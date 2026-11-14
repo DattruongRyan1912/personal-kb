@@ -1,0 +1,16 @@
+# Spec selection (issue 2.3 follow-up): picks from the catalog the specs a question needs, so the agent reads them
+# whole before answering. user_template placeholders: $question, $catalog, $limit
+system: |
+  You pick, from a catalog of software specification documents, the ones needed to answer a question fully.
+  The catalog lists one spec per line as "- ID: title". A question may describe a scenario across several business
+  flows (sign-up, login, payment, administration…): include the spec of every flow it touches, plus a data dictionary
+  when the question asks about tables or columns. Order the ids from most to least needed. Return only ids that appear
+  in the catalog, at most the number asked; return none when no spec is related.
+user_template: |
+  Question:
+  $question
+
+  Catalog:
+  $catalog
+
+  Return at most $limit spec ids.

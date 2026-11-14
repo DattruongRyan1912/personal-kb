@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal KB — Báo Cáo Triển Khai Rebranding & Trang Phê Duyệt Tri Thức (/approvals)</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #ef4444;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 32px 20px;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    p.subtitle { color: var(--text-muted); font-size: 15px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 32px; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .status-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-rejected { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    ul.check-list { list-style: none; space-y: 10px; }
+    ul.check-list li {
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+    ul.check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #34d399;
+      font-weight: bold;
+    }
+    pre {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 14px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #c9d1d9;
+      margin: 12px 0;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #93c5fd; }
+    .copy-btn {
+      float: right;
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .copy-btn:hover { background: #30363d; }
+    .nav-preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #1e293b;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-top: 12px;
+    }
+    .tag { background: #334155; color: #94a3b8; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <div class="badge-top">VERDICT: APPROVED BY SENIOR ARCHITECT ADVISOR</div>
+        <h1>Personal KB — Báo Cáo Triển Khai Rebranding & Phê Duyệt Tri Thức</h1>
+        <p class="subtitle">Kho tri thức độc lập đã tách biệt hoàn toàn thương hiệu và bổ sung cổng kiểm duyệt dữ liệu (Knowledge Governance).</p>
+      </div>
+      <div>
+        <a href="http://localhost:3001/approvals" target="_blank" style="display: inline-block; background: var(--primary); color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px;">Truy cập /approvals →</a>
+      </div>
+    </header>
+
+    <div class="grid-2">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-title">🎨 1. Dọn Sạch Thương Hiệu "Personal KB"</div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Đã loại bỏ hoàn toàn các chuỗi CyberOS trên giao diện người dùng:</p>
+        <ul class="check-list">
+          <li><strong>Page Title & Description:</strong> Đổi thành <code>Personal KB | Knowledge Base</code> (layout.tsx).</li>
+          <li><strong>Giao diện Chat & Header:</strong> Đổi tên và logo sang <code>Personal KB</code> (c/layout.tsx, sidebar.tsx).</li>
+          <li><strong>Trang Đăng Nhập:</strong> Đổi sang <code>Personal KB - Quản trị kho tri thức</code> (login/page.tsx).</li>
+          <li><strong>Package Name:</strong> Đổi thành <code>personal-kb-chat</code> (package.json).</li>
+          <li><strong>Backward Compatibility:</strong> Hỗ trợ token key mới <code>personalkb.devToken</code> cùng fallback <code>cyberos.devToken</code>, export alias <code>CyberosChatTransport</code>.</li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-title">🛡️ 2. Trang Phê Duyệt Tri Thức (/approvals)</div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Cổng kiểm duyệt và quản trị tài liệu trực quan:</p>
+        <ul class="check-list">
+          <li><strong>Dashboard Thống kê:</strong> 4 Metric Cards (Tổng đề xuất, Chờ duyệt <span class="status-badge status-pending">Pending</span>, Đã duyệt <span class="status-badge status-approved">Approved</span>, Đã từ chối <span class="status-badge status-rejected">Rejected</span>).</li>
+          <li><strong>Sidebar Integration:</strong> Tích hợp link "Phê duyệt tri thức" trên Sidebar kèm <strong>Badge đếm số lượng đề xuất Chờ duyệt</strong>.</li>
+          <li><strong>Chi Tiết & Preview Markdown:</strong> Modal hiển thị lý do đề xuất (Rationale) và render Markdown nguyên văn đề xuất.</li>
+          <li><strong>Nút Hành Động:</strong> Phê duyệt 1 chạm (tự động re-ingest và đóng chunk cũ) hoặc Từ chối (nhập lý do phản hồi).</li>
+          <li><strong>Tự Tạo Đề Xuất:</strong> Modal cho phép người dùng tự gửi proposal cập nhật tri thức mới.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Card 3: Backend & Dual Protocol Integration -->
+    <div class="card" style="margin-bottom: 32px;">
+      <div class="card-title">⚙️ 3. Cơ Chế Proposal Store & Dual Protocol Tích Hợp</div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+        AI Agent không thể tự ý ghi đè vào file spec gốc. Khi phát hiện thông tin lỗi thời hoặc người dùng cung cấp thông tin mới, Agent sẽ gọi tool để tạo proposal ở trạng thái <code>PENDING</code>.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <div style="background: #0d1117; padding: 16px; border-radius: 8px; border: 1px solid #21262d;">
+          <h4 style="color: #60a5fa; font-size: 14px; margin-bottom: 8px;">🤖 Agent Tool (Dual-Channel)</h4>
+          <p style="font-size: 13px; color: #9ca3af;">Agent nội bộ: <code>propose_kb_update</code><br>MCP Server: <code>propose_knowledge_update</code><br>Đầy đủ tham số: <code>spec_id</code>, <code>title</code>, <code>proposed_content</code>, <code>rationale</code>, <code>section</code>.</p>
+        </div>
+
+        <div style="background: #0d1117; padding: 16px; border-radius: 8px; border: 1px solid #21262d;">
+          <h4 style="color: #34d399; font-size: 14px; margin-bottom: 8px;">🔒 An Toàn & OCC (Concurrency)</h4>
+          <p style="font-size: 13px; color: #9ca3af;">Lưu trữ file JSON tại <code>knowledge/proposals/*.json</code>. Hàm <code>resolve_spec_path</code> chống Path Traversal và kiểm soát SHA-256 hash (OCC) ngăn chặn Lost Update.</p>
+        </div>
+
+        <div style="background: #0d1117; padding: 16px; border-radius: 8px; border: 1px solid #21262d;">
+          <h4 style="color: #fbbf24; font-size: 14px; margin-bottom: 8px;">⚡ Tự Động Re-ingest Khi Approve</h4>
+          <p style="font-size: 13px; color: #9ca3af;">Khi duyệt đề xuất, backend cập nhật file Markdown spec, đóng chunk cũ (<code>valid_to = now()</code>) và nhúng chunk mới vào pgvector ngay lập tức không cần restart server.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Verification & Test Results -->
+    <div class="card">
+      <div class="card-title">🧪 4. Kết Quả Kiểm Thử Thực Tế (100% GREEN)</div>
+      <pre><code>=== BACKEND PYTEST (32/32 PASSED) ===
+tests/test_proposals_api.py ...                                          [  9%]
+tests/test_mcp_server.py .........                                       [ 37%]
+tests/test_specs_api.py ......                                           [ 56%]
+tests/test_sdd_tools.py ..............                                   [100%]
+============================== 32 passed in 1.62s ==============================
+
+=== FRONTEND VITEST (41/41 PASSED) ===
+ Test Files  10 passed (10)
+      Tests  41 passed (41)
+✓ Types generated successfully (0 errors, 0 warnings)</code></pre>
+      
+      <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <span class="tag">Next.js UI: http://localhost:3001</span>
+        <span class="tag">Trang Duyệt: http://localhost:3001/approvals</span>
+        <span class="tag">FastAPI Backend: http://localhost:8000</span>
+        <span class="tag">MCP Server: personal-kb</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

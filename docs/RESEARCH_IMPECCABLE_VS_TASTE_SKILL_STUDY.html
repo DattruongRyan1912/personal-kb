@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nghiên Cứu Chuyên Sâu: Impeccable vs Taste-Skill (Anti-AI-Slop & Design Engineering for Coding Agents)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669' },
+            zinc: { 850: '#18181b', 900: '#121214', 950: '#09090b' }
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    pre code { font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace; }
+    .hairline-border { border: 1px solid #27272a; }
+    .table-hairline th, .table-hairline td { border-bottom: 1px solid #27272a; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500/30">
+
+  <!-- Top Navigation Header -->
+  <header class="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-md bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm font-mono">
+          DS
+        </div>
+        <div>
+          <h1 class="text-base font-semibold text-zinc-100">Báo Cáo Nghiên Cứu Kỹ Thuật: Impeccable vs Taste-Skill</h1>
+          <p class="text-xs text-zinc-400 font-mono">Design Vocabulary, Deterministic Anti-Slop & Empirical CDP Browser Auditing</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 font-mono text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          RESEARCH COMPLETE
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+    <!-- Executive Summary Banner -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🎯</span> Kết Luận Trực Diện: Hai Trường Phái Lớn Nhất Khử "AI-Slop" Hiện Nay
+        </h2>
+        <span class="text-xs text-zinc-400 font-mono">Author: Ryan Truong & AGY Lead | Project: Personal-KB</span>
+      </div>
+      <p class="text-sm text-zinc-300 leading-relaxed">
+        Cả hai repository <code class="text-emerald-400 font-mono">pbakaus/impeccable</code> và <code class="text-emerald-400 font-mono">leonxlnx/taste-skill</code> sinh ra để giải quyết cùng một nỗi đau cốt lõi của lập trình viên: <strong>Mọi AI Coding Agent (Claude, Cursor, Gemini, Codex) khi được yêu cầu code giao diện đều mặc định tạo ra sản phẩm "trung bình cộng" (AI-slop)</strong> — 3 thẻ icon bo tròn, chữ gradient, nền kem hoặc đen tím phát sáng, padding chật hẹp, thiếu bản sắc.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div class="p-4 rounded hairline-border bg-zinc-950/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-amber-400">1. IMPECCABLE (Paul Bakaus)</span>
+            <span class="text-[10px] font-mono text-zinc-400">Rust Engine + 24 Verbs</span>
+          </div>
+          <p class="text-xs text-zinc-300">
+            <strong>Triết lý: Ngôn ngữ chỉ đạo & Rà soát cơ học.</strong> Cung cấp 24 động từ chuyên biệt (<code class="text-zinc-200">bolder</code>, <code class="text-zinc-200">quieter</code>, <code class="text-zinc-200">polish</code>, <code class="text-zinc-200">audit</code>, <code class="text-zinc-200">harden</code>...) kèm Engine Rust 16 crates phát hiện <strong>62 anti-slop rules</strong> mang tính cơ học, không tốn token LLM, hỗ trợ live in-browser overlay.
+          </p>
+        </div>
+        <div class="p-4 rounded hairline-border bg-zinc-950/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-blue-400">2. TASTE-SKILL (Leon Lin)</span>
+            <span class="text-[10px] font-mono text-zinc-400">Node CDP + Art Direction Dealer</span>
+          </div>
+          <p class="text-xs text-zinc-300">
+            <strong>Triết lý: Định hướng nghệ thuật & Kiểm định thực nghiệm CDP.</strong> Không để AI tự đoán phong cách; dùng script <code class="text-zinc-200">draw.mjs</code> rút ngẫu nhiên 3 trong 20 phong cách nghiên cứu từ 247 website Awwwards, kéo ảnh thật từ bảo tàng, và dùng Chrome Headless (CDP thuần) tự chụp đo đạc ở 3 viewport 1440/768/390px.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep Dive: Impeccable -->
+    <section class="space-y-4">
+      <div class="border-b border-zinc-800 pb-2 flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+          <span class="text-amber-400">⚡</span> Phân Tích Chuyên Sâu: pbakaus/impeccable
+        </h2>
+        <a href="https://github.com/pbakaus/impeccable" target="_blank" class="text-xs font-mono text-emerald-400 hover:underline">github.com/pbakaus/impeccable ↗</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Col 1: Vocabulary -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <h3 class="text-sm font-semibold text-zinc-200 font-mono">1. Bộ 24 Động Từ Chỉ Đạo (Verbs)</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Thay vì nói câu mơ hồ <em>"hãy làm đẹp hơn"</em> hay <em>"make it pop"</em> khiến AI sinh slop, developer dùng lệnh chính xác:
+          </p>
+          <ul class="text-xs space-y-1.5 text-zinc-300 font-mono">
+            <li><span class="text-amber-400">/impeccable bolder</span>: Tăng độ tương phản, cá tính mạnh cho UI mờ nhạt.</li>
+            <li><span class="text-amber-400">/impeccable quieter</span>: Tiết chế UI quá chói, giảm màu chrome.</li>
+            <li><span class="text-amber-400">/impeccable distill</span>: Tước bỏ khung viền, container thừa, đơn giản hoá.</li>
+            <li><span class="text-amber-400">/impeccable polish</span>: Rà soát pixel, nhịp điệu typography trước khi ship.</li>
+            <li><span class="text-amber-400">/impeccable harden</span>: Xử lý chu đáo các ca biên (edge cases, lỗi, i18n, overflow).</li>
+            <li><span class="text-amber-400">/impeccable audit</span>: Chấm điểm chất lượng kỹ thuật (a11y, perf, responsive).</li>
+          </ul>
+        </div>
+
+        <!-- Col 2: Architecture -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <h3 class="text-sm font-semibold text-zinc-200 font-mono">2. Kiến Trúc Rust Engine & Anti-Slop</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Không dựa vào việc nhắc nhở bằng prompt (vốn hay bị AI quên lãng), Impeccable xây dựng một Cargo Workspace gồm 16 crates:
+          </p>
+          <ul class="text-xs space-y-1.5 text-zinc-300">
+            <li><code class="text-emerald-400 font-mono">crates/detect</code>: 62 luật kiểm tra cú pháp AST/Regex tĩnh, chạy trong mili-giây qua hook.</li>
+            <li><code class="text-emerald-400 font-mono">crates/live</code> & <code class="text-emerald-400 font-mono">browser</code>: Kết nối in-page live overlay cho phép chọn phần tử trực tiếp trên trình duyệt.</li>
+            <li><code class="text-emerald-400 font-mono">crates/comp</code> & <code class="text-emerald-400 font-mono">foundation</code>: Hệ thống màu OKLCH, typography scale, spacing rhythm chuẩn mực.</li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Context Files -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <h3 class="text-sm font-semibold text-zinc-200 font-mono">3. Hai Trục Ngữ Cảnh: PRODUCT vs DESIGN</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Cơ chế lưu giữ ngữ cảnh bền vững (persistent context) qua 2 file markdown chuẩn:
+          </p>
+          <ul class="text-xs space-y-1.5 text-zinc-300">
+            <li><code class="text-yellow-400 font-mono">PRODUCT.md</code>: Định nghĩa sự thật sản phẩm (Who, What, Why, Constraints). Mọi lệnh thiết kế đều phải tuân thủ mục đích cốt lõi này.</li>
+            <li><code class="text-yellow-400 font-mono">DESIGN.md</code>: Định nghĩa bản sắc thị giác: hệ màu OKLCH, font pair, quy tắc thẻ, quy ước surface/elevation, ngăn ngừa AI tự tiện đổi màu thương hiệu.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep Dive: Taste-Skill -->
+    <section class="space-y-4">
+      <div class="border-b border-zinc-800 pb-2 flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+          <span class="text-blue-400">🎨</span> Phân Tích Chuyên Sâu: leonxlnx/taste-skill
+        </h2>
+        <a href="https://github.com/leonxlnx/taste-skill" target="_blank" class="text-xs font-mono text-emerald-400 hover:underline">github.com/leonxlnx/taste-skill ↗</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Col 1: Art Direction Dealer -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <h3 class="text-sm font-semibold text-zinc-200 font-mono">1. Bộ "Chia Bài" Nghệ Thuật (draw.mjs)</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Khi được yêu cầu tạo style, AI luôn chọn mẫu số chung. Taste-skill đảo ngược hoàn toàn quy trình này:
+          </p>
+          <ul class="text-xs space-y-1.5 text-zinc-300">
+            <li>Nghiên cứu từ <strong>247 trang web đoạt giải Awwwards & One Page Love</strong>.</li>
+            <li>Script <code class="text-emerald-400 font-mono">draw.mjs</code> rút ngẫu nhiên 3 trong 20 phong cách nghệ thuật nghiên cứu sẵn (<code class="text-zinc-200">brutalist-editorial</code>, <code class="text-zinc-200">archive-kinetic</code>, <code class="text-zinc-200">dense-technical</code>...).</li>
+            <li>Kéo theo toàn bộ palette màu độc bản, typography pairings và section blueprints tương ứng.</li>
+          </ul>
+        </div>
+
+        <!-- Col 2: CDP Headless Inspector -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <h3 class="text-sm font-semibold text-zinc-200 font-mono">2. Chrome CDP Inspector (inspect.mjs)</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Kiểm tra thực nghiệm bằng trình duyệt thật với triết lý zero-dependency (chỉ cần Node 22+ và Chrome có sẵn):
+          </p>
+          <ul class="text-xs space-y-1.5 text-zinc-300">
+            <li>Tự động dựng local HTTP server tạm thời trên <code class="text-zinc-200 font-mono">127.0.0.1</code> để test.</li>
+            <li>Kết nối trực tiếp Chrome qua <strong>WebSocket CDP (DevTools Protocol)</strong>.</li>
+            <li>Đo đạc chính xác ở 3 độ rộng: <strong>1440px (Desktop), 768px (Tablet), 390px (Mobile)</strong>.</li>
+            <li>Chụp cuộn phim <code class="text-emerald-400 font-mono">--film</code> theo từng 1/3 viewport để bắt lỗi giật lag khi cuộn.</li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Tells Registry & App Screens -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <h3 class="text-sm font-semibold text-zinc-200 font-mono">3. Sổ Bộ Cạm Bẫy (tells.md) & App Screens</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Đúc kết cực kỳ sắc sảo về 3 làn sóng AI-slop và quy chuẩn giao diện ứng dụng làm việc (App Screens):
+          </p>
+          <ul class="text-xs space-y-1.5 text-zinc-300">
+            <li><strong>Làn sóng 3 AI-Slop:</strong> Vạch trần trào lưu <em>"nền vàng kem + đất nung terracotta + serif nghiêng"</em> đang bị các model lạm dụng thành slop mới.</li>
+            <li><strong>App Screens (v2.1):</strong> Nghiên cứu từ 23 SaaS hàng đầu: màu sắc chỉ chiếm &lt;3% diện tích và chỉ dành cho data; KPI không dùng icon hình tròn; không dùng zebra table; không dùng shadow.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Matrix -->
+    <section class="space-y-4">
+      <div class="border-b border-zinc-800 pb-2">
+        <h2 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+          <span>⚖️</span> Bảng So Sánh Kỹ Thuật Trực Diện
+        </h2>
+      </div>
+
+      <div class="overflow-x-auto rounded-md hairline-border">
+        <table class="w-full text-left border-collapse text-xs table-hairline">
+          <thead>
+            <tr class="bg-zinc-900/80 text-zinc-400 font-mono">
+              <th class="p-3 w-1/5">Đặc Tính / Trục Kỹ Thuật</th>
+              <th class="p-3 w-2/5 text-amber-400">pbakaus/impeccable</th>
+              <th class="p-3 w-2/5 text-blue-400">leonxlnx/taste-skill</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800 text-zinc-300">
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Trọng tâm thiết kế</td>
+              <td class="p-3">Giao diện sẵn có cần tinh chỉnh (Refinement, Steer, Polish, UX Critique, Component Design System).</td>
+              <td class="p-3">Tạo mới từ đầu (New Work Art Direction, Landing Pages, Marketing, Editorial, App Screens).</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Ngôn ngữ & Engine</td>
+              <td class="p-3 font-mono">Rust Workspace (16 crates) + Bun/TypeScript + Browser Extension.</td>
+              <td class="p-3 font-mono">Pure Node.js 22+ (Zero dependencies) + Chrome CDP Native WebSocket.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Bộ lệnh thao tác</td>
+              <td class="p-3">24 commands chuyên biệt (<code class="text-amber-400 font-mono">bolder</code>, <code class="text-amber-400 font-mono">quieter</code>, <code class="text-amber-400 font-mono">distill</code>, <code class="text-amber-400 font-mono">critique</code>, <code class="text-amber-400 font-mono">harden</code>...).</td>
+              <td class="p-3">1 run 6 bước (<code class="text-blue-400 font-mono">draw.mjs</code>, <code class="text-blue-400 font-mono">assets.mjs</code>, <code class="text-blue-400 font-mono">inspect.mjs</code>, look-and-fix loop).</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Kiểm tra Anti-AI-Slop</td>
+              <td class="p-3">62 quy tắc cơ học (Deterministic Rules) chạy qua CLI hook, không cần LLM API.</td>
+              <td class="p-3">Lọc qua CDP Browser (<code class="text-blue-400 font-mono">inspect.mjs</code>) + Sổ bộ cạm bẫy <code class="text-blue-400 font-mono">tells.md</code> 3 thế hệ.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Tương tác trực tiếp (Live)</td>
+              <td class="p-3">Live Browser overlay: bấm chọn element trực tiếp trên DOM và xoay vòng biến thể.</td>
+              <td class="p-3">Headless screenshot tự động ở 3 breakpoint (1440/768/390) + chế độ cuộn film.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Xử lý Media / Ảnh thật</td>
+              <td class="p-3">Răn đe cấm SVG doodle nghiệp dư, cấm vector lười biếng; yêu cầu dùng asset thật.</td>
+              <td class="p-3">Tích hợp sẵn <code class="text-blue-400 font-mono">assets.mjs</code> cào ảnh public domain từ bảo tàng Met, Wikimedia, Openverse.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Quản lý Tokens / Brand</td>
+              <td class="p-3">Xuất sắc: Hệ màu <code class="text-zinc-200 font-mono">OKLCH</code>, surface ramps, lưu bền vững trong <code class="text-yellow-400 font-mono">DESIGN.md</code>.</td>
+              <td class="p-3">Lưu trong thư mục tạm <code class="text-zinc-200 font-mono">.taste-skill/direction.json</code> theo từng lượt vẽ.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Synthesis & Recommendations for Ryan / Personal-KB -->
+    <section class="space-y-4">
+      <div class="border-b border-zinc-800 pb-2">
+        <h2 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+          <span class="text-emerald-400">💡</span> Kế Hoạch Ứng Dụng Thực Chiến Cho Hệ Sinh Thái Của Ryan
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Action 1 -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <div class="flex items-center gap-2 text-emerald-400 font-mono text-sm font-semibold">
+            <span>01</span> Đồng Bộ Tư Tưởng Vào GLOBAL.md
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Quy định Anti-AI-Slop trong <code class="text-zinc-200 font-mono">~/.agents/GLOBAL.md</code> đã đi đúng hướng (cấm gradient tím hồng, cấm emoji/sparkles, cấm pill rounded button). Chúng ta nên bổ sung thêm:
+          </p>
+          <ul class="text-xs space-y-1 text-zinc-300">
+            <li>• Cấm <em>"Eyebrow / Kicker"</em> nhồi nhét trên mọi heading.</li>
+            <li>• Cảnh giác <em>"Làn sóng 3 AI-slop"</em>: lạm dụng nền vàng kem + terracotta + serif nghiêng.</li>
+            <li>• Ràng buộc App Screens: Màu sắc chiếm &lt;3% diện tích và chỉ để thể hiện trạng thái dữ liệu.</li>
+          </ul>
+        </div>
+
+        <!-- Action 2 -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <div class="flex items-center gap-2 text-emerald-400 font-mono text-sm font-semibold">
+            <span>02</span> Kế Thừa CDP Inspect Của Taste-Skill
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Script <code class="text-emerald-400 font-mono">inspect.mjs</code> của taste-skill là một kiệt tác kỹ thuật: <strong>hoàn toàn không cần cài Puppeteer / Playwright nặng nề</strong>, chỉ dùng WebSocket thuần của Node 22 để bắt tay với Chrome có sẵn trên macOS.
+          </p>
+          <p class="text-xs text-zinc-300">
+            Có thể đưa script CDP này vào công cụ nghiệm thu UI cho subagent <strong>Advisor</strong> để chấm dứt hoàn toàn tình trạng <em>"nghiệm thu trên giấy"</em>!
+          </p>
+        </div>
+
+        <!-- Action 3 -->
+        <div class="p-5 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+          <div class="flex items-center gap-2 text-emerald-400 font-mono text-sm font-semibold">
+            <span>03</span> Tích Hợp PRODUCT.md & DESIGN.md
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Chuẩn hoá 2 file context theo chuẩn Impeccable cho các dự án có UI (như <code class="text-zinc-200 font-mono">MyNotch</code> và Web Frontend):
+          </p>
+          <p class="text-xs text-zinc-300">
+            Khi AI Agent bước vào repo, nó đọc <code class="text-yellow-400 font-mono">DESIGN.md</code> để biết ngay bảng màu (Dark Zinc 950, 1px border) và không bao giờ tự ý bịa thêm màu sắc hay style lạc điệu.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-6 border-t border-zinc-800 text-xs text-zinc-500 font-mono flex items-center justify-between">
+      <span>Personal-KB Engineering Report · Anti-AI-Slop Deep Study</span>
+      <span>Rendered with Standalone Tailwind CSS & JetBrains Mono</span>
+    </footer>
+
+  </main>
+</body>
+</html>

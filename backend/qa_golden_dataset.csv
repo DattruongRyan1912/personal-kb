@@ -1,0 +1,31 @@
+Question,Expected_Answer_Logic,Source_Spec_ID
+"Khi đăng nhập thành công, access token và refresh token sống bao lâu, refresh token được lưu ở đâu?","Access token là JWT sống 15 phút (expires_in 900); refresh token sống 7 ngày, lưu trong cookie HttpOnly.",SPC-1
+"API đăng nhập là endpoint nào, có cần xác thực không và giới hạn tốc độ ra sao?","POST /api/v1/auth/login, không cần auth; rate limit 10 request mỗi phút mỗi IP, vượt thì trả 429 RATE_LIMITED.",SPC-1
+Đăng nhập sai email hoặc mật khẩu thì API trả mã lỗi gì và bộ đếm thay đổi thế nào?,Trả 401 INVALID_CREDENTIALS; nếu user tồn tại thì users.failed_login_count tăng 1.,SPC-1
+"Khi nào tài khoản bị khoá tạm thời, khoá bao lâu và API trả gì trong thời gian khoá?",Sai 5 lần liên tiếp thì đặt users.locked_until = now() + 15 phút; trong thời gian khoá đăng nhập trả 423 ACCOUNT_LOCKED.,SPC-1
+Mật khẩu người dùng được so sánh bằng thuật toán gì khi đăng nhập?,So sánh bằng Argon2id (argon2.verify với users.password_hash).,SPC-1
+"Mỗi lần đăng nhập thành công, hệ thống ghi gì vào cơ sở dữ liệu?","Đặt lại failed_login_count về 0 và cập nhật users.last_login_at; tạo một dòng login_sessions (user_id, refresh_token_hash, expires_at, user_agent) với refresh token chỉ lưu dạng hash SHA-256.",SPC-1
+Khi nào đơn hàng chuyển sang trạng thái PAID? Redirect của trình duyệt sau thanh toán có đủ không?,Đơn chỉ chuyển PENDING sang PAID khi nhận IPN hợp lệ từ VNPay; redirect của trình duyệt không bao giờ là bằng chứng thanh toán.,SPC-2
+"API tạo giao dịch thanh toán cần xác thực gì, đọc và ghi những bảng nào?","POST /api/v1/payments/checkout cần Bearer access token, header Idempotency-Key bắt buộc; đọc orders và users, ghi payments; trả URL thanh toán VNPay.",SPC-2
+"Khi nhận IPN từ VNPay, hệ thống xử lý theo những bước nào?",1 kiểm chữ ký vnp_SecureHash (HMAC-SHA512); 2 tìm giao dịch theo vnp_TxnRef trong payments; 3 so khớp số tiền với orders.total_amount; 4 payments.status = SUCCEEDED; 5 orders.status = PAID; 6 cộng users.reward_points.,SPC-2
+Hệ thống chống xử lý trùng IPN từ VNPay như thế nào?,"Bước 4 đến 6 chạy trong một transaction và chỉ khi payments.status = PENDING (UPDATE ... WHERE status = 'PENDING'); nếu không cập nhật dòng nào thì IPN là bản lặp, trả RspCode = 02 cho VNPay và không làm gì thêm.",SPC-2
+Điểm thưởng được cộng theo quy tắc nào và khi hoàn tiền thì sao?,Mỗi 10.000 VND thanh toán thành công cộng 1 điểm vào users.reward_points; hoàn tiền trừ lại điểm tương ứng.,SPC-2
+Những bên nào tham gia luồng thanh toán và dịch vụ nào sở hữu bảng nào?,"Người mua (role member), dịch vụ Order sở hữu bảng orders, dịch vụ Payment sở hữu bảng payments, và cổng VNPay bên ngoài.",SPC-2
+Người dùng đăng ký tài khoản qua API nào và hệ thống chấp nhận email nào?,"POST /api/v1/auth/register, không cần auth; chỉ chấp nhận email thuộc domain example.com; ghi bảng users và email_verifications.",SPC-3
+Tài khoản vừa đăng ký có trạng thái gì và đã đăng nhập được chưa?,users.status = PENDING_VERIFICATION; tài khoản chỉ đăng nhập được khi email đã được xác thực.,SPC-3
+API gửi mail đăng ký ảnh hưởng đến bảng nào?,POST /api/v1/notifications/email ghi một dòng vào bảng email_outbox (trạng thái QUEUED) và đọc email_templates.,SPC-3
+Email chào mừng được gửi đi như thế nào và khi lỗi thì thử lại mấy lần?,"API không gửi trực tiếp: ghi email_outbox trạng thái QUEUED; worker outbox gửi qua Amazon SES và cập nhật SENT hoặc FAILED, thử lại tối đa 3 lần.",SPC-3
+Link xác thực email có hiệu lực bao lâu và xác thực thành công thì cập nhật gì?,"GET /api/v1/auth/verify kiểm token trong email_verifications, sống 24 giờ và dùng một lần; thành công thì đặt users.status = ACTIVE và users.email_verified_at = now().",SPC-3
+Nếu người dùng bấm link xác thực đã hết hạn hoặc đã dùng rồi thì sao?,consume trả None nên hệ thống ném InvalidVerificationToken; tài khoản không được kích hoạt.,SPC-3
+Thành viên có role member được làm gì với hồ sơ người dùng?,"Member xem hồ sơ của mình và sửa họ tên, avatar, số điện thoại; không được xem hồ sơ người khác, không đổi role, không khoá hay mở khoá tài khoản.",SPC-4
+API sửa hồ sơ của chính mình là gì và ghi những bảng nào?,"PATCH /api/v1/users/me sửa full_name, phone, avatar_url; cập nhật bảng users và ghi audit_logs.",SPC-4
+"Khi admin khoá tài khoản một người dùng, hệ thống làm những gì?","POST /api/v1/admin/users/{id}/lock chỉ cho admin: trong một transaction đặt users.status = LOCKED, xoá mọi dòng login_sessions của người đó và ghi audit_logs với action USER_LOCKED.",SPC-4
+Số điện thoại và avatar trong hồ sơ có ràng buộc gì?,"Số điện thoại theo định dạng E.164; avatar tối đa 2 MB, chỉ PNG hoặc JPEG.",SPC-4
+Người dùng có được tự đổi role của chính mình không?,Không: không ai được tự đổi role của chính mình; chỉ admin có quyền đổi role.,SPC-4
+Cột status của bảng users nhận những giá trị nào và mặc định là gì?,"PENDING_VERIFICATION, ACTIVE, LOCKED; mặc định PENDING_VERIFICATION; có chỉ mục users_status_idx.",SPC-5
+Email trong bảng users có được trùng không?,"Email (kiểu citext) là duy nhất qua unique index users_email_key ON users (email) WHERE deleted_at IS NULL, nên sau khi xoá mềm email có thể dùng lại.",SPC-5
+Cột role và reward_points của bảng users có ràng buộc gì?,"role mặc định member, CHECK role IN ('member', 'admin'); reward_points kiểu int mặc định 0, CHECK reward_points >= 0.",SPC-5
+Những bảng nào có khoá ngoại tới bảng users và spec nào sở hữu chúng?,"login_sessions (user_id, SPC-1), payments (user_id, SPC-2), orders (user_id, SPC-2), email_verifications (user_id, SPC-3), audit_logs (actor_id và target_id, SPC-4).",SPC-5
+Những cột nào của bảng users phục vụ việc khoá tài khoản khi đăng nhập sai và chúng hoạt động thế nào?,"failed_login_count (int, mặc định 0) tăng mỗi lần sai; locked_until (timestamptz) đặt now() + 15 phút khi đủ 5 lần; last_login_at ghi lần đăng nhập thành công; cả ba do SPC-1 ghi.",SPC-1;SPC-5
+"Khi đăng ký một tài khoản mới, những bảng nào được ghi, kể cả qua API gửi mail?","users (status PENDING_VERIFICATION, mặc định trong từ điển dữ liệu), email_verifications, và email_outbox (QUEUED) qua POST /api/v1/notifications/email.",SPC-3;SPC-5
+"Sau khi admin khoá tài khoản, refresh token cũ của người đó còn dùng được không?","Không: khoá tài khoản xoá mọi dòng login_sessions của người đó, nơi lưu refresh_token_hash, nên refresh token bị thu hồi.",SPC-4;SPC-1

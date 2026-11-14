@@ -1,0 +1,517 @@
+[
+ {
+  "query": "cách tính lương làm thêm giờ OT",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "cach tinh luong lam them gio",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "kind": "no-accent"
+ },
+ {
+  "query": "quy định về làm thêm giờ OT và bảng hệ số tính như thế nào",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "nghỉ phép năm được bao nhiêu ngày",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "nghi phep nam",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "no-accent"
+ },
+ {
+  "query": "đi muộn về sớm chấm công",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "hồ sơ nhân sự hợp đồng lao động",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M02"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "quyết toán thuế TNCN",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "bao hiem xa hoi BHXH",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "no-accent"
+ },
+ {
+  "query": "Dynamic Island notch",
+  "project": "MyNotch",
+  "want": [
+   "MYNOTCH-01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "workspace context",
+  "project": "mynotch",
+  "want": [
+   "mynotch-context"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "quota pool manager",
+  "project": "AGY-Remote-Hub",
+  "want": [
+   "AGY-01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "phê duyệt đề xuất human gate",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-04"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "chấm cộng",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "typo"
+ },
+ {
+  "query": "bảo hiêm xã hội",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "typo"
+ },
+ {
+  "query": "quyết toán thuê",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "typo"
+ },
+ {
+  "query": "công thức nấu phở",
+  "project": "Demo-Core",
+  "want": [],
+  "kind": "off-topic"
+ },
+ {
+  "query": "giá bitcoin hôm nay",
+  "project": "Personal-KB",
+  "want": [],
+  "kind": "off-topic"
+ },
+ {
+  "query": "quy trình tuyển dụng ứng viên và gửi offer",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M03"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "tạo đơn nghỉ phép và rút đơn",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "bảng chấm công tháng khóa sổ",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "phát hành phiếu lương điện tử",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "quản lý tiền thưởng nhân viên",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "người phụ thuộc giảm trừ gia cảnh",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M02",
+   "HR-M05"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "workflow phê duyệt dùng chung",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "có được dùng float cho tiền lương không",
+  "project": "Demo-Core",
+  "want": [
+   "HR-GOTCHAS"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "luan chuyen thang chuc nhan vien",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M02"
+  ],
+  "kind": "no-accent"
+ },
+ {
+  "query": "đăng ký đi công tác cá nhân",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "on-demand polling và vòng đời ứng dụng",
+  "project": "MyNotch",
+  "want": [
+   "MYNOTCH-01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "danh sách các module nghiệp vụ của notch",
+  "project": "MyNotch",
+  "want": [
+   "MYNOTCH-01"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "auto rotator daemon xoay tài khoản",
+  "project": "AGY-Remote-Hub",
+  "want": [
+   "AGY-01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "bố cục tmux 3 cửa sổ",
+  "project": "AGY-Remote-Hub",
+  "want": [
+   "AGY-01"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "keychain sticky reload gan tai khoan theo project",
+  "project": "AGY-Remote-Hub",
+  "want": [
+   "AGY-01"
+  ],
+  "kind": "no-accent"
+ },
+ {
+  "query": "kết quả benchmark 100k chunks",
+  "project": "CyberOS",
+  "want": [
+   "CYBEROS-03"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "ràng buộc ranh giới dữ liệu DEC-116",
+  "project": "CyberOS",
+  "want": [
+   "CYBEROS-03"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "bộ nhớ đệm ngữ nghĩa đa tenant",
+  "project": "CyberOS",
+  "want": [
+   "CYBEROS-01"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "optimistic concurrency control khi duyệt đề xuất",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-04"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "giai đoạn cross-encoder reranking",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-02"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "cấu hình biến môi trường .env",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-05"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "tại sao tách MCP stdio và REST SSE",
+  "project": "Personal-KB",
+  "want": [
+   "ADR-002"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "cách thêm tài liệu mới vào kho tri thức",
+  "project": "Personal-KB",
+  "want": [
+   "KB-01",
+   "PKB-05"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "lịch thi đấu bóng đá tuần này",
+  "project": "MyNotch",
+  "want": [],
+  "kind": "off-topic"
+ },
+ {
+  "query": "cách trồng cây cà chua",
+  "project": "AGY-Remote-Hub",
+  "want": [],
+  "kind": "off-topic"
+ },
+ {
+  "query": "cong thuc nau pho bo",
+  "project": "Demo-Core",
+  "want": [],
+  "kind": "off-topic"
+ },
+ {
+  "query": "how to bake sourdough bread",
+  "project": "Personal-KB",
+  "want": [],
+  "kind": "off-topic"
+ },
+ {
+  "query": "tại sao dùng một kho vector chung thay vì tách nhiều collection",
+  "project": "Personal-KB",
+  "want": [
+   "ADR-001"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "vì sao ưu tiên ràng buộc phủ định trước khi sinh code",
+  "project": "Personal-KB",
+  "want": [
+   "ADR-003"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "danh mục công cụ MCP chuẩn của CyberOS",
+  "project": "CyberOS",
+  "want": [
+   "CYBEROS-02"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "mẫu code tính lương chuẩn production",
+  "project": "Demo-Core",
+  "want": [
+   "HR-EX-001"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "mẫu xử lý phiếu điều chỉnh công sau khóa sổ",
+  "project": "Demo-Core",
+  "want": [
+   "HR-EX-002"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "phạm vi nền tảng Enterprise Application Platform EAP",
+  "project": "Demo-Core",
+  "want": [
+   "HR-PROJECT",
+   "HR-M01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "kiến trúc giao thức kép tổng thể của Personal-KB",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-01",
+   "ADR-002"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "danh sách tools MCP cung cấp cho agent",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-03"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "báo cáo bàn giao các giai đoạn đã hoàn tất",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-06"
+  ],
+  "kind": "accent"
+ },
+ {
+  "query": "mẫu triển khai MCP tool chuẩn, log ra stderr",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-EX-001"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "agent có được tự sửa file tài liệu gốc không",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-GOTCHAS"
+  ],
+  "kind": "prose"
+ },
+ {
+  "query": "cạm bẫy và lỗi thường gặp khi dùng Antigravity AGY",
+  "project": "Personal-KB",
+  "want": [
+   "AGY-GOTCHAS"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "cạm bẫy kỹ thuật và ràng buộc âm bản dự án MyNotch",
+  "project": "MyNotch",
+  "want": [
+   "MYNOTCH-GOTCHAS"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "cạm bẫy kỹ thuật và nguyên nhân gốc rễ phân hệ CyberOS AI Core",
+  "project": "CyberOS",
+  "want": [
+   "CYBEROS-GOTCHAS"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "quy trình dọn dẹp dung lượng ổ cứng macOS an toàn",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-STORAGE-RUNBOOK"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "hướng dẫn áp dụng spec-driven development thực chiến",
+  "project": "Personal-KB",
+  "want": [
+   "SDD-PRACTICAL-GUIDE"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "cạm bẫy kỹ thuật và nguyên nhân gốc rễ AGY Remote Hub",
+  "project": "AGY-Remote-Hub",
+  "want": [
+   "AGY-REMOTE-HUB-GOTCHAS"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "kiến trúc hệ thống luyện thi TOEIC adaptive learning",
+  "project": "TOEIC",
+  "want": [
+   "TOEIC-01"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "cạm bẫy kỹ thuật và ràng buộc âm bản TOEIC",
+  "project": "TOEIC",
+  "want": [
+   "TOEIC-GOTCHAS"
+  ],
+  "kind": "keyword"
+ },
+ {
+  "query": "kho lưu trữ lỗi và cạm bẫy bài thi TOEIC",
+  "project": "TOEIC",
+  "want": [
+   "toeic-error-vault"
+  ],
+  "kind": "keyword"
+ }
+]

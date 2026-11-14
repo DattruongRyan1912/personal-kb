@@ -1,0 +1,6 @@
+{
+  "name": "kb-brief-injector",
+  "displayName": "KB Brief Injector",
+  "version": "0.1.0",
+  "description": "Injects the Personal-KB project brief as the first user message of an AGY conversation"
+}

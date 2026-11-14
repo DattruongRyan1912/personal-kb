@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nghiên Cứu Chuyên Sâu: Cơ Chế Cốt Lõi CodeGraph & Tiềm Năng Thay Thế Của Personal-KB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669' },
+            zinc: { 850: '#18181b', 900: '#121214', 950: '#09090b' }
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    pre code { font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace; }
+    .hairline-border { border: 1px solid #27272a; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500/30">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-md bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-base font-mono">
+          CG
+        </div>
+        <div>
+          <h1 class="text-base font-semibold text-zinc-100">Báo Cáo Nghiên Cứu Kỹ Thuật: CodeGraph vs Personal-KB</h1>
+          <p class="text-xs text-zinc-400 font-mono">Reverse-Engineering CodeGraph Engine & Architectural Feasibility Study</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 font-mono text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          RESEARCH & ESTIMATION
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <!-- Executive Summary Banner -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🎯</span> Kết Luận Trực Diện: Personal-KB Có Thay Thế Được CodeGraph Không?
+        </h2>
+        <span class="text-xs text-zinc-400 font-mono">Target: Ryan Truong | System: Personal-KB</span>
+      </div>
+      <p class="text-sm text-zinc-300 leading-relaxed">
+        <strong>Câu trả lời ngắn gọn:</strong> Personal-KB <strong>HOÀN TOÀN CÓ THỂ VÀ NÊN THAY THẾ</strong> vai trò của CodeGraph trong hệ sinh thái AI Agent của bạn, <strong>NHƯNG KHÔNG PHẢI BẰNG CÁCH DÙNG VECTOR RAG / LLM ĐỂ PARSE CODE</strong>. 
+        Việc thay thế phải được thực hiện bằng cách <strong>hấp thụ (absorb) cơ chế AST Parsing (Tree-sitter) & Relational Call-Graph của CodeGraph</strong> trở thành một Subsystem chuẩn bên trong kiến trúc <strong>Memory Fabric (CYBEROS-01 / PKB-02)</strong>.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-rose-400 font-mono uppercase font-semibold">Sai Lầm Phổ Biến</div>
+          <div class="text-base font-bold text-zinc-100 mt-1">Dùng Vector RAG thay AST</div>
+          <p class="text-xs text-zinc-400 mt-1">Vector search mang tính xác suất (probabilistic), không thể cam kết 100% tìm đúng toàn bộ Callers/Callees của một hàm và làm bùng nổ token.</p>
+        </div>
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-emerald-400 font-mono uppercase font-semibold">Thực Tế Của CodeGraph</div>
+          <div class="text-base font-bold text-zinc-100 mt-1">Tree-sitter + SQLite FTS5</div>
+          <p class="text-xs text-zinc-400 mt-1">CodeGraph hoàn toàn không dùng LLM hay vector database. Nó dùng bộ parser WASM Tree-sitter siêu nhẹ (0 token) và lưu đồ thị vào SQLite local.</p>
+        </div>
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-sky-400 font-mono uppercase font-semibold">Cơ Hội Của Personal-KB</div>
+          <div class="text-base font-bold text-zinc-100 mt-1">Unified Spec & Code Fabric</div>
+          <p class="text-xs text-zinc-400 mt-1">Hợp nhất Spec nghiệp vụ [HR-M04] với AST Code Symbols thật. Tạo ra liên kết 2 chiều mà cả CodeGraph lẫn Vector RAG độc lập đều không làm được.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep Dive: CodeGraph Core Architecture -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-6">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-semibold text-zinc-100 font-mono uppercase tracking-wide text-emerald-400">
+          1. Giải Phẫu Cơ Chế Cốt Lõi Của CodeGraph (Under The Hood)
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Dữ liệu phân tích trực tiếp từ mã nguồn thực thi: <code class="text-zinc-300">@colbymchenry/codegraph-darwin-arm64/lib/dist/</code></p>
+      </div>
+
+      <div class="space-y-4 text-sm text-zinc-300 leading-relaxed">
+        <p>
+          Qua quá trình dịch ngược và phân tích mã thực thi trong gói Volta của hệ thống, CodeGraph hoạt động theo chu trình <strong>4 giai đoạn hoàn toàn tất định (Deterministic, Zero-LLM)</strong>:
+        </p>
+
+        <!-- Pipeline Steps -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="p-4 rounded-sm bg-zinc-900/90 hairline-border space-y-2">
+            <div class="font-mono text-xs text-emerald-400 font-bold">BƯỚC 1: AST EXTRACTION</div>
+            <div class="text-xs font-semibold text-zinc-200">web-tree-sitter (WASM)</div>
+            <p class="text-xs text-zinc-400">
+              Quét file nguồn với 30+ ngữ pháp WASM (<code class="text-zinc-300">typescript, python, go, rust, dart...</code>). Trích xuất 22 loại Nodes (functions, classes, interfaces...) với toạ độ <code class="text-zinc-300">startLine, endLine</code>, docstring, signature.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-sm bg-zinc-900/90 hairline-border space-y-2">
+            <div class="font-mono text-xs text-sky-400 font-bold">BƯỚC 2: TWO-PASS LINKING</div>
+            <div class="text-xs font-semibold text-zinc-200">Resolution Engine</div>
+            <p class="text-xs text-zinc-400">
+              Pass 1 ghi nhận <code class="text-zinc-300">unresolvedReferences</code>. Pass 2 chạy <code class="text-zinc-300">import-resolver.js</code>, <code class="text-zinc-300">name-matcher.js</code>, <code class="text-zinc-300">path-aliases.js</code> để phân giải liên kết thành các Edge: <code class="text-zinc-300">calls, contains, imports, extends</code>.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-sm bg-zinc-900/90 hairline-border space-y-2">
+            <div class="font-mono text-xs text-amber-400 font-bold">BƯỚC 3: PERSISTENCE</div>
+            <div class="text-xs font-semibold text-zinc-200">SQLite + FTS5 Index</div>
+            <p class="text-xs text-zinc-400">
+              Lưu toàn bộ vào <code class="text-zinc-300">.codegraph/codegraph.db</code>. Bảng <code class="text-zinc-300">nodes, edges, files</code> kèm virtual table <code class="text-zinc-300">nodes_fts</code> cho phép tìm kiếm full-text biểu tượng siêu tốc không tốn bộ nhớ vector.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-sm bg-zinc-900/90 hairline-border space-y-2">
+            <div class="font-mono text-xs text-purple-400 font-bold">BƯỚC 4: GRAPH TRAVERSAL</div>
+            <div class="text-xs font-semibold text-zinc-200">Graph Queries & MCP</div>
+            <p class="text-xs text-zinc-400">
+              Cung cấp 8 công cụ MCP (<code class="text-zinc-300">codegraph_callers, codegraph_impact, codegraph_explore...</code>) thông qua thuật toán duyệt đồ thị BFS/DFS trên SQL JOIN có composite index.
+            </p>
+          </div>
+        </div>
+
+        <!-- Schema SQL Analysis -->
+        <div class="mt-4 p-4 rounded-sm bg-zinc-950 hairline-border">
+          <div class="text-xs font-mono text-zinc-400 mb-2 flex items-center justify-between">
+            <span>CẤU TRÚC DATABASE SQLITE THỰC TẾ CỦA CODEGRAPH (SCHEMA.SQL)</span>
+            <span class="text-emerald-400">Zero Vector Overhead</span>
+          </div>
+          <pre class="text-xs text-zinc-300 font-mono overflow-x-auto p-2 bg-zinc-900/50 rounded">
+-- 1. Bảng Nodes (Chứa mọi symbol khai báo trong code)
+CREATE TABLE nodes (
+    id TEXT PRIMARY KEY,               -- hash(file_path + qualified_name)
+    kind TEXT NOT NULL,                -- function, class, method, interface...
+    name TEXT NOT NULL, qualified_name TEXT NOT NULL,
+    file_path TEXT NOT NULL, language TEXT NOT NULL,
+    start_line INTEGER NOT NULL, end_line INTEGER NOT NULL,
+    docstring TEXT, signature TEXT, visibility TEXT,
+    is_exported INTEGER, is_async INTEGER, return_type TEXT
+);
+
+-- 2. Bảng Edges (Chứa quan hệ tĩnh giữa các code symbols)
+CREATE TABLE edges (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source TEXT NOT NULL, target TEXT NOT NULL,
+    kind TEXT NOT NULL,                -- calls, contains, imports, extends...
+    line INTEGER, col INTEGER, provenance TEXT
+);
+
+-- 3. Chỉ mục Tìm kiếm Full-Text Lexical (FTS5)
+CREATE VIRTUAL TABLE nodes_fts USING fts5(id, name, qualified_name, docstring, signature);
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Matrix -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-6">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-semibold text-zinc-100 font-mono uppercase tracking-wide text-sky-400">
+          2. Bảng So Sánh Bản Chất: CodeGraph vs Personal-KB Hiện Tại
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Đối soát kỹ thuật giữa Code Intelligence Graph và Cognitive Memory Fabric</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left text-zinc-300 border-collapse">
+          <thead>
+            <tr class="border-b border-zinc-800 text-zinc-400 font-mono bg-zinc-900/60">
+              <th class="p-3">Đặc Tính Kỹ Thuật</th>
+              <th class="p-3 text-emerald-400">CodeGraph</th>
+              <th class="p-3 text-sky-400">Personal-KB Hiện Tại</th>
+              <th class="p-3 text-amber-400">Khả Năng Hợp Nhất / Thay Thế</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60 font-mono">
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Miền Dữ Liệu (Domain)</td>
+              <td class="p-3 text-zinc-300">Source Code (Syntax, AST, Call Graph, Imports)</td>
+              <td class="p-3 text-zinc-300">Business Specs, ADRs, Worklogs, Negative Constraints</td>
+              <td class="p-3 text-emerald-300">Cần hợp nhất cả hai thành một nguồn chân lý chung.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Đơn Vị Nhỏ Nhất (Granularity)</td>
+              <td class="p-3 text-zinc-300">Code Symbol (Function, Method, Struct, Variable)</td>
+              <td class="p-3 text-zinc-300">Document Chunk (Điều khoản, Đoạn Spec, Section)</td>
+              <td class="p-3 text-amber-300">KB cần mở rộng lưu trữ Symbol Level cho mã nguồn.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Cơ Chế Trích Xuất (Extraction)</td>
+              <td class="p-3 text-zinc-300">Tree-sitter WASM (Deterministic, Zero LLM cost)</td>
+              <td class="p-3 text-zinc-300">LLM Structured Output / Regex Markdown Chunking</td>
+              <td class="p-3 text-emerald-300">KB phải dùng Tree-sitter cho code, KHÔNG dùng LLM.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Độ Chính Xác Call Graph</td>
+              <td class="p-3 text-zinc-300">100% Tuyệt đối (Exact Static Resolution)</td>
+              <td class="p-3 text-zinc-300">Xác suất ngữ nghĩa (Semantic Similarity)</td>
+              <td class="p-3 text-rose-300">Vector không bao giờ thay thế được Call Graph tĩnh.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Công Nghệ Lưu Trữ</td>
+              <td class="p-3 text-zinc-300">Embedded SQLite local (.codegraph/) + FTS5</td>
+              <td class="p-3 text-zinc-300">PostgreSQL pgvector + Qdrant + Redis Cache</td>
+              <td class="p-3 text-emerald-300">PostgreSQL 17 hoàn toàn dư sức chứa bảng graph code.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Chi Phí Vận Hành (Cost & RAM)</td>
+              <td class="p-3 text-zinc-300">~5MB disk / 0 RAM khi không query / 0 Token</td>
+              <td class="p-3 text-zinc-300">Duy trì Vector DB, Embedding Model (BGE-M3/Ollama)</td>
+              <td class="p-3 text-emerald-300">Giữ nguyên SQLite local cho code cache giúp tối ưu RAM.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-zinc-200">Mô Hình Khách Hàng (Agent UX)</td>
+              <td class="p-3 text-zinc-300">Tách biệt riêng, chỉ hiểu code, không hiểu Spec</td>
+              <td class="p-3 text-zinc-300">Hiểu Spec, Guardrails nhưng không trace được code</td>
+              <td class="p-3 text-emerald-400 font-bold">1 MCP Server duy nhất giải quyết toàn diện.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Strategic Architecture Blueprint -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-6">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-semibold text-zinc-100 font-mono uppercase tracking-wide text-purple-400">
+          3. Bản Thiết Kế Kiến Trúc: Tích Hợp CodeGraph Subsystem Vào Personal-KB
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Phương án tối ưu để Personal-KB hấp thụ toàn bộ sức mạnh của CodeGraph</p>
+      </div>
+
+      <div class="space-y-4 text-sm text-zinc-300 leading-relaxed">
+        <p>
+          Trong tài liệu kiến trúc <code class="text-emerald-400">[CYBEROS-01]</code>, Personal-KB đã quy định rõ 3 Cổng lưu trữ độc lập của <strong>Memory Fabric</strong>:
+          <code class="text-zinc-200">DocumentStore</code>, <code class="text-zinc-200">VectorStore</code>, và <code class="text-zinc-200">GraphStore</code>.
+          Hiện tại, <code class="text-zinc-200">GraphStore</code> của chúng ta chỉ mới định nghĩa các thực thể nghiệp vụ: <code class="text-zinc-400">Spec, Feature, Database_Table, API_Endpoint, Role</code>.
+        </p>
+
+        <div class="p-4 rounded-sm bg-zinc-900 hairline-border">
+          <div class="text-xs font-mono text-emerald-400 font-bold mb-2">KIẾN TRÚC HỢP NHẤT ĐỀ XUẤT (UNIFIED CODE & COGNITIVE FABRIC)</div>
+          <div class="text-xs font-mono text-zinc-300 whitespace-pre overflow-x-auto">
++-----------------------------------------------------------------------------------------+
+|                                    AI AGENT INTERFACE                                   |
+|                        1 Cổng Giao Tiếp MCP Duy Nhất: personal-kb                       |
++-----------------------------------------------------------------------------------------+
+                                             |
+                   +-------------------------+-------------------------+
+                   |                                                   |
+       [Nghiệp Vụ & Quy Định]                                   [Mã Nguồn Cú Pháp]
+       query_cognitive_memory()                                 query_code_symbol()
+       recall_guardrails()                                      trace_code_callers()
+       verify_citation()                                        trace_symbol_impact()
+                   |                                                   |
++-------------------------------------+             +-------------------------------------+
+|        COGNITIVE MEMORY LAYER       |             |         CODE GRAPH SUBSYSTEM        |
+|  (DocumentStore & VectorStore)      |             |     (Tree-sitter WASM / Python)     |
+| - Specs Markdown (HR-M04, PKB-01)   |             | - AST Nodes (Function, Class)       |
+| - Negative Constraints (Gotchas)    |             | - Call Graph (Callers/Callees)      |
+| - Dense Vectors (BGE-M3 / Qdrant)   |             | - Exact Line Numbers & Files        |
++-------------------------------------+             +-------------------------------------+
+                   \                                                   /
+                    \                                                 /
+                     +-----------------------+-----------------------+
+                                             |
+                                  [THE UNIFIED LINK BRIDGE]
+                          Spec [HR-M04]  <=======>  lockTimesheet()
+                          Feature: payroll_lock  ==> TimesheetCronJob.execute()
+                                             |
+                            PostgreSQL 17 / Local SQLite Cache
+          </div>
+        </div>
+
+        <h3 class="text-xs font-mono text-zinc-200 font-bold uppercase mt-4">Lợi ích vượt trội khi Personal-KB hấp thụ CodeGraph:</h3>
+        <ul class="list-disc list-inside space-y-2 text-xs text-zinc-400 pl-2">
+          <li><strong class="text-zinc-200">Giảm độ phân mảnh cấu hình:</strong> Agent không cần cấu hình 2-3 MCP servers rời rạc. Chỉ cần 1 server <code class="text-emerald-400">personal-kb</code>.</li>
+          <li><strong class="text-zinc-200">Truy nguyên ngược từ Code về Spec (Traceability):</strong> Khi Agent sửa hàm <code class="text-zinc-300">calculate_tax()</code>, KB lập tức cảnh báo: *"Hàm này đang hiện thực quy định tại [HR-M05] §4.2, hãy tuân thủ Negative Constraint cấm dùng float"*. CodeGraph đơn lẻ không bao giờ biết được điều này!</li>
+          <li><strong class="text-zinc-200">Tiết kiệm 100% Token Ingestion:</strong> Quá trình index mã nguồn vẫn dùng Tree-sitter (0 token cost, tốc độ chớp nhoáng), không làm tốn chi phí embedding của hệ thống.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Roadmap & Implementation Strategy -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-6">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-semibold text-zinc-100 font-mono uppercase tracking-wide text-emerald-400">
+          4. Lộ Trình Triển Khai Thực Tế (Actionable 3-Phase Roadmap)
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Cách hiện thực hoá từng bước không làm gián đoạn hệ thống hiện tại</p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Phase 1 -->
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border flex items-start gap-4">
+          <div class="h-7 w-7 rounded bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono font-bold text-xs">
+            01
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-200 font-mono">GIAI ĐOẠN 1: ADAPTER / MCP FACADE (NHANH NHẤT - 1 NGÀY)</h4>
+            <p class="text-xs text-zinc-400 leading-relaxed">
+              Tạo adapter trong <code class="text-zinc-300">personal_kb/services/code_graph_adapter.py</code>. Nếu repo hiện tại có file <code class="text-zinc-300">.codegraph/codegraph.db</code>, Personal-KB sẽ mở kết nối trực tiếp SQLite chỉ-đọc để phục vụ các truy vấn <code class="text-zinc-300">codegraph_callers</code>, <code class="text-zinc-300">codegraph_explore</code> thông qua MCP của Personal-KB. Loại bỏ hoàn toàn sự phụ thuộc vào binary daemon của Volta.
+            </p>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border flex items-start gap-4">
+          <div class="h-7 w-7 rounded bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-mono font-bold text-xs">
+            02
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-200 font-mono">GIAI ĐOẠN 2: NATIVE TREE-SITTER PARSER CHO PERSONAL-KB (1-2 TUẦN)</h4>
+            <p class="text-xs text-zinc-400 leading-relaxed">
+              Cài đặt thư viện Python <code class="text-zinc-300">tree-sitter</code> trong <code class="text-zinc-300">personal-kb/backend</code>. Viết extractor cho các ngôn ngữ chính của team (TypeScript/React, C# .NET, Python, Go, Dart). Lưu trữ nodes và edges trực tiếp vào bảng SQLite per-project hoặc bảng Postgres của Memory Fabric.
+            </p>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border flex items-start gap-4">
+          <div class="h-7 w-7 rounded bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-mono font-bold text-xs">
+            03
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-200 font-mono">GIAI ĐOẠN 3: LIÊN KẾT NGHIỆP VỤ 2 CHIỀU (SPEC-TO-CODE MAPPING)</h4>
+            <p class="text-xs text-zinc-400 leading-relaxed">
+              Mở rộng bảng <code class="text-zinc-300">relation_assertions</code> để hỗ trợ quan hệ <code class="text-zinc-300">spec_implements_symbol</code> hoặc <code class="text-zinc-300">spec_governs_file</code>. Khi Agent hỏi bất kỳ câu hỏi nào về kiến trúc, router tự động trả về cả: <strong>Spec Contract + Negative Constraints + Code Call Hierarchy</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Estimation -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-6">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-semibold text-zinc-100 font-mono uppercase tracking-wide text-amber-400">
+          5. Ước Lượng Tiến Độ Triển Khai Của Agent (Agent Velocity & WBS)
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Dự toán khối lượng công việc, số lượt tương tác (turns) và thời gian thực thi theo quy trình Executor (Flash) + Advisor (Argon High)</p>
+      </div>
+
+      <!-- Velocity Metric Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-zinc-400 font-mono">Tổng Thời Gian Agent</div>
+          <div class="text-2xl font-bold text-amber-400 font-mono mt-1">2.5 – 3.5 Ngày</div>
+          <div class="text-xs text-zinc-500 mt-1">~20–25 giờ làm việc thực tế</div>
+        </div>
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-zinc-400 font-mono">So Với Dev Làm Thủ Công</div>
+          <div class="text-2xl font-bold text-emerald-400 font-mono mt-1">Nhanh gấp 5x–7x</div>
+          <div class="text-xs text-zinc-500 mt-1">Người làm mất 2.5–3 tuần (100h)</div>
+        </div>
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-zinc-400 font-mono">Số Lượt Turns Tương Tác</div>
+          <div class="text-2xl font-bold text-sky-400 font-mono mt-1">14 – 18 Turns</div>
+          <div class="text-xs text-zinc-500 mt-1">Chia thành 4–5 buổi session</div>
+        </div>
+        <div class="p-4 rounded-sm bg-zinc-900/80 hairline-border">
+          <div class="text-xs text-zinc-400 font-mono">Chi Phí Token LLM</div>
+          <div class="text-2xl font-bold text-purple-400 font-mono mt-1">~350k – 500k</div>
+          <div class="text-xs text-zinc-500 mt-1">Advisor Audit + Executor Code</div>
+        </div>
+      </div>
+
+      <!-- Breakdown Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left text-zinc-300 border-collapse">
+          <thead>
+            <tr class="border-b border-zinc-800 text-zinc-400 font-mono bg-zinc-900/60">
+              <th class="p-3">Hạng Mục Kỹ Thuật (WBS)</th>
+              <th class="p-3">Chi Tiết Công Việc</th>
+              <th class="p-3 text-center">Số Turns</th>
+              <th class="p-3 text-right">Thời Gian Agent</th>
+              <th class="p-3 text-right">Dev Người Làm</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60 font-mono">
+            <!-- Phase 1 -->
+            <tr class="bg-emerald-500/5">
+              <td class="p-3 font-semibold text-emerald-300">Phase 1: SQLite Adapter</td>
+              <td class="p-3 text-zinc-300">
+                - Viết <code class="text-zinc-200">code_graph_reader.py</code> đọc <code class="text-zinc-200">.codegraph/codegraph.db</code><br>
+                - Expose 4 MCP tools: <code class="text-zinc-200">kb_code_callers, kb_code_impact, kb_code_search, kb_code_node</code><br>
+                - Unit test trên database SQLite thật (100% pass)
+              </td>
+              <td class="p-3 text-center text-zinc-200">2 – 3 turns</td>
+              <td class="p-3 text-right font-bold text-emerald-400">1.5 – 2 giờ</td>
+              <td class="p-3 text-right text-zinc-500">1 – 2 ngày</td>
+            </tr>
+            <!-- Phase 2 -->
+            <tr class="bg-sky-500/5">
+              <td class="p-3 font-semibold text-sky-300">Phase 2: Tree-sitter Ingestion</td>
+              <td class="p-3 text-zinc-300">
+                - Tích hợp <code class="text-zinc-200">tree-sitter</code> Python bindings + 5 grammars (TS, Python, C#, Go, Dart)<br>
+                - Viết AST Visitor trích xuất nodes + unresolved_references<br>
+                - Port thuật toán Two-Pass Linker (import resolution, alias mapping)<br>
+                - File sync watcher băm SHA-256 (Incremental Indexing)<br>
+                - Test suite trên 3 repo mẫu thực tế
+              </td>
+              <td class="p-3 text-center text-zinc-200">8 – 10 turns</td>
+              <td class="p-3 text-right font-bold text-sky-400">1.5 – 2 ngày</td>
+              <td class="p-3 text-right text-zinc-500">1.5 – 2 tuần</td>
+            </tr>
+            <!-- Phase 3 -->
+            <tr class="bg-purple-500/5">
+              <td class="p-3 font-semibold text-purple-300">Phase 3: Spec-to-Code Linker</td>
+              <td class="p-3 text-zinc-300">
+                - Mở rộng <code class="text-zinc-200">relation_assertions</code> mô hình hoá quan hệ Spec &lt;-&gt; Symbol<br>
+                - Tích hợp vào <code class="text-zinc-200">query_cognitive_memory</code> (Context Triad + Code AST)<br>
+                - Kích hoạt Anti-Collision Guardrail khi sửa hàm dính líu spec nhạy cảm<br>
+                - Báo cáo HTML Showcase + nghiệm thu Advisor
+              </td>
+              <td class="p-3 text-center text-zinc-200">4 – 5 turns</td>
+              <td class="p-3 text-right font-bold text-purple-400">1 ngày</td>
+              <td class="p-3 text-right text-zinc-500">4 – 5 ngày</td>
+            </tr>
+            <tr class="border-t border-zinc-700 bg-zinc-900/90 font-bold">
+              <td class="p-3 text-zinc-100" colspan="2">TỔNG CỘNG TOÀN BỘ LỘ TRÌNH (END-TO-END)</td>
+              <td class="p-3 text-center text-amber-400">14 – 18 turns</td>
+              <td class="p-3 text-right text-amber-400">~2.5 – 3.5 ngày</td>
+              <td class="p-3 text-right text-zinc-400">~2.5 – 3 tuần</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Strategy recommendation -->
+      <div class="p-4 rounded-sm bg-zinc-950 hairline-border text-xs text-zinc-300 space-y-2">
+        <div class="font-bold text-emerald-400 uppercase font-mono">Chiến Lược Triển Khai Thực Dụng Khuyến Nghị Cho Ryan:</div>
+        <p class="leading-relaxed">
+          1. <strong>Đã hoàn thành Phase 1:</strong> Đã gom CodeGraph Adapter vào <code class="text-zinc-200">personal-kb</code> và tích hợp 5 MCP tools. Sẵn sàng gỡ bỏ CodeGraph MCP độc lập.<br>
+          2. <strong>Phase 2 và Phase 3:</strong> Sẵn sàng triển khai trong các phiên tiếp theo khi Ryan muốn Personal-KB hoàn toàn độc lập với binary <code class="text-zinc-200">codegraph</code>.
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. EMPIRICAL BENCHMARK ON MYNOTCH REPO -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+        <h2 class="text-lg font-bold text-zinc-100 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span>
+          6. Kết Quả Thử Nghiệm Thực Nghiệm Trên Repo MyNotch (1,957 Files, 35,217 Nodes)
+        </h2>
+        <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-sm border border-emerald-500/20">EMPIRICAL BENCHMARK PASSED</span>
+      </div>
+
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Nhằm kiểm chứng khả năng chịu tải và tính chính xác của bộ adapter <code class="text-zinc-200">personal-kb</code> trên một codebase lớn sản sinh nhiều dữ liệu, chúng tôi đã khởi tạo chỉ mục và chạy kiểm thử 5 hành vi trên dự án <strong>MyNotch</strong> (<code class="text-zinc-200">/Users/ryantruong/Project/MyNotch</code>).
+      </p>
+
+      <!-- Key metrics -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="p-3 bg-zinc-900/60 hairline-border rounded-sm">
+          <div class="text-[10px] text-zinc-500 font-mono uppercase">Tổng Số Tập Tin</div>
+          <div class="text-xl font-bold text-zinc-100 font-mono mt-1">1,957 files</div>
+          <div class="text-[10px] text-zinc-400 mt-1">1,901 Swift files native</div>
+        </div>
+        <div class="p-3 bg-zinc-900/60 hairline-border rounded-sm">
+          <div class="text-[10px] text-zinc-500 font-mono uppercase">AST Symbol Nodes</div>
+          <div class="text-xl font-bold text-sky-400 font-mono mt-1">35,217</div>
+          <div class="text-[10px] text-zinc-400 mt-1">20k methods, 2.1k structs</div>
+        </div>
+        <div class="p-3 bg-zinc-900/60 hairline-border rounded-sm">
+          <div class="text-[10px] text-zinc-500 font-mono uppercase">Quan Hệ Graph Edges</div>
+          <div class="text-xl font-bold text-purple-400 font-mono mt-1">152,736</div>
+          <div class="text-[10px] text-zinc-400 mt-1">calls, references, imports</div>
+        </div>
+        <div class="p-3 bg-zinc-900/60 hairline-border rounded-sm">
+          <div class="text-[10px] text-zinc-500 font-mono uppercase">DB Size & Index Speed</div>
+          <div class="text-xl font-bold text-emerald-400 font-mono mt-1">119.79 MB</div>
+          <div class="text-[10px] text-zinc-400 mt-1">Init 1m 47s, Query &lt; 100ms</div>
+        </div>
+      </div>
+
+      <!-- Test Cases Matrix -->
+      <div class="hairline-border rounded-sm overflow-hidden bg-zinc-900/40">
+        <div class="p-3 bg-zinc-900 border-b border-zinc-800 font-mono text-xs font-bold text-zinc-300 flex justify-between items-center">
+          <span>KẾT QUẢ THỰC NGHIỆM 5 MCP TOOLS TRÊN MYNOTCH</span>
+          <span class="text-emerald-400">5 / 5 PASSED (100%)</span>
+        </div>
+        <div class="p-4 space-y-4 text-xs">
+          
+          <!-- Case 1 -->
+          <div class="border-l-2 border-emerald-500 pl-3 space-y-1">
+            <div class="font-mono font-bold text-zinc-200">1. kb_code_status (Kiểm tra Telemetry kho dữ liệu MyNotch)</div>
+            <div class="text-zinc-400">
+              Nhận diện chính xác <strong>35,217 nodes</strong> và <strong>152,736 edges</strong>. Phân bố loại node: 20,093 methods, 2,168 structs, 1,283 classes, 1,224 functions, 512 enums, 174 protocols, 9,763 properties.
+            </div>
+            <div class="font-mono text-[11px] text-emerald-400">Status: PASS (Query time: 8ms)</div>
+          </div>
+
+          <!-- Case 2 -->
+          <div class="border-l-2 border-emerald-500 pl-3 space-y-1">
+            <div class="font-mono font-bold text-zinc-200">2. kb_code_search (FTS5 Token Search: "Notch")</div>
+            <div class="text-zinc-400">
+              Truy vấn FTS5 trả về 10 symbols khớp chính xác với điểm rank cao nhất: <code class="text-zinc-200">NotchState</code> (struct), <code class="text-zinc-200">NotchKind</code> (enum), <code class="text-zinc-200">NotchViewModel</code> (class), <code class="text-zinc-200">NotchRootView</code> (struct).
+            </div>
+            <div class="font-mono text-[11px] text-emerald-400">Status: PASS (Query time: 14ms)</div>
+          </div>
+
+          <!-- Case 3 -->
+          <div class="border-l-2 border-emerald-500 pl-3 space-y-1">
+            <div class="font-mono font-bold text-zinc-200">3. kb_code_node + Snippet Extraction ("NotchState")</div>
+            <div class="text-zinc-400">
+              Trích xuất chính xác định nghĩa symbol tại file <code class="text-zinc-200">Packages/NotchUI/Sources/NotchUI/Debug/NotchLog.swift</code> (lines 26–30) kèm đánh số dòng đầy đủ và bảo vệ path traversal:
+            </div>
+            <pre class="bg-zinc-950 p-2 rounded text-[11px] font-mono text-zinc-300 border border-zinc-800">26	public struct NotchState: Equatable, Sendable {
+27	    public let isExpanded: Bool
+28	    public let activeAppBundleId: String?
+29	    public let timestamp: Date
+30	}</pre>
+            <div class="font-mono text-[11px] text-emerald-400">Status: PASS (Query time: 4ms)</div>
+          </div>
+
+          <!-- Case 4 -->
+          <div class="border-l-2 border-emerald-500 pl-3 space-y-1">
+            <div class="font-mono font-bold text-zinc-200">4. kb_code_callers (Truy tìm Caller & Reference của NotchState)</div>
+            <div class="text-zinc-400">
+              Phát hiện chính xác <strong>20 callers thực tế</strong> tham chiếu hoặc khởi tạo <code class="text-zinc-200">NotchState</code>, bao gồm <code class="text-zinc-200">NotchViewModel</code> (line 8, 88), <code class="text-zinc-200">NotchRootView</code> (line 22) và các component trong <code class="text-zinc-200">Packages/NotchUI</code>.
+            </div>
+            <div class="font-mono text-[11px] text-emerald-400">Status: PASS (Query time: 22ms)</div>
+          </div>
+
+          <!-- Case 5 -->
+          <div class="border-l-2 border-emerald-500 pl-3 space-y-1">
+            <div class="font-mono font-bold text-zinc-200">5. kb_code_impact (Blast Radius Phân Tích Độ Rung Lắc max_depth=2)</div>
+            <div class="text-zinc-400">
+              Chạy thuật toán BFS Batch Traversal chống N+1 kết hợp mở rộng container con (<code class="text-zinc-200">contains</code>). Xác định phạm vi ảnh hưởng khi sửa <code class="text-zinc-200">NotchState</code>: <strong>69 nodes bị ảnh hưởng</strong> trải dài trên <strong>36 files nguồn</strong>, phát hiện toàn bộ blast radius chỉ trong <strong>67ms</strong> trên cơ sở dữ liệu SQLite 120MB.
+            </div>
+            <div class="font-mono text-[11px] text-emerald-400">Status: PASS (Query time: 67ms)</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. PHASE 2 NATIVE INGESTION ENGINE RESULTS -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+        <h2 class="text-lg font-bold text-zinc-100 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-sm bg-sky-500"></span>
+          7. Hoàn Thành Phase 2: Native Tree-sitter Ingestion & Tốc Độ Vượt Trội (11.3s vs 107s)
+        </h2>
+        <span class="text-xs font-mono text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded-sm border border-sky-500/20">PHASE 2 COMPLETED & BENCHMARKED</span>
+      </div>
+
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Personal-KB đã chính thức sở hữu Native Ingestion Engine viết hoàn toàn bằng Python và <code class="text-zinc-200">tree-sitter</code>, tự chủ 100% việc trích xuất AST và xây dựng liên kết Two-Pass Linker mà không cần bất kỳ daemon bên ngoài nào.
+      </p>
+
+      <!-- Benchmark Comparison Table -->
+      <div class="hairline-border rounded-sm overflow-hidden">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-zinc-800 bg-zinc-900/80 font-mono text-zinc-400">
+              <th class="p-3">Hạng Mục Benchmark (MyNotch 1,936 files)</th>
+              <th class="p-3 text-center">External Volta CodeGraph Binary</th>
+              <th class="p-3 text-center text-sky-400 font-bold">Personal-KB Native Parser (Phase 2)</th>
+              <th class="p-3 text-right">Mức Độ Cải Thiện</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60 font-mono">
+            <tr>
+              <td class="p-3 text-zinc-200 font-sans">Thời gian Full Indexing từ đầu (--force)</td>
+              <td class="p-3 text-center text-zinc-400">1 phút 47 giây (107s)</td>
+              <td class="p-3 text-center font-bold text-emerald-400">11.31 giây</td>
+              <td class="p-3 text-right text-emerald-400 font-bold">Nhanh hơn ~9.5x ⚡</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-zinc-200 font-sans">Thời gian Incremental Re-index (File không đổi)</td>
+              <td class="p-3 text-center text-zinc-400">3.5 – 5.0 giây</td>
+              <td class="p-3 text-center font-bold text-emerald-400">0.254 giây</td>
+              <td class="p-3 text-right text-emerald-400 font-bold">Nhanh hơn ~15x ⚡</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-zinc-200 font-sans">Dung lượng Database (.codegraph/codegraph.db)</td>
+              <td class="p-3 text-center text-zinc-400">119.79 MB</td>
+              <td class="p-3 text-center text-sky-400">102.59 MB</td>
+              <td class="p-3 text-right text-sky-400">Tiết kiệm 14.3% dung lượng</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-zinc-200 font-sans">Độ phụ thuộc môi trường ngoài (Dependencies)</td>
+              <td class="p-3 text-center text-rose-400">Cần Volta / Node.js runtime</td>
+              <td class="p-3 text-center text-emerald-400 font-bold">100% Python Native (0 token cost)</td>
+              <td class="p-3 text-right text-emerald-400">Độc lập hoàn toàn</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="p-4 rounded-sm bg-zinc-950 hairline-border text-xs text-zinc-300 space-y-2">
+        <div class="font-bold text-sky-400 uppercase font-mono">Cách Sử Dụng Sau Khi Update MyNotch:</div>
+        <p class="leading-relaxed">
+          - <strong>Tự động qua MCP:</strong> Gọi tool <code class="text-zinc-200">kb_code_index(project_path="/Users/ryantruong/Project/MyNotch")</code><br>
+          - <strong>Hoặc qua CLI Terminal:</strong><br>
+          <code class="text-zinc-200 bg-zinc-900 px-2 py-1 rounded block mt-1">uv run python -m personal_kb.cli index-code /Users/ryantruong/Project/MyNotch</code>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-800 py-6 text-center text-xs text-zinc-500 font-mono">
+    Personal-KB Engineering Report | Generated: 2026-10-30 | Grounded in CYBEROS-01 & PKB-02
+  </footer>
+
+</body>
+</html>

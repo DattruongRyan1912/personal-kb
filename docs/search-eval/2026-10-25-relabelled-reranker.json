@@ -1,0 +1,239 @@
+[
+ {
+  "query": "cách tính lương làm thêm giờ OT",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "kind": "accent",
+  "ids": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "cach tinh luong lam them gio",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "kind": "no-accent",
+  "ids": [],
+  "hit": false,
+  "rr": 0.0
+ },
+ {
+  "query": "quy định về làm thêm giờ OT và bảng hệ số tính như thế nào",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "kind": "prose",
+  "ids": [
+   "HR-M04",
+   "HR-M05"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "nghỉ phép năm được bao nhiêu ngày",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "prose",
+  "ids": [
+   "HR-M04",
+   "HR-GOTCHAS"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "nghi phep nam",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "no-accent",
+  "ids": [
+   "HR-M04"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "đi muộn về sớm chấm công",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "accent",
+  "ids": [
+   "HR-M04"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "hồ sơ nhân sự hợp đồng lao động",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M02"
+  ],
+  "kind": "accent",
+  "ids": [
+   "HR-GOTCHAS",
+   "HR-M02"
+  ],
+  "hit": true,
+  "rr": 0.5
+ },
+ {
+  "query": "quyết toán thuế TNCN",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "keyword",
+  "ids": [
+   "HR-M05"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "bao hiem xa hoi BHXH",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "no-accent",
+  "ids": [
+   "HR-M03",
+   "HR-M05",
+   "HR-EX-001"
+  ],
+  "hit": true,
+  "rr": 0.5
+ },
+ {
+  "query": "Dynamic Island notch",
+  "project": "MyNotch",
+  "want": [
+   "MYNOTCH-01"
+  ],
+  "kind": "keyword",
+  "ids": [
+   "MYNOTCH-01",
+   "mynotch-context"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "workspace context",
+  "project": "mynotch",
+  "want": [
+   "mynotch-context"
+  ],
+  "kind": "keyword",
+  "ids": [
+   "mynotch-context"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "quota pool manager",
+  "project": "AGY-Remote-Hub",
+  "want": [
+   "AGY-01"
+  ],
+  "kind": "keyword",
+  "ids": [
+   "AGY-01"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "phê duyệt đề xuất human gate",
+  "project": "Personal-KB",
+  "want": [
+   "PKB-04"
+  ],
+  "kind": "accent",
+  "ids": [
+   "PKB-01",
+   "PKB-04",
+   "PKB-06"
+  ],
+  "hit": true,
+  "rr": 0.5
+ },
+ {
+  "query": "chấm cộng",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M04"
+  ],
+  "kind": "typo",
+  "ids": [
+   "HR-M04"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "bảo hiêm xã hội",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "typo",
+  "ids": [
+   "HR-M05",
+   "HR-GOTCHAS"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "quyết toán thuê",
+  "project": "Demo-Core",
+  "want": [
+   "HR-M05"
+  ],
+  "kind": "typo",
+  "ids": [
+   "HR-M05"
+  ],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "công thức nấu phở",
+  "project": "Demo-Core",
+  "want": [],
+  "kind": "off-topic",
+  "ids": [],
+  "hit": true,
+  "rr": 1.0
+ },
+ {
+  "query": "giá bitcoin hôm nay",
+  "project": "Personal-KB",
+  "want": [],
+  "kind": "off-topic",
+  "ids": [],
+  "hit": true,
+  "rr": 1.0
+ }
+]

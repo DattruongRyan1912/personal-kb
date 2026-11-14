@@ -1,0 +1,41 @@
+# Personal Knowledge Base AI Backend
+FROM python:3.11-slim AS base
+COPY --from=ghcr.io/astral-sh/uv:0.11 /uv /uvx /bin/
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PROJECT_ENVIRONMENT=/opt/venv \
+    TIKTOKEN_CACHE_DIR=/opt/tiktoken \
+    PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:$PATH"
+WORKDIR /app
+
+FROM base AS deps
+COPY pyproject.toml uv.lock .python-version ./
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+# tiktoken downloads a tokenizer on first use, and the runtime user cannot write its cache: both are fetched here,
+# o200k_base (session memory, gpt-4o-mini) and cl100k_base (chunking, text-embedding-3-small)
+RUN python -c "import tiktoken; [tiktoken.get_encoding(e) for e in ('o200k_base', 'cl100k_base')]"
+
+FROM deps AS dev
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-install-project
+COPY . .
+EXPOSE 8000
+# Validate settings first: with --reload, uvicorn would otherwise keep running after the app fails to start.
+CMD ["sh", "-c", "python -c 'from personal_kb.core.config import get_settings; get_settings()' && exec uvicorn personal_kb.main:create_app --factory --host 0.0.0.0 --port 8000 --reload"]
+
+FROM python:3.11-slim AS runtime
+ENV TIKTOKEN_CACHE_DIR=/opt/tiktoken \
+    PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:$PATH"
+RUN useradd --create-home --uid 10001 app
+WORKDIR /app
+COPY --from=deps /opt/venv /opt/venv
+COPY --from=deps /opt/tiktoken /opt/tiktoken
+COPY personal_kb ./personal_kb
+COPY prompts ./prompts
+COPY scripts ./scripts
+COPY mock_data ./mock_data
+USER app
+EXPOSE 8000
+CMD ["sh", "-c", "python -c 'from personal_kb.core.config import get_settings; get_settings()' && exec uvicorn personal_kb.main:create_app --factory --host 0.0.0.0 --port 8000"]

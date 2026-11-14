@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "personal-kb": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory", "${WORKSPACE_DIR}/backend",
+        "--env-file", "${WORKSPACE_DIR}/.env",
+        "python", "-m", "personal_kb.mcp.cli"
+      ]
+    }
+  }
+}

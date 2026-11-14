@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài Liệu Bàn Giao Phiên: Active Cognitive Memory Fabric</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669' },
+            zinc: { 850: '#1e2025', 900: '#18181b', 950: '#09090b' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500/30">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-lg">
+          📜
+        </div>
+        <div>
+          <h1 class="text-base font-semibold text-zinc-100">Personal-KB: Session Handover & State Snapshot</h1>
+          <p class="text-xs text-zinc-400">Tài liệu bàn giao chuyển tiếp phiên — Spec-as-Truth & Cognitive Memory</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 font-mono text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          SPEC ID: PKB-06 (ACTIVE)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <!-- Overview Banner -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🚀</span> Bàn Giao Kiến Trúc: Đưa Personal-KB Thành Memory Fabric
+        </h2>
+        <span class="text-xs text-zinc-400 font-mono">Date: 2026-10-21 | Status: Clean & Healthy</span>
+      </div>
+      <p class="text-sm text-zinc-300 leading-relaxed">
+        Phiên làm việc đã giải quyết trọn vẹn bài toán lớn nhất: 
+        <em>"Làm sao lưu vào kho mà thực sự nâng cao chất lượng output cho Agent?"</em>. 
+        Đã hoàn tất và nghiệm thu <strong>Giai đoạn 1 (Reflective Memory / Negative Constraints)</strong> và 
+        <strong>Giai đoạn 2 (Golden Exemplars, Episodic ADRs & Tombstone Lifecycle)</strong> với sự phê duyệt chính thức từ 
+        Senior Architect Advisor (<code class="text-emerald-400">FINAL QA SIGN-OFF</code>).
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Chỉ số Tuân thủ CAR</div>
+          <div class="text-2xl font-bold text-emerald-400 font-mono mt-1">100.0%</div>
+          <div class="text-xs text-zinc-500 mt-1">Base model: 0.0% trên 5 Trap Prompts</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Công Cụ MCP Sẵn Sàng</div>
+          <div class="text-2xl font-bold text-sky-400 font-mono mt-1">7 Tools</div>
+          <div class="text-xs text-zinc-500 mt-1">search, spec, guardrails, exemplar...</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Tài Liệu Trong Kho</div>
+          <div class="text-2xl font-bold text-purple-400 font-mono mt-1">21 Specs</div>
+          <div class="text-xs text-zinc-500 mt-1">992 Chunks trong Qdrant sdd_specs</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Kiểm Thử Hồi Quy</div>
+          <div class="text-2xl font-bold text-emerald-400 font-mono mt-1">PASS 100%</div>
+          <div class="text-xs text-zinc-500 mt-1">54 Pytest + 64 Vitest</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- System Status & Ports -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-3">
+        <h3 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🖥️</span> Trạng Thái Dịch Vụ Môi Trường (Daemons)
+        </h3>
+        <div class="space-y-2 text-xs font-mono">
+          <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+            <span class="text-zinc-300">FastAPI Backend (Uvicorn)</span>
+            <span class="text-emerald-400 font-semibold">http://localhost:8000</span>
+          </div>
+          <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+            <span class="text-zinc-300">Next.js Web Portal</span>
+            <span class="text-emerald-400 font-semibold">http://localhost:3001</span>
+          </div>
+          <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+            <span class="text-zinc-300">Qdrant Vector DB</span>
+            <span class="text-sky-400 font-semibold">localhost:6333 (sdd_specs)</span>
+          </div>
+          <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+            <span class="text-zinc-300">Ollama Embedding Service</span>
+            <span class="text-purple-400 font-semibold">localhost:11434 (bge-m3 1024d)</span>
+          </div>
+          <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+            <span class="text-zinc-300">PostgreSQL / Supabase</span>
+            <span class="text-amber-400 font-semibold">localhost:5432 (schema: sdd)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-3">
+        <h3 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+          <span>⚡</span> 7 Công Cụ MCP Hoạt Động (Active Tools)
+        </h3>
+        <div class="grid grid-cols-1 gap-1.5 text-xs font-mono">
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">search_knowledge</code>: Tìm kiếm ngữ nghĩa tài liệu đặc tả
+          </div>
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">get_spec_content</code>: Đọc 100% nguyên văn spec theo mã ID
+          </div>
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">recall_guardrails</code>: Nạp cấm kỵ kỹ thuật (< 180 tok, Top-3 limit)
+          </div>
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">recall_exemplar</code>: Nạp code mẫu chuẩn sản xuất (few-shot)
+          </div>
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">propose_knowledge_update</code>: Đề xuất cập nhật tri thức (3-Tier Deduplication)
+          </div>
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">verify_citation</code>: Đối soát trích dẫn gốc & SHA-256 hash
+          </div>
+          <div class="p-1.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300">
+            <code class="text-emerald-400">list_specs</code>: Liệt kê danh mục tài liệu theo dự án
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Mission: Phase 3 -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <h3 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+        <span>🎯</span> Nhiệm Vụ Cho Phiên Tiếp Theo (Giai Đoạn 3 Roadmap)
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
+          <div class="font-semibold text-sky-400">1. Two-Phase Intent Cognitive Router</div>
+          <p class="text-zinc-400 leading-relaxed">
+            Bộ phân loại Intent siêu nhẹ: Tự động phân luồng (Tra cứu lý thuyết $\rightarrow$ Spec Chunks; Viết code $\rightarrow$ Spec + Guardrails + Exemplar; Kiến trúc $\rightarrow$ ADRs).
+          </p>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
+          <div class="font-semibold text-purple-400">2. Semantic Anti-Collision Engine</div>
+          <p class="text-zinc-400 leading-relaxed">
+            Tự động phát hiện xung đột mâu thuẫn giữa quy tắc mới và quy tắc cũ khi Agent gửi proposal, hiển thị Conflict Warning Banner trên /approvals.
+          </p>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
+          <div class="font-semibold text-emerald-400">3. Closed-Loop Self-Learning & CER</div>
+          <p class="text-zinc-400 leading-relaxed">
+            Đóng vòng lặp tự học từ lỗi fix bug và đo lường trực quan hệ số Context Efficiency Ratio (CER) trên Web Dashboard.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Copy-ready Kickoff Prompt -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-3">
+      <h3 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+        <span>📋</span> Kickoff Prompt Sẵn Sàng Copy Cho Phiên Mới
+      </h3>
+      <p class="text-xs text-zinc-400">
+        Copy đoạn văn bản dưới đây và dán trực tiếp vào prompt khởi đầu của phiên hội thoại mới:
+      </p>
+      <pre class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 text-xs text-emerald-400 overflow-x-auto selection:bg-emerald-500/30"><code>Xin chào Antigravity, chúng ta tiếp tục phát triển dự án Personal-KB (Active Cognitive Memory Fabric). 
+Phiên trước đã hoàn thành xuất sắc Giai đoạn 1 & 2 (Reflective Gotchas, Golden Exemplars, Episodic ADRs, Tombstone Lifecycle - QA Signed-off).
+Hãy đọc tài liệu bàn giao `PKB-06` bằng công cụ `get_spec_content(spec_id="PKB-06")` hoặc đọc file `knowledge/PKB-06.md`, 
+sau đó bắt đầu triển khai GIAI ĐOẠN 3: Two-Phase Intent-Gated Cognitive Router & Semantic Anti-Collision Engine.</code></pre>
+    </section>
+
+  </main>
+</body>
+</html>

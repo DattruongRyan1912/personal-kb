@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "personal-kb": {
+      "type": "stdio",
+      "command": "/bin/bash",
+      "args": [
+        "${WORKSPACE_DIR}/scripts/mcp_server.sh"
+      ]
+    }
+  }
+}

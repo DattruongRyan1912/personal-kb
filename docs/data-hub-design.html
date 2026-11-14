@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thiết Kế Trung Tâm Quản Trị Dữ Liệu & Lưu Trữ | Personal-KB</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-bg: rgba(56, 189, 248, 0.1);
+      --success: #4ade80;
+      --purple: #c084fc;
+      --warning: #fbbf24;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .badge-primary { background: var(--primary-bg); color: var(--primary); border: 1px solid var(--primary); }
+    .badge-success { background: rgba(74, 222, 128, 0.1); color: var(--success); border: 1px solid var(--success); }
+    .badge-purple { background: rgba(192, 132, 252, 0.1); color: var(--purple); border: 1px solid var(--purple); }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    h1, h2, h3 { margin-top: 0; }
+    h1 { color: #fff; font-size: 1.8rem; display: flex; align-items: center; gap: 12px; }
+    .tabs-nav {
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .stat-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.6rem; font-weight: 700; margin: 4px 0; color: #fff; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; }
+    code { font-family: monospace; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: var(--primary); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: #0284c7;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h1>🗄️ Personal-KB: Data Management Hub</h1>
+      <span class="badge badge-primary">Brainstorming Concept | Option A</span>
+    </div>
+
+    <!-- TABS NAVIGATION -->
+    <div class="card">
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="showTab('tab1')">📂 Tab 1: Nguồn Dữ Liệu (Data Catalog)</button>
+        <button class="tab-btn" onclick="showTab('tab2')">📊 Tab 2: Phân Bổ Lưu Trữ (Storage Topology)</button>
+        <button class="tab-btn" onclick="showTab('tab3')">🔍 Tab 3: Khám Phá Chunks & Retrieval Sandbox</button>
+      </div>
+
+      <!-- TAB 1 CONTENT -->
+      <div id="tab1" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.2rem; color: var(--primary);">Danh Mục Tài Nguyên Tri Thức (Knowledge Catalog)</h2>
+          <button class="btn">+ Tải Lên Nguồn Mới (.md, .pdf, .txt)</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Toàn bộ tài liệu trong kho tri thức cá nhân của bạn. Trạng thái phân bổ hiển thị trực quan nơi dữ liệu đã được index.</p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Mã Spec / File</th>
+              <th>Tiêu Đề & Phạm Vi</th>
+              <th>Phân Bổ DB</th>
+              <th>Số Chunks</th>
+              <th>Cập Nhật Cuối</th>
+              <th>Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>PKB-01.md</code></td>
+              <td>Tầm nhìn & Phạm vi hệ thống Personal-KB</td>
+              <td><span class="badge badge-primary">PGvector</span> <span class="badge badge-purple">Qdrant</span></td>
+              <td>153 chunks</td>
+              <td>2026-10-20 02:00</td>
+              <td><button class="btn" style="padding: 4px 10px; font-size: 0.75rem;">Re-index</button></td>
+            </tr>
+            <tr>
+              <td><code>PKB-02.md</code></td>
+              <td>Kiến trúc RAG Đa tầng & Pipeline Lưu Trữ</td>
+              <td><span class="badge badge-primary">PGvector</span> <span class="badge badge-purple">Qdrant</span></td>
+              <td>234 chunks</td>
+              <td>2026-10-20 02:00</td>
+              <td><button class="btn" style="padding: 4px 10px; font-size: 0.75rem;">Re-index</button></td>
+            </tr>
+            <tr>
+              <td><code>PKB-03.md</code></td>
+              <td>Dual-Protocol: Agent MCP & Human Web UI</td>
+              <td><span class="badge badge-primary">PGvector</span> <span class="badge badge-purple">Qdrant</span></td>
+              <td>182 chunks</td>
+              <td>2026-10-20 02:00</td>
+              <td><button class="btn" style="padding: 4px 10px; font-size: 0.75rem;">Re-index</button></td>
+            </tr>
+            <tr>
+              <td><code>PKB-04.md</code></td>
+              <td>Mô hình Tri thức Sống & Quy trình Đề xuất</td>
+              <td><span class="badge badge-primary">PGvector</span> <span class="badge badge-purple">Qdrant</span></td>
+              <td>215 chunks</td>
+              <td>2026-10-20 02:00</td>
+              <td><button class="btn" style="padding: 4px 10px; font-size: 0.75rem;">Re-index</button></td>
+            </tr>
+            <tr>
+              <td><code>PKB-05.md</code></td>
+              <td>Hạ tầng Triển khai & Vận hành Độc lập</td>
+              <td><span class="badge badge-primary">PGvector</span> <span class="badge badge-purple">Qdrant</span></td>
+              <td>229 chunks</td>
+              <td>2026-10-20 02:00</td>
+              <td><button class="btn" style="padding: 4px 10px; font-size: 0.75rem;">Re-index</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 2 CONTENT -->
+      <div id="tab2" class="tab-content" style="display: none;">
+        <h2 style="font-size: 1.2rem; color: var(--purple);">Phân Bổ Lưu Trữ & Hiện Trạng 4 Tầng Engine</h2>
+        <div class="grid-4" style="margin: 20px 0;">
+          <div class="stat-box">
+            <div class="stat-label">🐘 PostgreSQL 17</div>
+            <div class="stat-val" style="color: #60a5fa;">1,013</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">pgvector HNSW (768d)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">⚡ Qdrant Vector DB</div>
+            <div class="stat-val" style="color: #c084fc;">60</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">points in pkb_vectors</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">🔴 Redis Cache</div>
+            <div class="stat-val" style="color: #f87171;">24</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Session & Query cache</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">📁 Local Storage</div>
+            <div class="stat-val" style="color: #4ade80;">12 docs</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">~420 KB raw markdown</div>
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid var(--border); margin-top: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="font-size: 1rem; margin: 0; color: #fff;">Kiểm Tra Nhất Quán Giữa Các Kho (Consistency Audit)</h3>
+            <button class="btn" style="background: #10b981; font-size: 0.8rem;">Chạy Kiểm Tra Ngay (Audit Run)</button>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+            ✓ 100% tài liệu trên thư mục nguồn đã được băm chunk đồng bộ sang PostgreSQL.<br>
+            ✓ Index HNSW đang hoạt động bình thường, không phát hiện chunk mồ côi (orphan chunks).
+          </p>
+        </div>
+      </div>
+
+      <!-- TAB 3 CONTENT -->
+      <div id="tab3" class="tab-content" style="display: none;">
+        <h2 style="font-size: 1.2rem; color: var(--success);">Trình Khám Phá Chunks & Retrieval Sandbox</h2>
+        <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Thử nghiệm truy hồi vector (Retrieval Sandbox):</div>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" placeholder="Nhập câu hỏi test: vd. 'Kiến trúc RAG xử lý truy vấn qua mấy bước?'" style="flex: 1; padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border); background: #0f172a; color: white;">
+            <button class="btn" style="background: #059669;">Test Truy Hồi</button>
+          </div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Kết quả sẽ hiển thị chính xác Top 3 Chunks được lấy ra từ PostgreSQL/Qdrant kèm Similarity Score và phân tích trích dẫn.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

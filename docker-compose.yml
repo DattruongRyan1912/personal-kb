@@ -1,0 +1,92 @@
+name: personal-kb
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: kb-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_USER:-kb_user}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-kb_secret_password_2026}
+      POSTGRES_DB: ${PG_DATABASE:-knowledge_db}
+    ports:
+      - "127.0.0.1:${PG_PORT:-5434}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-kb_user} -d ${PG_DATABASE:-knowledge_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: kb-redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6380}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kb-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"
+    environment:
+      - PORT=8000
+      - POSTGRES_URL=postgresql://${PG_USER:-kb_user}:${PG_PASSWORD:-kb_secret_password_2026}@postgres:5432/${PG_DATABASE:-knowledge_db}
+      - POSTGRES_SCHEMA=public
+      - REDIS_URL=redis://redis:6379/0
+      - RERANKER_URL=${RERANKER_URL:-http://host.docker.internal:8081}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.deepseek.com/v1}
+      - LLM_MODEL=${LLM_MODEL:-deepseek-chat}
+      - LLM_MODEL_THOROUGH=${LLM_MODEL_THOROUGH:-deepseek-chat}
+      - LLM_REASONING_EFFORT=${LLM_REASONING_EFFORT:-none}
+      - EMBEDDING_BASE_URL=${EMBEDDING_BASE_URL:-http://host.docker.internal:11434/v1}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY:-ollama}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-bge-m3}
+      - EMBEDDING_DIMENSIONS=${EMBEDDING_DIMENSIONS:-1024}
+      - AGENT_READ_SPECS=${AGENT_READ_SPECS:-false}
+      - AGENT_MAX_TOOL_CALLS=${AGENT_MAX_TOOL_CALLS:-12}
+      - DEV_LOGIN=true
+      - SUPABASE_URL=http://localhost:54321
+      - SUPABASE_JWT_SECRET=${SUPABASE_JWT_SECRET:-dev-secret-jwt-key-for-standalone-kb-2026}
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+      - PROJECTS_CONFIG=/app/config/projects.json
+      - GRAPH_SEARCH=${GRAPH_SEARCH:-false}  # no graph is ingested here (scripts/ingest_sdd_to_graph.py): skip its LLM call
+    volumes:
+      - ./knowledge:/app/knowledge  # writable: /approvals and uploads write specs; MCP agents can only propose
+      - ./config:/app/config:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+        NEXT_PUBLIC_DEV_LOGIN: 1
+    container_name: kb-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

@@ -1,0 +1,18 @@
+# Query entities (issue 1.4): turns a user's question into search terms for the knowledge graph in Neo4j.
+# Graph node names are English, lowercase snake_case: tables ("users", "email_outbox"), endpoints
+# ("post_api_v1_auth_login"), features ("login", "registration"), roles ("admin").
+# user_template placeholders: $query
+system: |
+  You turn a question about a software system into search terms for a knowledge graph.
+  The graph names things in English, lowercase snake_case:
+  - database tables by their table name, e.g. "users", "email_outbox", "login_sessions";
+  - API endpoints by method and path, e.g. "post_api_v1_auth_register";
+  - features by a short English name, e.g. "login", "checkout", "registration", "notification";
+  - roles by name, e.g. "admin", "member".
+
+  Return up to 8 short terms (one or two English words each, snake_case) that such names would contain:
+  the systems, tables, endpoints, features and roles the question is about, translated to English when the
+  question is in Vietnamese. Prefer single words that appear in names ("email", "register", "payment") over
+  long phrases. Leave out generic words such as "api", "table", "system", "affect".
+user_template: |
+  $query

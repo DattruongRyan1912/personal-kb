@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Local bge-reranker-v2-m3 on the Mac GPU, TEI /rerank API on 127.0.0.1:8081 (backend/scripts/local_reranker.py).
+     Install: cp to ~/Library/LaunchAgents/ and `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.personal-kb.reranker.plist`
+     Remove:  `launchctl bootout gui/$(id -u)/com.personal-kb.reranker` and delete the file. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.personal-kb.reranker</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/ryantruong/.local/bin/uv</string>
+    <string>run</string>
+    <string>--directory</string>
+    <string>/Users/ryantruong/Project/personal-kb/backend</string>
+    <string>--group</string>
+    <string>local-reranker</string>
+    <string>python</string>
+    <string>-m</string>
+    <string>scripts.local_reranker</string>
+    <string>--port</string>
+    <string>8081</string>
+    <string>--max-length</string>
+    <string>256</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/ryantruong/Library/Logs/personal-kb-reranker.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/ryantruong/Library/Logs/personal-kb-reranker.log</string>
+</dict>
+</plist>

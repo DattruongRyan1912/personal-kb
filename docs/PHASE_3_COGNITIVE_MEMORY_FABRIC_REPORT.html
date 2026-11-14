@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Nghiệm Thu Giai Đoạn 3: Two-Phase Intent Cognitive Router & Anti-Collision Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669' },
+            zinc: { 850: '#1e2025', 900: '#18181b', 950: '#09090b' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500/30">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-lg">
+          🧠
+        </div>
+        <div>
+          <h1 class="text-base font-semibold text-zinc-100">Personal-KB: Phase 3 QA Handover Report</h1>
+          <p class="text-xs text-zinc-400">Two-Phase Intent-Gated Cognitive Router & Semantic Anti-Collision Engine</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 font-mono text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          PHASE 3 COMPLETE (QA SIGN-OFF)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <!-- Executive Summary Banner -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🚀</span> Bứt Phá Nhận Thức: Hoàn Tất Toàn Diện Giai Đoạn 3
+        </h2>
+        <span class="text-xs text-zinc-400 font-mono">Date: 2026-10-21 | Status: Production-Ready</span>
+      </div>
+      <p class="text-sm text-zinc-300 leading-relaxed">
+        Giai đoạn 3 đã chính thức biến <strong>Personal-KB</strong> thành một <strong>Kho Trí Nhớ Nhận Thức Dài Hạn Chủ Động (Active Cognitive Memory Fabric)</strong>.
+        Hệ thống không còn đợi Agent tìm kiếm thủ công mà tự động phân luồng theo Intent, tự động đóng gói <strong>Context Triad</strong> khi viết code,
+        bảo vệ kho tri thức bằng <strong>Semantic Anti-Collision Engine</strong> với cơ chế Soft-Flagging & Hard-Block an toàn, và đo lường trực quan hiệu quả tiết kiệm token (CER).
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">CER Token Savings</div>
+          <div class="text-2xl font-bold text-emerald-400 font-mono mt-1">~95.3%</div>
+          <div class="text-xs text-zinc-500 mt-1">Triad (~880 tok) vs Raw URD (~18k)</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Công Cụ MCP Sẵn Sàng</div>
+          <div class="text-2xl font-bold text-sky-400 font-mono mt-1">8 Tools</div>
+          <div class="text-xs text-zinc-500 mt-1">+ query_cognitive_memory</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Anti-Collision Gate</div>
+          <div class="text-2xl font-bold text-amber-400 font-mono mt-1">100% Cấm</div>
+          <div class="text-xs text-zinc-500 mt-1">Soft-flag + Hard-block on approve</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Kiểm Thử Hồi Quy</div>
+          <div class="text-2xl font-bold text-emerald-400 font-mono mt-1">PASS 100%</div>
+          <div class="text-xs text-zinc-500 mt-1">63 Pytest + 64 Vitest</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Architectural Pillars -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Pillar 1: Cognitive Router -->
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+            <span>⚡</span> 1. Two-Phase Intent Cognitive Router
+          </h3>
+          <span class="text-xs font-mono text-emerald-400">Zero-Latency Fast Filter</span>
+        </div>
+        <div class="space-y-3 text-xs text-zinc-300 leading-relaxed font-sans">
+          <p>
+            Phân loại Intent 2 tầng với phân cấp ưu tiên nghiêm ngặt (Intent Priority Hierarchy): 
+            <code class="text-emerald-400">CODE_IMPLEMENTATION</code> &gt; <code class="text-purple-400">ARCHITECTURE_DESIGN</code> &gt; <code class="text-sky-400">THEORY_LOOKUP</code>.
+          </p>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800 space-y-1.5 font-mono">
+            <div class="text-emerald-400 font-semibold">Cấu trúc Context Triad (Khi Viết Code):</div>
+            <div class="text-zinc-400">1️⃣ Spec Contract (Trích đoạn quy chuẩn nghiệp vụ)</div>
+            <div class="text-zinc-400">2️⃣ Negative Constraints (Top-3 cấm kỵ cốt tử &lt; 180 tok)</div>
+            <div class="text-zinc-400">3️⃣ Golden Exemplar (Mã nguồn mẫu chuẩn sản xuất)</div>
+          </div>
+          <p>
+            Tự động fallback về tài liệu kiến trúc nền tảng (<code class="text-zinc-400">PKB-01</code> / <code class="text-zinc-400">HR-PROJECT</code>) khi intent là kiến trúc mà không có ADR cụ thể.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pillar 2: Anti-Collision Engine -->
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+            <span>🛡️</span> 2. Semantic Anti-Collision Engine
+          </h3>
+          <span class="text-xs font-mono text-amber-400">Soft-Flag & Hard-Block</span>
+        </div>
+        <div class="space-y-3 text-xs text-zinc-300 leading-relaxed font-sans">
+          <p>
+            Đối chiếu nội dung đề xuất cập nhật với các điều cấm kỵ tuyệt đối:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-zinc-400 font-mono">
+            <li><span class="text-amber-400">NC-HR-001:</span> Cấm float/double cho tiền tệ & lương.</li>
+            <li><span class="text-amber-400">NC-HR-010:</span> Cấm hard delete trên bảng employees.</li>
+            <li><span class="text-amber-400">NC-HR-020:</span> Cấm hardcode hệ số 1.3 ca đêm, 1.5, 2.0.</li>
+            <li><span class="text-amber-400">NC-HR-021:</span> Cấm sửa trực tiếp kỳ công khi LOCKED.</li>
+            <li><span class="text-amber-400">NC-PKB-001:</span> Cấm bypass human gate & hardcode secret.</li>
+          </ul>
+          <p>
+            <strong>Cơ chế bảo vệ kép:</strong> Lưu đề xuất ở trạng thái PENDING kèm cờ cảnh báo (không làm mất dữ liệu), nhưng chặn cứng (HTTP 409) tại thời điểm duyệt trừ khi reviewer bật <code class="text-emerald-400">force=True</code>.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MCP Tools Catalog Table -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <h3 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+        <span>📦</span> Danh Sách 8 Công Cụ MCP Hoạt Động (Production Suite)
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-mono border-collapse">
+          <thead>
+            <tr class="border-b border-zinc-800 text-zinc-400">
+              <th class="py-2.5 px-3">Tên Công Cụ</th>
+              <th class="py-2.5 px-3">Tầng Trí Nhớ</th>
+              <th class="py-2.5 px-3">Mô Tả & Trách Nhiệm</th>
+              <th class="py-2.5 px-3">Giai Đoạn</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60 text-zinc-300">
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400 font-semibold">query_cognitive_memory</td>
+              <td class="py-2.5 px-3 text-purple-400">Cognitive Fabric</td>
+              <td class="py-2.5 px-3 font-sans">Bộ phân luồng nhận thức tự động: đóng gói Context Triad cho code, ADRs cho kiến trúc, Spec cho tra cứu.</td>
+              <td class="py-2.5 px-3 text-sky-400 font-semibold">Giai đoạn 3 (MỚI)</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">search_knowledge</td>
+              <td class="py-2.5 px-3 text-purple-400">Semantic Memory</td>
+              <td class="py-2.5 px-3 font-sans">Tìm kiếm ngữ nghĩa theo cosine similarity trong Qdrant sdd_specs.</td>
+              <td class="py-2.5 px-3 text-zinc-500">Core</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">get_spec_content</td>
+              <td class="py-2.5 px-3 text-purple-400">Semantic Memory</td>
+              <td class="py-2.5 px-3 font-sans">Đọc 100% nguyên văn đặc tả kỹ thuật theo mã ID.</td>
+              <td class="py-2.5 px-3 text-zinc-500">Core</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">recall_guardrails</td>
+              <td class="py-2.5 px-3 text-amber-400">Reflective Memory</td>
+              <td class="py-2.5 px-3 font-sans">Truy xuất cấm kỵ kỹ thuật [FORBIDDEN] (Top-3 Hard Limit &lt; 180 tok).</td>
+              <td class="py-2.5 px-3 text-zinc-500">Giai đoạn 1</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">recall_exemplar</td>
+              <td class="py-2.5 px-3 text-sky-400">Procedural Memory</td>
+              <td class="py-2.5 px-3 font-sans">Trích xuất mã nguồn mẫu chuẩn sản xuất (Golden Few-shot).</td>
+              <td class="py-2.5 px-3 text-zinc-500">Giai đoạn 2</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">propose_knowledge_update</td>
+              <td class="py-2.5 px-3 text-rose-400">Episodic / Staging</td>
+              <td class="py-2.5 px-3 font-sans">Tạo đề xuất cập nhật tri thức với Anti-Collision check và 3-tier Deduplication.</td>
+              <td class="py-2.5 px-3 text-zinc-500">Core / GĐ 3</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">verify_citation</td>
+              <td class="py-2.5 px-3 text-emerald-400">Audit Trail</td>
+              <td class="py-2.5 px-3 font-sans">Đối soát tính xác thực của trích dẫn gốc & SHA-256 hash.</td>
+              <td class="py-2.5 px-3 text-zinc-500">Core</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 text-emerald-400">list_specs</td>
+              <td class="py-2.5 px-3 text-zinc-400">Catalog</td>
+              <td class="py-2.5 px-3 font-sans">Liệt kê danh mục tài liệu đặc tả có lọc theo dự án.</td>
+              <td class="py-2.5 px-3 text-zinc-500">Core</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Verification Evidence -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <h3 class="text-base font-semibold text-zinc-100 flex items-center gap-2">
+        <span>🧪</span> Bằng Chứng Kiểm Thử Tự Động (Verification Evidence)
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
+          <div class="font-mono text-xs text-emerald-400 font-semibold flex items-center justify-between">
+            <span>Pytest Suite (Backend Core & Fabric)</span>
+            <span>63/63 PASS</span>
+          </div>
+          <pre class="text-[11px] text-zinc-400 overflow-x-auto p-2 bg-zinc-900/60 rounded"><code>test_car_benchmark.py ............... PASS
+test_exemplars_and_adrs.py .......... PASS
+test_guardrails.py .................. PASS
+test_mcp_server.py .................. PASS
+test_proposals_api.py ............... PASS
+test_phase3_cognitive_fabric.py ..... PASS (6/6)
+---------------------------------------------
+63 passed in 1.52s (100% Success)</code></pre>
+        </div>
+
+        <div class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
+          <div class="font-mono text-xs text-emerald-400 font-semibold flex items-center justify-between">
+            <span>Vitest Suite (Frontend Web Portal)</span>
+            <span>64/64 PASS</span>
+          </div>
+          <pre class="text-[11px] text-zinc-400 overflow-x-auto p-2 bg-zinc-900/60 rounded"><code>src/app/approvals/page.test.tsx ..... PASS (5)
+src/app/data/page.test.tsx .......... PASS (6)
+src/components/chat/sidebar.test.tsx  PASS (4)
+src/components/chat/citation.test.tsx PASS (9)
+src/components/markdown/markdown.test PASS (10)
+---------------------------------------------
+15 test files, 64 passed in 5.75s (100% Success)</code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

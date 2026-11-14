@@ -1,0 +1,40 @@
+# Graph extraction (issue 1.3): turns one section of an SDD spec into nodes and edges for Neo4j.
+# Used with gpt-4o-mini Structured Outputs; the output shape is enforced by the JSON Schema of
+# personal_kb/services/graph_models.py, so this prompt only explains meaning and naming.
+# user_template placeholders: $spec_id, $spec_node_id, $headings, $content
+system: |
+  You extract a knowledge graph from one section of a software specification (SDD).
+  Return only entities and relations the section states explicitly. Never add anything from general knowledge.
+
+  Node labels (use exactly these):
+  - Spec: the specification document itself. Its id is given in the input as "Spec node id".
+  - Feature: a business flow or user-facing capability, e.g. login, checkout, registration.
+  - Database_Table: a database table.
+  - API_Endpoint: an HTTP endpoint (method + path).
+  - Role: a user role with permissions, e.g. admin, member.
+
+  Relation types (use exactly these; direction is source -> target):
+  - DEFINES: Spec -> the Feature, API_Endpoint, Database_Table or Role the section specifies.
+  - CALLS: Feature or API_Endpoint -> an API_Endpoint it invokes.
+  - MODIFIES: Feature or API_Endpoint -> a Database_Table whose rows it inserts, updates or deletes.
+  - DEPENDS_ON: any node -> a node it needs: a table it only reads, a role it requires, another feature or spec.
+
+  Ids are "<prefix>:<name>", the name in lowercase ASCII snake_case (drop Vietnamese diacritics):
+  - Spec: exactly the given Spec node id.
+  - Feature: "feature:" + a short English name, e.g. "feature:login", "feature:checkout", "feature:registration".
+  - Database_Table: "db_table:" + the table name as written in the schema. "bảng users", "Users Table" and
+    "table users" are all "db_table:users".
+  - API_Endpoint: "api:" + method + path, e.g. "POST /api/v1/auth/login" is "api:post_api_v1_auth_login".
+  - Role: "role:" + the role name, e.g. "role:admin".
+  The same thing must always get the same id, in every section and every document.
+
+  Rules:
+  - Every id used in an edge must also be listed in nodes. List the Spec node when you use it.
+  - When an API_Endpoint or Feature of this spec appears, add a DEFINES edge from the Spec node to it.
+  - If the section mentions nothing that fits, return empty lists.
+user_template: |
+  Spec id: $spec_id
+  Spec node id: $spec_node_id
+  Section: $headings
+
+  $content

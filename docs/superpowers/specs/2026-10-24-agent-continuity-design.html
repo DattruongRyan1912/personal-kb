@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Continuity Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --panel: #fafafa; --text: #18181b; --muted: #52525b; --line: #e4e4e7;
+    --accent: #2563eb; --warn: #b45309; --code-bg: #f4f4f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #09090b; --panel: #111113; --text: #e4e4e7; --muted: #a1a1aa; --line: #27272a;
+      --accent: #60a5fa; --warn: #f59e0b; --code-bg: #18181b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #09090b; --panel: #111113; --text: #e4e4e7; --muted: #a1a1aa; --line: #27272a;
+    --accent: #60a5fa; --warn: #f59e0b; --code-bg: #18181b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.65 Inter, system-ui, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 24px; margin: 0 0 4px; font-weight: 600; }
+  h2 { font-size: 18px; margin: 40px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); font-weight: 600; }
+  h3 { font-size: 15px; margin: 24px 0 8px; font-weight: 600; }
+  p, li { color: var(--text); }
+  .meta { color: var(--muted); font-size: 13px; font-family: "JetBrains Mono", monospace; }
+  code, pre, .mono { font-family: "JetBrains Mono", monospace; font-size: 13px; }
+  code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; border: 1px solid var(--line); }
+  pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; overflow-x: auto; position: relative; }
+  pre code { background: none; border: 0; padding: 0; }
+  .copy { position: absolute; top: 6px; right: 6px; font: 12px "JetBrains Mono", monospace; background: var(--panel); color: var(--muted);
+          border: 1px solid var(--line); border-radius: 3px; padding: 2px 8px; cursor: pointer; }
+  .copy:hover { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border: 1px solid var(--line); }
+  th { background: var(--panel); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+  .note { border: 1px solid var(--line); border-left: 3px solid var(--accent); background: var(--panel); padding: 10px 14px; border-radius: 4px; margin: 12px 0; }
+  .note.warn { border-left-color: var(--warn); }
+  .tag { font: 12px "JetBrains Mono", monospace; border: 1px solid var(--line); border-radius: 3px; padding: 0 6px; color: var(--muted); white-space: nowrap; }
+  nav ol { columns: 2; font-size: 14px; padding-left: 20px; }
+  @media (max-width: 640px) { nav ol { columns: 1; } }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<h1>Agent Continuity: tiến độ dùng chung cho Claude và AGY</h1>
+<div class="meta">personal-kb · thiết kế · 2026-10-24 · trạng thái: CHỜ DUYỆT</div>
+
+<nav>
+<ol>
+  <li><a href="#why">Mục đích và lý do</a></li>
+  <li><a href="#goals">Mục tiêu, ngoài phạm vi, anti-goals</a></li>
+  <li><a href="#state">Hiện trạng và bằng chứng</a></li>
+  <li><a href="#design">Thiết kế</a></li>
+  <li><a href="#constraints">Ràng buộc</a></li>
+  <li><a href="#calls">Lựa chọn của người thiết kế</a></li>
+  <li><a href="#builder">Để builder quyết</a></li>
+  <li><a href="#accept">Kịch bản nghiệm thu</a></li>
+  <li><a href="#log-bench">Nhật ký cấu hình và benchmark</a></li>
+</ol>
+</nav>
+
+<h2 id="why">1. Mục đích và lý do</h2>
+<p>Ryan làm việc song song với <b>Claude Code</b> và <b>AGY (Antigravity CLI, Gemini)</b> trên các dự án Demo-Core, CyberOS, MyNotch, AGY-Remote-Hub, Personal-KB. Nỗi đau thật <b>không</b> phải là agent thiếu requirement (các dự án chưa đủ lớn để gây lỗi vì thiếu ngữ cảnh), mà là <b>tính liên tục</b>:</p>
+<ul>
+  <li>Agent không nhớ mình đang làm gì: sang phiên mới hoặc sau khi nén ngữ cảnh là mất mạch.</li>
+  <li>Chuyển qua lại Claude và AGY khó: bên này không biết bên kia làm tới đâu.</li>
+</ul>
+<p>Quy trình hiện tại tốn hai bước tay: (1) quay lại hội thoại cũ bảo AI "cập nhật tiến độ lên KB" (thường thành proposal phải duyệt, ví dụ AGY-01, PKB-06), (2) mở hội thoại mới bảo agent đọc. Khi hội thoại cũ không ghi được, Ryan phải chép conversation id sang.</p>
+<p>Bằng chứng cho thấy KB hiện chưa nằm trên đường làm việc hằng ngày: MCP <code>personal-kb</code> của Claude desktop từng trỏ nhầm sang dữ liệu mẫu CyberOS mà không ai phát hiện (đã sửa ngày 2026-10-24).</p>
+<p><b>Thành công trông như thế nào:</b> đang làm dở với Claude trong <code>~/Project/HRM</code>, mở AGY trong cùng repo, gõ "tiếp tục", AGY làm tiếp đúng chỗ mà Ryan không phải kể lại gì. Và ngược lại.</p>
+
+<h2 id="goals">2. Mục tiêu, ngoài phạm vi, anti-goals</h2>
+<h3>Mục tiêu</h3>
+<ol>
+  <li><b>G1 — Tự có bối cảnh khi mở phiên:</b> agent mở phiên trong một repo đã map nhận được bản tóm tắt "tiến độ gần đây" của dự án mà người dùng không phải yêu cầu.</li>
+  <li><b>G2 — Ghi tiến độ không cần duyệt:</b> agent ghi tiến độ bằng một lệnh/tool, ghi thẳng, không qua Human Gate.</li>
+  <li><b>G3 — Dự phòng khi phiên cũ không kịp ghi:</b> bản tóm tắt tự lấy được yêu cầu cuối và câu trả lời cuối của phiên trước (Claude hoặc AGY) trong cùng repo, từ transcript cục bộ.</li>
+  <li><b>G4 — Sống sót qua nén ngữ cảnh:</b> Claude nhận lại bản tóm tắt sau compact.</li>
+  <li><b>G5 — Đối chiếu với code thật:</b> bản tóm tắt có nhánh hiện tại, file chưa commit và commit gần đây của Ryan.</li>
+</ol>
+<h3>Ngoài phạm vi</h3>
+<ul>
+  <li>Codex, Kiro, Cursor (có thể dùng tool MCP nhưng không có hook nạp tự động).</li>
+  <li>Đưa thêm repo khác vào KB (MyEQ, Tu_hoc_Toeic, FreshKeep, MediaScan).</li>
+  <li>Tự động đẩy nội dung worklog thành proposal requirement.</li>
+  <li>Thay đổi Phase 1–3 (cognitive router, semantic cache, anti-collision…).</li>
+  <li>Giao diện web cho worklog.</li>
+  <li>Di chuyển PKB-06 ra khỏi <code>knowledge/</code> (có thể làm sau).</li>
+</ul>
+<h3>Anti-goals (chạy đúng kỹ thuật nhưng vẫn là thất bại)</h3>
+<ul>
+  <li>Bản tóm tắt dài, làm phình context mỗi phiên. Giới hạn cứng: khoảng 2.500 ký tự.</li>
+  <li>Thêm việc cho Ryan (phải nhớ gõ lệnh, phải duyệt tiến độ).</li>
+  <li>Hệ thống lỗi làm phiên agent treo hoặc báo lỗi: hook luôn thoát mã 0, dưới 3 giây, kể cả khi docker tắt.</li>
+  <li>Quyền ghi tự do lan sang requirement trong <code>knowledge/</code>.</li>
+  <li>Đưa secret (API key, token trong transcript) vào bản tóm tắt.</li>
+  <li>Thêm một tầng kỹ thuật đẹp nhưng không ai dùng.</li>
+</ul>
+
+<h2 id="state">3. Hiện trạng và bằng chứng (kiểm tra ngày 2026-10-24)</h2>
+<div class="table-wrap"><table>
+<tr><th>Hạng mục</th><th>Hiện trạng</th></tr>
+<tr><td>Backend</td><td>Stack docker <code>personal-kb</code>: <code>kb-backend</code> :8000, <code>kb-postgres</code> :5434, <code>kb-redis</code> :6380. <code>DEV_LOGIN=true</code> nên API <code>/api/v1/agent/*</code> không cần token khi chạy cục bộ.</td></tr>
+<tr><td>Ranh giới container</td><td>MCP chạy qua <code>docker exec kb-backend</code>; container chỉ mount <code>./knowledge:/app/knowledge:ro</code>. <b>Không</b> thấy được <code>.git</code> của các repo, <code>~/.claude/projects</code>, <code>~/.gemini/antigravity-cli</code>.</td></tr>
+<tr><td>MCP Claude desktop</td><td>Đã trỏ về <code>scripts/mcp_server.sh</code> (backup <code>claude_desktop_config.json.bak-20261024-205829</code>).</td></tr>
+<tr><td>MCP AGY</td><td><code>agy mcp list</code>: <code>personal-kb</code> → <code>scripts/mcp_server.sh</code> (đúng). <code>~/.gemini/settings.json</code> vẫn trỏ CyberOS nhưng là cấu hình Gemini CLI không dùng (<code>gemini</code> không được cài) — để nguyên.</td></tr>
+<tr><td>Hook Claude</td><td><code>~/.claude/settings.json</code> đã có SessionStart/Stop (của Orca). Claude nhận <code>hookSpecificOutput.additionalContext</code> từ SessionStart.</td></tr>
+<tr><td>Hook AGY</td><td><code>~/.gemini/config/hooks.json</code> hỗ trợ <code>SessionStart</code>, <code>PreInvocation</code>, <code>PostInvocation</code>, <code>Stop</code>, <code>PreToolUse</code>, <code>PostToolUse</code>. Payload có <code>conversationId</code>, <code>workspacePaths</code>, <code>transcriptPath</code>, <code>lastUserInput</code>, <code>modelName</code>, <code>artifactDirectoryPath</code>.</td></tr>
+<tr><td>Thử nghiệm inject AGY</td><td>Chạy <code>agy -p</code> (print mode) với hook tạm trong <code>hooks.json</code> cấp người dùng: (a) SessionStart in text thường; (b) PreInvocation trả <code>{"userMessage": "…"}</code> khi <code>invocationNum==0 &amp;&amp; initialNumSteps==1</code>; (c) như (b) với <code>{"userMessage": {"text": "…"}}</code>. Hook đều chạy, điều kiện khớp, nhưng <b>model không thấy nội dung</b> trong cả ba lần. Đã khôi phục <code>hooks.json</code>. Theo tài liệu superpowers, <code>userMessage</code> từ PreInvocation hoạt động khi <code>hooks.json</code> nằm ở gốc một plugin — chưa kiểm chứng.</td></tr>
+<tr><td>Luật Human Gate</td><td>Câu "AI TUYỆT ĐỐI KHÔNG tự ý chỉnh sửa file tài liệu gốc…" nằm ở <code>~/.agents/GLOBAL.md</code> (dòng 126; <code>~/.claude/CLAUDE.md</code> và <code>~/.gemini/GEMINI.md</code> đều symlink tới) và <code>integrations/rules/personal-kb-grounding.md</code> (dòng 16).</td></tr>
+<tr><td>Commit CyberOS</td><td>Từ 2026-07-01: 50 commit, tất cả của <code>ryantruong &lt;dattruong19122003@gmail.com&gt;</code>. Lọc theo tác giả này.</td></tr>
+<tr><td>Đọc hội thoại AGY</td><td>Đã có helper chỉ đọc <code>~/.agents/skills/agy-conversation-reader/scripts/read_agy_conversations.py</code> (đọc sqlite <code>conversations/&lt;id&gt;.db</code>, <code>conversation_summaries.db</code>, bỏ phần thinking, che giá trị giống credential).</td></tr>
+</table></div>
+
+<h2 id="design">4. Thiết kế</h2>
+
+<h3>4.1 Hai vùng, hai luật</h3>
+<div class="table-wrap"><table>
+<tr><th>Vùng</th><th>Nội dung</th><th>Nơi lưu</th><th>Luật ghi</th></tr>
+<tr><td><b>Requirement</b></td><td>Spec, ADR, gotchas, exemplars</td><td><code>knowledge/</code> (giữ nguyên)</td><td>Human Gate: AI chỉ <code>propose_knowledge_update</code>, Ryan duyệt</td></tr>
+<tr><td><b>Worklog</b> (mới)</td><td>Tiến độ, quyết định trong lúc làm, cạm bẫy vừa gặp, ghi chú bàn giao</td><td>Bảng Postgres trong <code>kb-postgres</code></td><td>AI ghi thẳng, không duyệt. Chỉ thêm (append-only), không sửa/xoá qua API</td></tr>
+</table></div>
+
+<h3>4.2 Bản đồ dự án ↔ repo</h3>
+<p>File cấu hình trong repo, ví dụ <code>config/projects.json</code>, là nguồn duy nhất cho cả script phía host lẫn backend:</p>
+<pre><code>{
+  "Demo-Core":       { "repo": "~/Project/HRM",            "git_author": "dattruong19122003@gmail.com" },
+  "CyberOS":        { "repo": "~/Project/CyberOS",        "git_author": "dattruong19122003@gmail.com" },
+  "MyNotch":        { "repo": "~/Project/MyNotch",        "git_author": "dattruong19122003@gmail.com" },
+  "AGY-Remote-Hub": { "repo": "~/Project/agy-remote-hub", "git_author": "dattruong19122003@gmail.com" },
+  "Personal-KB":    { "repo": "~/Project/personal-kb",    "git_author": "dattruong19122003@gmail.com" }
+}</code></pre>
+<p>Nhận diện dự án: thư mục đang mở (hoặc <code>workspacePaths[0]</code> của AGY) nằm trong <code>repo</code> nào thì thuộc dự án đó (khớp tiền tố dài nhất, đã resolve symlink). Không khớp thì không in gì.</p>
+
+<h3>4.3 Lưu trữ worklog</h3>
+<p>Một bảng mới trong Postgres của <code>kb-backend</code>, ví dụ <code>worklog_entries</code>:</p>
+<div class="table-wrap"><table>
+<tr><th>Cột</th><th>Ý nghĩa</th></tr>
+<tr><td><code>id</code></td><td>khoá chính</td></tr>
+<tr><td><code>project</code></td><td>tên dự án theo bản đồ 4.2 (bắt buộc, phải có trong bản đồ)</td></tr>
+<tr><td><code>kind</code></td><td><code>progress</code> | <code>decision</code> | <code>gotcha</code> | <code>handoff</code></td></tr>
+<tr><td><code>summary</code></td><td>đã làm gì / phát hiện gì (bắt buộc, giới hạn độ dài, ví dụ 2.000 ký tự)</td></tr>
+<tr><td><code>next_steps</code></td><td>việc còn dở / bước tiếp theo (tuỳ chọn)</td></tr>
+<tr><td><code>agent</code></td><td><code>claude</code> | <code>agy</code> | chuỗi khác (tuỳ chọn)</td></tr>
+<tr><td><code>session_id</code></td><td>conversation/session id của agent ghi (tuỳ chọn)</td></tr>
+<tr><td><code>branch</code></td><td>nhánh git lúc ghi (tuỳ chọn)</td></tr>
+<tr><td><code>created_at</code></td><td>thời điểm ghi (server đặt)</td></tr>
+</table></div>
+
+<h3>4.4 Ghi và đọc worklog</h3>
+<ul>
+  <li><b>MCP tool <code>log_progress(project, summary, kind="progress", next_steps="", agent="", session_id="", branch="")</code></b>: ghi một bản ghi, trả về id. Mô tả tool phải nói rõ: dùng khi xong một bước đáng kể, khi ra quyết định, khi gặp cạm bẫy, và trước khi kết thúc/bàn giao; không cần duyệt.</li>
+  <li><b>MCP tool <code>get_worklog(project, limit=10, kind="")</code></b>: đọc các bản ghi mới nhất.</li>
+  <li><b>REST tương ứng</b> dưới <code>/api/v1/agent/worklog</code> (GET danh sách, POST ghi), dùng chung <code>agent_auth</code> hiện có. Script phía host dùng REST này.</li>
+</ul>
+
+<h3>4.5 Bản tóm tắt dự án (project brief) — script phía host</h3>
+<p>Vì container không thấy git và transcript (mục 3), bản tóm tắt được dựng bởi <b>một script chạy trên máy host</b>, ví dụ <code>scripts/project_brief.py</code>, chỉ dùng thư viện chuẩn Python 3 (không phụ thuộc venv của backend). Cả Claude và AGY dùng chung script này.</p>
+<p>Đầu vào: <code>--cwd</code>, hoặc JSON payload của hook qua stdin (lấy <code>cwd</code> của Claude hoặc <code>workspacePaths[0]</code> của AGY). Đầu ra gồm các khối, theo thứ tự, tổng tối đa khoảng 2.500 ký tự:</p>
+<ol>
+  <li><b>Worklog:</b> 5 bản ghi mới nhất của dự án (thời gian, agent, kind, summary rút gọn, next_steps). Gọi REST với timeout 2 giây; lỗi thì in một dòng "worklog không truy cập được" và đi tiếp.</li>
+  <li><b>Git:</b> nhánh hiện tại; số file chưa commit và tối đa 10 tên; tối đa 8 commit gần nhất của <code>git_author</code> trong 7 ngày (hash ngắn, ngày, tiêu đề).</li>
+  <li><b>Phiên trước:</b> phiên gần nhất trong cùng repo của Claude hoặc AGY (bỏ qua chính phiên hiện tại): runtime, thời điểm, yêu cầu cuối của người dùng, câu trả lời cuối của agent, mỗi phần rút gọn. Đây là dự phòng cho G3 thay cho việc chép conversation id.</li>
+  <li>Một dòng nhắc: "Ghi tiến độ bằng MCP <code>log_progress</code> khi xong một bước hoặc trước khi kết thúc."</li>
+</ol>
+<p>Đọc transcript:</p>
+<ul>
+  <li><b>Claude:</b> file <code>*.jsonl</code> mới nhất trong <code>~/.claude/projects/&lt;slug&gt;/</code>, với slug là đường dẫn repo đã thay <code>/</code> và <code>.</code> bằng <code>-</code> (ví dụ <code>-Users-ryantruong-Project-personal-kb</code>). Chỉ lấy text của tin nhắn user/assistant, bỏ tool output và thinking.</li>
+  <li><b>AGY:</b> viết mới phần lọc theo repo bằng cột <code>workspace_uris</code> trong <code>~/.gemini/antigravity-cli/conversation_summaries.db</code> (helper <code>read_agy_conversations.py</code> chỉ tìm theo label/title nên không dùng lại được nguyên vẹn; có thể tham khảo cách nó đọc sqlite chỉ-đọc và che credential).</li>
+  <li>Che secret bằng regex (dạng key/token/bearer/password) trước khi in.</li>
+</ul>
+<p>Định dạng đầu ra: <code>--format text</code> (mặc định) và <code>--format claude-hook</code> (JSON <code>{"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": "…"}}</code>). Mọi lỗi nội bộ: in rỗng/JSON rỗng, thoát mã 0.</p>
+
+<h3>4.6 Nạp tự động cho Claude</h3>
+<p>Thêm một mục SessionStart vào <code>~/.claude/settings.json</code> (giữ nguyên các hook Orca hiện có), áp dụng cho cả <code>startup</code>, <code>resume</code>, <code>clear</code>, <code>compact</code>, gọi <code>python3 ~/Project/personal-kb/scripts/project_brief.py --format claude-hook</code> với payload qua stdin. <code>compact</code> phục vụ G4.</p>
+
+<h3>4.7 Nạp cho AGY</h3>
+<p>Thử nghiệm ở mục 3 cho thấy <code>hooks.json</code> cấp người dùng không đưa được nội dung vào ngữ cảnh. Thiết kế dùng hai lớp:</p>
+<ol>
+  <li><b>Mặc định (chắc chắn chạy):</b> luật trong <code>~/.agents/GLOBAL.md</code> (AGY đọc qua <code>GEMINI.md</code>): "Ở lượt đầu của một hội thoại mới trong một repo, nếu ngữ cảnh chưa có khối PROJECT BRIEF, chạy <code>python3 ~/Project/personal-kb/scripts/project_brief.py --cwd "$PWD"</code> và đọc kết quả trước khi làm." Claude đã có hook nên bỏ qua khi thấy khối này.</li>
+  <li><b>Thử thêm (giới hạn thời gian ~30 phút):</b> một plugin AGY cục bộ có <code>hooks.json</code> ở gốc plugin, PreInvocation trả <code>userMessage</code> khi <code>invocationNum==0 &amp;&amp; initialNumSteps==1</code>. Phải kiểm chứng bằng phiên AGY <b>tương tác</b> lẫn <code>-p</code>. Nếu chạy được thì dùng nó và giữ luật ở lớp 1 như phương án dự phòng; nếu không thì dừng.</li>
+</ol>
+
+<h3>4.8 Sửa luật Human Gate (cần Ryan duyệt nội dung)</h3>
+<p>Sửa câu luật ở <code>~/.agents/GLOBAL.md</code> và <code>integrations/rules/personal-kb-grounding.md</code> để:</p>
+<ul>
+  <li>Phạm vi "không tự ý chỉnh sửa" chỉ áp dụng cho <b>requirement</b> trong <code>knowledge/</code>.</li>
+  <li>Worklog là vùng AI được ghi trực tiếp qua <code>log_progress</code>, không cần proposal.</li>
+  <li>Thêm nghĩa vụ: gọi <code>log_progress</code> khi xong một bước đáng kể và trước khi kết thúc hoặc bàn giao phiên; khi người dùng nói "cập nhật tiến độ" thì dùng <code>log_progress</code>, không tạo proposal.</li>
+  <li>Thêm luật đọc brief ở mục 4.7 lớp 1.</li>
+</ul>
+<p>Ryan đã cho phép ghi trực tiếp (mục 5), kèm backup và nhật ký thay đổi (mục 9). Sau khi ghi, đồng bộ cùng nội dung sang <code>~/.kiro/steering/GLOBAL.md</code> theo yêu cầu ở header của GLOBAL.md.</p>
+
+<h2 id="constraints">5. Ràng buộc</h2>
+<ul>
+  <li>Hook và script: luôn thoát mã 0, tổng thời gian dưới 3 giây, chạy được khi <code>kb-backend</code> tắt (chỉ mất khối worklog).</li>
+  <li>Script phía host chỉ dùng thư viện chuẩn, chạy bằng <code>python3</code> hệ thống.</li>
+  <li>Không ghi gì vào <code>knowledge/</code>; không đổi API/tool hiện có.</li>
+  <li>Không in secret; không đưa nội dung thinking của model vào brief.</li>
+  <li>Không đọc thêm repo nào ngoài bản đồ 4.2.</li>
+  <li>Ryan cho phép sửa cấu hình cá nhân cần cho việc này (<code>~/.claude/settings.json</code>, <code>~/.agents/GLOBAL.md</code> kèm bản đồng bộ <code>~/.kiro/steering/GLOBAL.md</code>, <code>~/.gemini/config/*</code> cho plugin thử nghiệm) <b>với điều kiện</b>: mỗi lần sửa phải backup trước và ghi một dòng vào nhật ký thay đổi (mục 9); không sửa gì ngoài phạm vi tài liệu này.</li>
+  <li>Không thêm dòng Co-Authored-By hay nhãn AI vào commit.</li>
+</ul>
+
+<h2 id="calls">6. Lựa chọn của người thiết kế (Claude) — Ryan có thể bác</h2>
+<ul>
+  <li>Xây trên backend personal-kb hiện có, lưu worklog trong Postgres thay vì file Markdown.</li>
+  <li>Dựng bản tóm tắt ở phía host thay vì mount thêm thư mục vào container (tránh cho container đọc toàn bộ <code>~/Project</code> và transcript).</li>
+  <li>Bỏ checkpoint tự động mỗi lượt: git và transcript được đọc trực tiếp lúc mở phiên, nên không cần hook Stop ghi gì cả. "Hệ thống tự lấy" trong yêu cầu được đáp ứng bằng cách đọc live thay vì lưu lại.</li>
+  <li>AGY dùng luật trong GLOBAL.md làm cơ chế chính vì inject bằng hook chưa chạy được.</li>
+  <li>Cửa sổ git 7 ngày / 8 commit, worklog 5 bản ghi, giới hạn 2.500 ký tự.</li>
+  <li>Lọc commit theo email <code>dattruong19122003@gmail.com</code> cho mọi repo.</li>
+</ul>
+
+<h3>Bổ sung sau builder review (lựa chọn của người thiết kế)</h3>
+<ul>
+  <li><b>Khối "Phiên trước" chỉ lấy phiên mới nhất của runtime <i>kia</i>.</b> Script nhận <code>--runtime claude|agy</code> (hook Claude truyền <code>claude</code>, luật AGY truyền <code>agy</code>). Như vậy phiên AGY đang chạy brief không tự hiện ra như "phiên trước". Tiếp nối cùng runtime đã được worklog và git bao phủ.</li>
+  <li><b>Chỉ tính phiên chính:</b> bỏ hội thoại AGY có <code>nesting_depth &gt; 0</code> hoặc do agy-flow/headless worker tạo; bỏ transcript subagent/sidechain của Claude.</li>
+  <li><b>"Thuộc repo" tính theo tiền tố:</b> phiên mở ở thư mục con hoặc worktree bên trong repo (ví dụ <code>personal-kb/backend</code>, <code>.claude/worktrees/*</code>) đều tính; với Claude, quét mọi thư mục <code>~/.claude/projects/&lt;slug&gt;</code> có slug bắt đầu bằng slug của repo.</li>
+  <li><b>Bản đồ dự án đặt ở <code>config/projects.json</code> gốc repo</b> và được mount chỉ-đọc vào container (<code>./config:/app/config:ro</code> trong <code>docker-compose.yml</code>) để backend/MCP kiểm tra <code>project</code>. Builder được sửa compose, rebuild và restart <code>kb-backend</code> (stack của chính repo này); không động tới stack CyberOS.</li>
+</ul>
+
+<h2 id="builder">7. Để builder quyết</h2>
+<ul>
+  <li>Tên bảng, cách tạo schema (theo cách <code>schema.sql</code>/store hiện có), tên file script và vị trí file bản đồ.</li>
+  <li>Cấu trúc code backend (store, service, router) theo kiểu của các module hiện có.</li>
+  <li>Gọi helper AGY như subprocess hay trích phần logic cần thiết.</li>
+  <li>Regex che secret cụ thể.</li>
+  <li>Bộ test (pytest cho store/tool/REST; test cho script với repo git tạm và transcript giả).</li>
+</ul>
+
+<h2 id="accept">8. Kịch bản nghiệm thu (phải chạy thật, có log)</h2>
+<ol>
+  <li><b>Claude → AGY:</b> trong <code>~/Project/personal-kb</code>, phiên Claude gọi <code>log_progress</code> với một next_steps đặc trưng. Mở <code>agy</code> trong cùng repo, gõ "tiếp tục": AGY chạy brief, nêu đúng next_steps đó.</li>
+  <li><b>AGY → Claude:</b> ngược lại; phiên Claude mới thấy khối PROJECT BRIEF trong ngữ cảnh ngay lượt đầu, có bản ghi AGY vừa ghi.</li>
+  <li><b>Phiên cũ không ghi:</b> kết thúc một phiên mà không gọi <code>log_progress</code>; phiên mới (runtime kia) vẫn thấy yêu cầu cuối và câu trả lời cuối của phiên đó trong khối "Phiên trước".</li>
+  <li><b>Compact:</b> chạy <code>/compact</code> trong Claude; ngữ cảnh sau compact có lại khối brief.</li>
+  <li><b>Backend tắt:</b> <code>docker stop kb-backend</code>; mở phiên Claude: không lỗi, brief vẫn có khối git và phiên trước, kèm dòng "worklog không truy cập được". Khởi động lại sau khi thử.</li>
+  <li><b>Repo không map:</b> mở phiên trong <code>~/Project/MyEQ</code>: không có khối brief, không lỗi.</li>
+  <li><b>Ngân sách:</b> đo độ dài brief của từng repo đã map, ≤ 2.500 ký tự, thời gian chạy &lt; 3 giây.</li>
+  <li><b>Không lộ secret:</b> chèn một chuỗi giống API key vào transcript giả; brief không chứa chuỗi đó.</li>
+</ol>
+
+<h2 id="log-bench">9. Nhật ký thay đổi cấu hình và benchmark (điều kiện của Ryan)</h2>
+<h3>Nhật ký thay đổi cấu hình</h3>
+<p>Mỗi lần sửa một file cấu hình ngoài repo: tạo backup <code>&lt;file&gt;.bak-YYYYMMDD-HHMMSS</code> cạnh file gốc, rồi ghi một dòng vào <code>docs/agent-continuity/config-changes.log</code> trong repo gồm: thời điểm, đường dẫn file, đường dẫn backup, mô tả thay đổi một dòng, lệnh hoàn tác. Không ghi giá trị secret. Ví dụ dòng:</p>
+<pre><code>2026-10-25T10:12:03+07:00 | ~/.claude/settings.json | backup: ~/.claude/settings.json.bak-20261025-101203 | thêm SessionStart hook project_brief (startup|resume|clear|compact) | undo: cp &lt;backup&gt; &lt;file&gt;</code></pre>
+<p>Thay đổi đã thực hiện trước tài liệu này (2026-10-24): <code>claude_desktop_config.json</code> → trỏ <code>personal-kb</code> sang <code>scripts/mcp_server.sh</code>, backup <code>claude_desktop_config.json.bak-20261024-205829</code>; builder ghi bổ sung dòng này vào nhật ký.</p>
+
+<h3>Benchmark (chạy thật, kết quả ra báo cáo HTML)</h3>
+<div class="table-wrap"><table>
+<tr><th>Hạng mục</th><th>Cách đo</th><th>Ngưỡng đạt</th></tr>
+<tr><td>Độ trễ brief</td><td>20 lần chạy script cho mỗi repo đã map, backend bật và tắt</td><td>p95 &lt; 3 giây; luôn thoát mã 0</td></tr>
+<tr><td>Kích thước brief</td><td>Độ dài đầu ra mỗi repo</td><td>≤ 2.500 ký tự</td></tr>
+<tr><td>Claude nạp tự động</td><td>3 phiên mới + 1 lần <code>/compact</code>, kiểm tra khối brief có trong ngữ cảnh</td><td>4/4</td></tr>
+<tr><td>AGY làm theo luật đọc brief</td><td>10 lần <code>agy -p "tiếp tục"</code> + 3 phiên tương tác trong repo đã map, kiểm tra AGY chạy brief và nêu đúng next_steps mới nhất</td><td>≥ 9/10 và 3/3. Không đạt thì vẫn giao, ghi rõ giới hạn và tỉ lệ đo được</td></tr>
+<tr><td>Bàn giao hai chiều</td><td>Kịch bản nghiệm thu 1, 2, 3, mỗi kịch bản 3 lần</td><td>9/9</td></tr>
+<tr><td>Che secret</td><td>Kịch bản 8</td><td>0 lần lộ</td></tr>
+</table></div>
+<p>Báo cáo: <code>docs/agent-continuity/benchmark-report.html</code> (HTML tự chứa), gồm bảng kết quả, số liệu thô và lệnh để chạy lại.</p>
+</main>
+<script>
+document.querySelectorAll("pre").forEach(pre => {
+  const b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = "copy";
+  b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(pre.innerText.replace(/copy$/, "").trim()); b.textContent = "copied"; }
+    catch (e) { b.textContent = "failed"; }
+    setTimeout(() => { b.textContent = "copy"; }, 1200);
+  });
+  pre.appendChild(b);
+});
+</script>
+</body>
+</html>

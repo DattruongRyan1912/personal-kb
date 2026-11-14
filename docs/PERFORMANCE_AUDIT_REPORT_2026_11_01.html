@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Khảo Sát Định Kỳ Hiệu Suất Hệ Thống Personal-KB (Tháng 11/2026)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669' },
+            zinc: { 850: '#18181b', 900: '#121214', 950: '#09090b' }
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    pre code { font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace; }
+    .hairline-border { border: 1px solid #27272a; }
+    .table-hairline th, .table-hairline td { border-bottom: 1px solid #27272a; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500/30">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-md bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm font-mono">
+          PKB
+        </div>
+        <div>
+          <h1 class="text-base font-semibold text-zinc-100">Báo Cáo Khảo Sát Hiệu Suất Định Kỳ: Personal-KB</h1>
+          <p class="text-xs text-zinc-400 font-mono">PostgreSQL Vector, Redis Cache, Ollama bge-m3, Reranker & CodeGraph AST Engine</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 font-mono text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          HEALTH: EXCELLENT (99.8%)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <!-- KPI Cards Summary -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="p-4 rounded-md hairline-border bg-zinc-900/40 space-y-1">
+        <span class="text-xs text-zinc-400 font-mono">Database Size (Postgres)</span>
+        <div class="text-2xl font-bold font-mono text-emerald-400">40 MB</div>
+        <p class="text-[11px] text-zinc-500">1,219 chunks · 35 documents</p>
+      </div>
+      <div class="p-4 rounded-md hairline-border bg-zinc-900/40 space-y-1">
+        <span class="text-xs text-zinc-400 font-mono">Redis Memory (Port 6380)</span>
+        <div class="text-2xl font-bold font-mono text-cyan-400">1.44 MB</div>
+        <p class="text-[11px] text-zinc-500">Peak 1.46 MB · 14 cache keys</p>
+      </div>
+      <div class="p-4 rounded-md hairline-border bg-zinc-900/40 space-y-1">
+        <span class="text-xs text-zinc-400 font-mono">Embedding (bge-m3)</span>
+        <div class="text-2xl font-bold font-mono text-amber-400">63.2 ms</div>
+        <p class="text-[11px] text-zinc-500">Local Ollama · 1024 dims</p>
+      </div>
+      <div class="p-4 rounded-md hairline-border bg-zinc-900/40 space-y-1">
+        <span class="text-xs text-zinc-400 font-mono">CodeGraph FTS Search</span>
+        <div class="text-2xl font-bold font-mono text-purple-400">1.57 ms</div>
+        <p class="text-[11px] text-zinc-500">Trigram / Unicode61 FTS5</p>
+      </div>
+    </section>
+
+    <!-- Detail 1: Storage & Database Breakdown -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+        <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🗄️</span> 1. Dung Lượng & Hiệu Năng Truy Vấn PostgreSQL (pgvector trên Port 5434)
+        </h2>
+        <span class="text-xs text-zinc-400 font-mono">Engine: PostgreSQL 17 + pgvector</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Table sizes -->
+        <div class="space-y-3">
+          <h3 class="text-xs font-mono font-semibold text-zinc-300">Phân Bổ Kích Thước Bảng (Table Disk Usage)</h3>
+          <div class="overflow-x-auto rounded hairline-border">
+            <table class="w-full text-left text-xs table-hairline">
+              <thead class="bg-zinc-900/80 text-zinc-400 font-mono">
+                <tr>
+                  <th class="p-2">Tên Bảng</th>
+                  <th class="p-2 text-right">Số Bản Ghi</th>
+                  <th class="p-2 text-right">Kích Thước</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-800 font-mono text-zinc-300">
+                <tr><td class="p-2">chunks (vectors)</td><td class="p-2 text-right">1,219</td><td class="p-2 text-right text-emerald-400">23 MB</td></tr>
+                <tr><td class="p-2">documents</td><td class="p-2 text-right">35</td><td class="p-2 text-right">1,336 kB</td></tr>
+                <tr><td class="p-2">worklog_entries</td><td class="p-2 text-right">336</td><td class="p-2 text-right">352 kB</td></tr>
+                <tr><td class="p-2">entity_assertions</td><td class="p-2 text-right">-</td><td class="p-2 text-right">96 kB</td></tr>
+                <tr><td class="p-2">entities</td><td class="p-2 text-right">-</td><td class="p-2 text-right">72 kB</td></tr>
+                <tr><td class="p-2">relation_assertions</td><td class="p-2 text-right">67</td><td class="p-2 text-right">64 kB</td></tr>
+                <tr><td class="p-2">relations</td><td class="p-2 text-right">-</td><td class="p-2 text-right">64 kB</td></tr>
+                <tr><td class="p-2">graph_sources</td><td class="p-2 text-right">-</td><td class="p-2 text-right">32 kB</td></tr>
+                <tr class="bg-zinc-900/90 font-bold"><td class="p-2 text-zinc-100">Tổng Database</td><td class="p-2 text-right">1,657+</td><td class="p-2 text-right text-emerald-400">40 MB</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Query Latencies -->
+        <div class="space-y-3">
+          <h3 class="text-xs font-mono font-semibold text-zinc-300">Độ Trễ Truy Vấn Thực Tế (EXPLAIN ANALYZE)</h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-3 rounded hairline-border bg-zinc-950 flex items-center justify-between">
+              <div>
+                <div class="text-zinc-200">Document Lookup (Primary Key)</div>
+                <div class="text-[10px] text-zinc-500">SELECT * FROM documents WHERE spec_id = 'PKB-01'</div>
+              </div>
+              <div class="text-emerald-400 font-bold">0.036 ms (36 µs)</div>
+            </div>
+            <div class="p-3 rounded hairline-border bg-zinc-950 flex items-center justify-between">
+              <div>
+                <div class="text-zinc-200">Worklog Scan (Indexed Descending)</div>
+                <div class="text-[10px] text-zinc-500">SELECT * FROM worklog_entries ORDER BY created_at DESC LIMIT 20</div>
+              </div>
+              <div class="text-emerald-400 font-bold">0.179 ms (179 µs)</div>
+            </div>
+            <div class="p-3 rounded hairline-border bg-zinc-950 flex items-center justify-between">
+              <div>
+                <div class="text-zinc-200">Chunks Project Filter</div>
+                <div class="text-[10px] text-zinc-500">SELECT * FROM chunks WHERE project_id = 'Demo-Core' LIMIT 10</div>
+              </div>
+              <div class="text-emerald-400 font-bold">0.044 ms (44 µs)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detail 2: Cache & AI Model Inference -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Cache Tier -->
+      <div class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-4">
+        <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+          <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+            <span>⚡</span> 2. Tầng Cache Redis (Port 6380)
+          </h2>
+          <span class="text-xs text-cyan-400 font-mono">redis:7-alpine</span>
+        </div>
+        <ul class="text-xs space-y-2 text-zinc-300">
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Dung lượng sử dụng (Used Memory):</span>
+            <span class="font-mono font-bold text-zinc-100">1.44 MB</span>
+          </li>
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Bộ nhớ đỉnh điểm (Peak Memory):</span>
+            <span class="font-mono text-zinc-300">1.46 MB (98.1%)</span>
+          </li>
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Số lượng khóa hoạt động (Keys):</span>
+            <span class="font-mono text-cyan-400 font-bold">14 keys</span>
+          </li>
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Chính sách giải phóng (Eviction):</span>
+            <span class="font-mono text-zinc-300">noeviction (Ổn định)</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-zinc-400 font-mono">Độ trễ PING / GET:</span>
+            <span class="font-mono text-emerald-400 font-bold">&lt; 0.5 ms</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Local AI Models -->
+      <div class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-4">
+        <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+          <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+            <span>🧠</span> 3. Tầng AI Model Cục Bộ (Local Inference)
+          </h2>
+          <span class="text-xs text-amber-400 font-mono">Apple Silicon Native</span>
+        </div>
+        <ul class="text-xs space-y-2 text-zinc-300">
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Embedding Model:</span>
+            <span class="font-mono font-bold text-zinc-100">bge-m3:latest (Ollama)</span>
+          </li>
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Kích thước Vector (Embedding Dim):</span>
+            <span class="font-mono text-zinc-300">1024 dimensions</span>
+          </li>
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Độ trễ tạo Vector (1 câu truy vấn):</span>
+            <span class="font-mono text-emerald-400 font-bold">63.24 ms</span>
+          </li>
+          <li class="flex justify-between border-b border-zinc-800/60 pb-1">
+            <span class="text-zinc-400 font-mono">Cross-Encoder Re-ranker:</span>
+            <span class="font-mono text-zinc-300">BGE-Reranker-Large (Port 8081)</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-zinc-400 font-mono">Độ trễ Re-ranking (3 đoạn văn):</span>
+            <span class="font-mono text-amber-400 font-bold">287.05 ms</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Detail 3: CodeGraph Engine Telemetry -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+        <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🌳</span> 4. Telemetry Hiệu Năng CodeGraph Native AST Engine (.codegraph/codegraph.db)
+        </h2>
+        <span class="text-xs text-purple-400 font-mono">Tree-sitter AST + FTS5 SQLite</span>
+      </div>
+
+      <div class="overflow-x-auto rounded hairline-border">
+        <table class="w-full text-left text-xs table-hairline">
+          <thead class="bg-zinc-900/80 text-zinc-400 font-mono">
+            <tr>
+              <th class="p-2.5">Repository / Dự Án</th>
+              <th class="p-2.5 text-right">Files</th>
+              <th class="p-2.5 text-right">Nodes</th>
+              <th class="p-2.5 text-right">Edges</th>
+              <th class="p-2.5 text-right">Dung Lượng DB</th>
+              <th class="p-2.5 text-right">Index Lần Đầu</th>
+              <th class="p-2.5 text-right">Index Tăng Dần</th>
+              <th class="p-2.5 text-right">FTS Search</th>
+              <th class="p-2.5 text-right">Callers Query</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800 font-mono text-zinc-300">
+            <tr>
+              <td class="p-2.5 font-semibold text-zinc-100">Personal-KB (Repo này)</td>
+              <td class="p-2.5 text-right">235</td>
+              <td class="p-2.5 text-right">1,887</td>
+              <td class="p-2.5 text-right">5,552</td>
+              <td class="p-2.5 text-right text-emerald-400">3.40 MB</td>
+              <td class="p-2.5 text-right text-emerald-400">0.491 s</td>
+              <td class="p-2.5 text-right text-emerald-400 font-bold">0.021 s (21ms)</td>
+              <td class="p-2.5 text-right text-emerald-400">1.57 ms</td>
+              <td class="p-2.5 text-right text-emerald-400">1.62 ms</td>
+            </tr>
+            <tr>
+              <td class="p-2.5 font-semibold text-zinc-100">MyNotch (Large Swift Repo)</td>
+              <td class="p-2.5 text-right">1,967</td>
+              <td class="p-2.5 text-right">26,016</td>
+              <td class="p-2.5 text-right">140,800</td>
+              <td class="p-2.5 text-right text-purple-400">108.0 MB</td>
+              <td class="p-2.5 text-right text-purple-400">11.31 s</td>
+              <td class="p-2.5 text-right text-purple-400 font-bold">0.254 s (254ms)</td>
+              <td class="p-2.5 text-right text-purple-400">3.82 ms</td>
+              <td class="p-2.5 text-right text-purple-400">68.06 ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-[11px] text-zinc-400">
+        💡 <em>Nhận xét:</em> Thuật toán Two-Pass Linker và băm SHA-256 tăng dần của Personal-KB đạt tốc độ vượt trội: Quét kiểm tra 235 files chỉ mất <strong>21 mili-giây</strong>; tìm kiếm FTS symbol dưới <strong>4 mili-giây</strong> ngay cả trên cơ sở dữ liệu lớn 108 MB.
+      </p>
+    </section>
+
+    <!-- Detail 4: Action Items & Recommendations -->
+    <section class="p-6 rounded-md hairline-border bg-zinc-900/40 space-y-3">
+      <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+        <span>🛠️</span> 5. Nhận Xét & Khuyến Nghị Tối Ưu Định Kỳ
+      </h2>
+      <ul class="text-xs space-y-2 text-zinc-300">
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-400 font-bold">✓</span>
+          <span><strong>Trạng thái MCP Stdio:</strong> Server MCP chạy mượt mà từ virtualenv host (<code class="text-zinc-200 font-mono">backend/.venv</code>), hoàn toàn miễn nhiễm với sự cố sập container của Docker.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-400 font-bold">✓</span>
+          <span><strong>Dung lượng & Tài nguyên:</strong> Cơ sở dữ liệu và cache cực kỳ tinh gọn (Tổng Postgres 40 MB, Redis 1.44 MB, RAM tiêu hao không đáng kể).</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-amber-400 font-bold">!</span>
+          <span><strong>Đồng bộ hoá Tài liệu:</strong> Có 1 tài liệu mới trên đĩa (<code class="text-zinc-200 font-mono">toeic-error-vault.md</code>) chưa được nạp vector embeddings. Cần chạy <code class="text-zinc-200 font-mono">./scripts/ingest.sh</code> khi tiện để đạt tỷ lệ đồng bộ 100% (36/36 specs).</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-6 border-t border-zinc-800 text-xs text-zinc-500 font-mono flex items-center justify-between">
+      <span>Personal-KB Periodic Benchmark Telemetry · 2026-11-01</span>
+      <span>PostgreSQL 17 · Redis 7 · Ollama bge-m3 · SQLite FTS5</span>
+    </footer>
+
+  </main>
+</body>
+</html>

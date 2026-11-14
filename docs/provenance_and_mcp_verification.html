@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Bàn Giao: MCP Citation Verification & Interactive Provenance</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --code-bg: #090d16;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1.5rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .badge-success { background: rgba(52, 211, 153, 0.2); color: var(--success); border: 1px solid var(--success); }
+    h1 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #fff; }
+    .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .card h2 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
+    .card h3 { font-size: 1.1rem; margin-top: 1rem; margin-bottom: 0.5rem; color: #e2e8f0; }
+    ul { list-style: none; }
+    li { margin-bottom: 0.6rem; position: relative; padding-left: 1.4rem; }
+    li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: bold;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      margin: 0.75rem 0;
+      position: relative;
+    }
+    code { font-family: var(--font-mono); color: #38bdf8; }
+    .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: #334155;
+      color: #cbd5e1;
+      border: none;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: #475569; color: #fff; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--card-border);
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+    th { background: #1a2234; color: var(--primary); }
+    tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+    .status-pill {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .status-pill.pass { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+    .link { color: var(--primary); text-decoration: none; }
+    .link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge badge-success">✅ Final Approved by Senior Architect Advisor</span>
+      <h1>Báo Cáo Nghiệm Thu & Hướng Dẫn Sử Dụng</h1>
+      <p class="subtitle">Đặc tả tính năng: Kiểm tra nguồn trích dẫn qua MCP & Xem toàn văn tài liệu (Interactive Provenance)</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>🤖 1. Phía Agent (MCP Protocol)</h2>
+        <p>Hỗ trợ các AI Agent (Cursor, Claude Desktop, Antigravity) chủ động kiểm định trích dẫn và truy cập link trực tiếp.</p>
+        
+        <h3>Tool mới: <code>verify_citation</code></h3>
+        <p>Cho phép Agent so khớp đoạn trích dẫn (quote) với bản gốc Markdown:</p>
+        <ul>
+          <li><strong>Chuẩn hoá khoảng trắng:</strong> Chống sai lệch do ngắt dòng (newline) và thụt lề từ LLM.</li>
+          <li><strong>Xác định Section:</strong> Tự động bóc tách Heading cha chứa đoạn trích dẫn.</li>
+          <li><strong>SHA-256 Hash:</strong> Cung cấp mã hash đảm bảo tính toàn vẹn của file.</li>
+        </ul>
+
+        <h3>Deep Links trong <code>search_knowledge</code></h3>
+        <p>Kết quả tìm kiếm trả về đồng thời URL Web và giao thức Resource của Agent:</p>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>{
+  "spec_id": "HR-M05",
+  "url": "http://localhost:3000/specs/HR-M05",
+  "resource_uri": "spec://HR-M05",
+  "snippet": "..."
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>👤 2. Phía Con Người (Human Web UI)</h2>
+        <p>Trải nghiệm xem toàn văn tài liệu trực tiếp trên Web Chat UI không làm gián đoạn luồng trò chuyện.</p>
+        
+        <h3>Right Slide-over Sheet (<code>SpecDrawer</code>)</h3>
+        <ul>
+          <li>Khi hover vào thẻ Citation Badge -> bấm nút <strong>"📖 Xem toàn văn tài liệu"</strong>.</li>
+          <li>Drawer trượt ra từ cạnh phải với toàn bộ nội dung Markdown (bảng biểu, quy tắc, code block).</li>
+          <li>Hỗ trợ sao chép toàn bộ Markdown và nút mở tab riêng.</li>
+        </ul>
+
+        <h3>Trang Độc Lập: <code>/specs/[id]</code></h3>
+        <p>Dành cho người dùng hoặc Agent click trực tiếp từ IDE mở ra trình duyệt:</p>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Kiểm tra xem tài liệu qua URL độc lập
+curl -I http://localhost:3001/specs/HR-M05
+# HTTP/1.1 200 OK</code></pre>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h2>⚡ 3. Triệt Tiêu Lỗi "Trả Ra Rồi Xoá Mất 2 Lần" (RCA)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nguyên nhân gốc</th>
+            <th>Cơ chế trước đây</th>
+            <th>Giải pháp triệt để đã áp dụng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lần 1: Dẫn nhập Tool</strong></td>
+            <td>Model sinh văn bản mào đầu trước khi gọi tool RAG -> frontend nhận event <code>on_tool_start</code> và phát lệnh <code>RESET</code> xoá sạch văn bản.</td>
+            <td>Tối ưu system prompt chỉ thị agent gọi tool ngay lập tức mà không phát biểu dẫn nhập dư thừa.</td>
+          </tr>
+          <tr>
+            <td><strong>Lần 2: False-positive Citation</strong></td>
+            <td>Model trích dẫn ID con hợp lệ (<code>UC-PRG-02</code>, <code>TABLE_025</code>) nhưng bị Guardrails phạt nhầm vì không trùng ID cấp cao (<code>HR-M05</code>) -> kích hoạt <code>CORRECTION</code> + <code>RESET</code>.</td>
+            <td>Bổ sung bộ tiền tố <code>_SUB_BLOCK_PREFIXES</code> trong <code>citations.py</code> và kiểm tra đối soát trực tiếp trong nội dung tài liệu đã nạp.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>🧪 4. Bảng Kết Quả Kiểm Thử Tự Động (Automated Test Matrix)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Bộ kiểm thử</th>
+            <th>Tập tin kiểm tra</th>
+            <th>Số lượng test</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MCP Server Suite</strong></td>
+            <td><code>backend/tests/test_mcp_server.py</code></td>
+            <td>8 test cases</td>
+            <td><span class="status-pill pass">100% PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Spec Content API</strong></td>
+            <td><code>backend/tests/test_specs_api.py</code></td>
+            <td>6 test cases</td>
+            <td><span class="status-pill pass">100% PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Guardrails & Citation</strong></td>
+            <td><code>backend/tests/test_guardrails.py</code></td>
+            <td>35 test cases</td>
+            <td><span class="status-pill pass">100% PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Frontend Next.js Vitest</strong></td>
+            <td><code>citation-badge.test.tsx</code> + all suites</td>
+            <td>38 test cases</td>
+            <td><span class="status-pill pass">100% PASSED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.innerText = 'Copied!';
+        setTimeout(() => btn.innerText = 'Copy', 2000);
+      });
+    }
+  </script>
+</body>
+</html>

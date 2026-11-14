@@ -1,0 +1,93 @@
+# What each spec must stop, start or keep stating after a revision (PoC-A, #297). An entity is a node of `label`
+# whose name matches the regular expression `pattern`, asserted (open) by the spec. An edge is an open relationship the
+# spec asserts between two such nodes, in either direction and of any type (the model varies MODIFIES/DEPENDS_ON).
+# The labels come from the spec text and the make_revisions.py diff. rev1 is the baseline: no labels.
+rev2:
+  specs:
+    SPC-2:
+      removed:
+        - {label: Database_Table, pattern: "^payments$"}
+      added:
+        - {label: Database_Table, pattern: "^payment_transactions$"}
+        - {label: Database_Table, pattern: "^refunds$"}
+        - {label: API_Endpoint, pattern: "refund$"}
+      kept:
+        - {label: Database_Table, pattern: "^orders$"}
+        - {label: Database_Table, pattern: "^users$"}
+        - {label: API_Endpoint, pattern: "payments_checkout$"}
+        - {label: API_Endpoint, pattern: "vnpay_ipn$"}
+      edges:
+        removed:
+        - {from: [API_Endpoint, "payments_checkout$"], to: [Database_Table, "^payments$"]}
+        - {from: [API_Endpoint, "vnpay_ipn$"], to: [Database_Table, "^payments$"]}
+        added:
+        - {from: [API_Endpoint, "payments_checkout$"], to: [Database_Table, "^payment_transactions$"]}
+        - {from: [API_Endpoint, "vnpay_ipn$"], to: [Database_Table, "^payment_transactions$"]}
+        - {from: [API_Endpoint, "refund$"], to: [Database_Table, "^refunds$"]}
+        - {from: [API_Endpoint, "refund$"], to: [Database_Table, "^payment_transactions$"]}
+        - {from: [API_Endpoint, "refund$"], to: [Database_Table, "^orders$"]}
+        kept:
+        - {from: [API_Endpoint, "payments_checkout$"], to: [Database_Table, "^orders$"]}
+        - {from: [API_Endpoint, "payments_checkout$"], to: [Database_Table, "^users$"]}
+        - {from: [API_Endpoint, "vnpay_ipn$"], to: [Database_Table, "^orders$"]}
+        - {from: [API_Endpoint, "vnpay_ipn$"], to: [Database_Table, "^users$"]}
+    SPC-3:
+      removed:
+        - {label: Database_Table, pattern: "^email_outbox$"}
+        - {label: API_Endpoint, pattern: "auth_verify$"}
+      added:
+        - {label: Database_Table, pattern: "^notification_queue$"}
+        - {label: API_Endpoint, pattern: "verify_otp$"}
+      kept:
+        - {label: Database_Table, pattern: "^users$"}
+        - {label: Database_Table, pattern: "^email_verifications$"}
+        - {label: Database_Table, pattern: "^email_templates$"}
+        - {label: API_Endpoint, pattern: "auth_register$"}
+        - {label: API_Endpoint, pattern: "notifications_email$"}
+      edges:
+        removed:
+        - {from: [API_Endpoint, "notifications_email$"], to: [Database_Table, "^email_outbox$"]}
+        - {from: [API_Endpoint, "auth_verify$"], to: [Database_Table, "^email_verifications$"]}
+        - {from: [API_Endpoint, "auth_verify$"], to: [Database_Table, "^users$"]}
+        added:
+        - {from: [API_Endpoint, "notifications_email$"], to: [Database_Table, "^notification_queue$"]}
+        - {from: [API_Endpoint, "verify_otp$"], to: [Database_Table, "^email_verifications$"]}
+        - {from: [API_Endpoint, "verify_otp$"], to: [Database_Table, "^users$"]}
+        kept:
+        - {from: [API_Endpoint, "auth_register$"], to: [Database_Table, "^users$"]}
+        - {from: [API_Endpoint, "auth_register$"], to: [Database_Table, "^email_verifications$"]}
+        - {from: [API_Endpoint, "auth_register$"], to: [API_Endpoint, "notifications_email$"]}
+        - {from: [API_Endpoint, "notifications_email$"], to: [Database_Table, "^email_templates$"]}
+    SPC-4:  # unchanged: nothing may close
+      kept:
+        - {label: Database_Table, pattern: "^users$"}
+        - {label: Database_Table, pattern: "^audit_logs$"}
+        - {label: Database_Table, pattern: "^login_sessions$"}
+        - {label: Role, pattern: "^admin$"}
+        - {label: API_Endpoint, pattern: "users_me$"}
+      edges:
+        kept:
+        - {from: [API_Endpoint, "users_me$"], to: [Database_Table, "^users$"]}
+        - {from: [API_Endpoint, "users_me$"], to: [Database_Table, "^audit_logs$"]}
+        - {from: [API_Endpoint, "lock$"], to: [Database_Table, "^users$"]}
+        - {from: [API_Endpoint, "lock$"], to: [Database_Table, "^login_sessions$"]}
+        - {from: [API_Endpoint, "lock$"], to: [Database_Table, "^audit_logs$"]}
+rev3:
+  delete: [SPC-5]
+  specs:
+    SPC-2:
+      removed:
+        - {label: Database_Table, pattern: "^refunds$"}
+        - {label: API_Endpoint, pattern: "refund$"}
+      kept:
+        - {label: Database_Table, pattern: "^payment_transactions$"}
+        - {label: Database_Table, pattern: "^orders$"}
+      edges:
+        removed:
+        - {from: [API_Endpoint, "refund$"], to: [Database_Table, "^refunds$"]}
+        - {from: [API_Endpoint, "refund$"], to: [Database_Table, "^payment_transactions$"]}
+        - {from: [API_Endpoint, "refund$"], to: [Database_Table, "^orders$"]}
+        kept:
+        - {from: [API_Endpoint, "payments_checkout$"], to: [Database_Table, "^payment_transactions$"]}
+        - {from: [API_Endpoint, "vnpay_ipn$"], to: [Database_Table, "^payment_transactions$"]}
+        - {from: [API_Endpoint, "payments_checkout$"], to: [Database_Table, "^orders$"]}

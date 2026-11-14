@@ -1,0 +1,58 @@
+# Ten questions asked for the time of a revision (as_of: the end of that revision's ingestion), answered from the
+# top-5 results of HybridRetriever.search (PoC-A, #297). A question passes when some result contains one of
+# expect_any (case-insensitive; none listed: no requirement), no result contains any of expect_none, no result names
+# a spec of expect_spec_absent, every spec of expect_spec_present is named, and (expect_revision) some vector result
+# holding an expected text was first written in that spec revision. An unchanged chunk keeps the revision it was first
+# written in. A control (ask_after) is asked right after that revision is ingested, to show the same question can fail.
+- id: Q1
+  question: Dịch vụ Payment sở hữu bảng nào?
+  as_of: rev1
+  expect_any: ["`payments`", "bảng payments"]
+  expect_none: [payment_transactions]
+- id: Q2
+  question: Dịch vụ Payment sở hữu bảng nào?
+  as_of: rev3
+  expect_any: [payment_transactions]
+  expect_none: ["`payments`", "bảng payments "]
+  expect_revision: "2"  # section 1.1 changed in rev2, not in rev3
+- id: Q3
+  question: API nào dùng để hoàn tiền một giao dịch?
+  as_of: rev2
+  expect_any: [refund]
+  expect_revision: "2"
+- id: Q4
+  question: API nào dùng để hoàn tiền một giao dịch?
+  as_of: rev3
+  expect_none: [refund]
+- id: Q5
+  question: API gửi mail ghi vào bảng nào?
+  as_of: rev1
+  expect_any: [email_outbox]
+- id: Q6
+  question: API gửi mail ghi vào bảng nào?
+  as_of: rev3
+  expect_any: [notification_queue]
+  expect_none: [email_outbox]
+- id: Q7
+  question: Người dùng xác thực email bằng API nào?
+  as_of: rev1
+  expect_any: ["GET /api/v1/auth/verify"]
+  expect_none: [verify-otp, verify/otp]
+- id: Q8
+  question: Người dùng xác thực email bằng API nào?
+  as_of: rev3
+  expect_any: [verify-otp, verify/otp]
+  expect_revision: "2"
+- id: Q9
+  question: Ai được khoá tài khoản người dùng?
+  as_of: rev3
+  expect_any: [admin]
+- id: Q10
+  question: Từ điển dữ liệu của bảng users nằm ở spec nào?
+  as_of: rev2
+  expect_spec_absent: [SPC-5]  # asked after rev3 deleted it: a deleted spec is gone from the past too
+- id: Q10-control
+  question: Từ điển dữ liệu của bảng users nằm ở spec nào?
+  as_of: rev2
+  ask_after: rev2  # before rev3 deletes SPC-5: the spec must be found, so Q10's empty answer is the deletion's doing
+  expect_spec_present: [SPC-5]

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Kỹ Thuật: Active Cognitive Memory Fabric (Giai Đoạn 2)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669' },
+            zinc: { 850: '#1e2025', 900: '#18181b', 950: '#09090b' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500/30">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold">
+          ⚡
+        </div>
+        <div>
+          <h1 class="text-base font-semibold text-zinc-100">Personal-KB: Active Cognitive Memory Fabric</h1>
+          <p class="text-xs text-zinc-400">Nghiệm Thu Kỹ Thuật Giai Đoạn 2 — Golden Exemplars, Episodic ADRs & Tombstone</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          FINAL QA SIGN-OFF: APPROVED
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <!-- Executive Summary Card -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+          <span>🎯</span> Tóm Tắt Nghiệm Thu Kỹ Thuật Giai Đoạn 2
+        </h2>
+        <span class="text-xs text-zinc-400 font-mono">Date: 2026-10-21 | Advisor: Senior Architect (pro)</span>
+      </div>
+      <p class="text-sm text-zinc-300 leading-relaxed">
+        Giai đoạn 2 đã hoàn thành trọn vẹn 3 trụ cột kỹ thuật:
+        <strong>(1) Golden Few-shot Exemplars (Mã nguồn mẫu chuẩn sản xuất)</strong> giúp Agent sinh code chính xác ngay lập tức;
+        <strong>(2) Episodic Memory (ADRs)</strong> lưu giữ nguyên vẹn bối cảnh và lý do ra quyết định kiến trúc;
+        <strong>(3) Tombstone Lifecycle (Triple-Lock Safety)</strong> tự động ẩn và đào thải tri thức lỗi thời mà không xóa cứng dữ liệu.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Golden Exemplars</div>
+          <div class="text-2xl font-bold text-sky-400 font-mono mt-1">3 Mẫu Chuẩn</div>
+          <div class="text-xs text-zinc-500 mt-1">HR-EX-001, HR-EX-002, PKB-EX-001</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Episodic Memory (ADRs)</div>
+          <div class="text-2xl font-bold text-purple-400 font-mono mt-1">3 Quyết Định</div>
+          <div class="text-xs text-zinc-500 mt-1">ADR-001, ADR-002, ADR-003</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Công Cụ MCP Hoạt Động</div>
+          <div class="text-2xl font-bold text-emerald-400 font-mono mt-1">7 Tools Active</div>
+          <div class="text-xs text-zinc-500 mt-1">Bổ sung tool recall_exemplar</div>
+        </div>
+        <div class="p-4 rounded-lg bg-zinc-800/40 border border-zinc-800">
+          <div class="text-xs text-zinc-400">Quy Mô Kho Tri Thức</div>
+          <div class="text-2xl font-bold text-amber-400 font-mono mt-1">20 Specs</div>
+          <div class="text-xs text-zinc-500 mt-1">989 chunks trong Qdrant sdd_specs</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed 3 Pillars Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Pillar 1: Golden Exemplars -->
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">PROCEDURAL</span>
+          <span class="text-xs text-zinc-500">Mã nguồn mẫu</span>
+        </div>
+        <h3 class="text-sm font-semibold text-zinc-100">1. Golden Few-Shot Exemplars</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Định dạng Dual-Nature Markdown (<code class="text-zinc-200">.exemplar.md</code>). Tương thích 100% với bge-m3 embedding và cho phép Agent truy xuất code chuẩn trong 1 roundtrip:
+        </p>
+        <ul class="text-xs space-y-1.5 text-zinc-300 font-mono">
+          <li>• <span class="text-sky-400">HR-EX-001:</span> Payroll Calculator (Decimal, ROUND_HALF_UP, Zero-Tolerance)</li>
+          <li>• <span class="text-sky-400">HR-EX-002:</span> Timesheet Adjustment (Locked Period, Audit Trail)</li>
+          <li>• <span class="text-sky-400">PKB-EX-001:</span> Production MCP Tool (Stderr log, safe exception)</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 2: Episodic ADRs -->
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">EPISODIC</span>
+          <span class="text-xs text-zinc-500">Quyết định kiến trúc</span>
+        </div>
+        <h3 class="text-sm font-semibold text-zinc-100">2. Architecture Decision Records</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Lưu giữ nguyên vẹn lý do ra quyết định kiến trúc để Agent ở mọi conversation mới không đảo lộn kiến trúc:
+        </p>
+        <ul class="text-xs space-y-1.5 text-zinc-300 font-mono">
+          <li>• <span class="text-purple-400">ADR-001:</span> Unified Vector Collection + Hierarchical Payload Filter</li>
+          <li>• <span class="text-purple-400">ADR-002:</span> Dual Protocol: MCP stdio (Agents) vs REST SSE (Human)</li>
+          <li>• <span class="text-purple-400">ADR-003:</span> Reflective Negative Constraints Priority (CAR 100%)</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 3: Tombstone Lifecycle -->
+      <div class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIFECYCLE</span>
+          <span class="text-xs text-zinc-500">An toàn đào thải</span>
+        </div>
+        <h3 class="text-sm font-semibold text-zinc-100">3. Tombstone Lifecycle (Triple-Lock)</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Đào thải tri thức cũ khi có quyết định thay thế mà không gây mất mát dữ liệu kiểm toán (Audit Trail):
+        </p>
+        <ul class="text-xs space-y-1.5 text-zinc-300 font-mono">
+          <li>• <span class="text-emerald-400">Two-Way Check:</span> Cùng dự án, tài liệu cũ phải đang active</li>
+          <li>• <span class="text-emerald-400">Soft Tombstone:</span> Gắn valid_to = now, superseded_by = new_id</li>
+          <li>• <span class="text-emerald-400">Auto Filter:</span> Qdrant validity_filter tự động ẩn khỏi AI</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- MCP Tool Specification -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <h3 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+        <span>🛠️</span> Công Cụ MCP Mới: <code>recall_exemplar(project, pattern)</code>
+      </h3>
+      <p class="text-xs text-zinc-400">
+        Cho phép Agent nạp mã nguồn mẫu chuẩn mực vào ngữ cảnh khi chuẩn bị sinh code phức tạp. 
+        Tự động trả về khối mã nguồn nguyên vẹn và hướng dẫn triển khai.
+      </p>
+      <pre class="p-4 rounded-lg bg-zinc-950 border border-zinc-800 text-xs text-sky-300 overflow-x-auto"><code># Gọi qua MCP Client:
+recall_exemplar(project="Demo-Core", pattern="payroll")
+
+# Kết quả trả về (Trích đoạn mã nguồn thực tế):
+📦 [GOLDEN EXEMPLAR] MÃ NGUỒN MẪU CHUẨN MỰC: HR-EX-001: Mẫu Triển Khai Tính Lương Chuẩn Mực
+- Mã tài liệu: HR-EX-001 | Dự án: Demo-Core | Ngôn ngữ: python
+- Tầng trí nhớ: Procedural Memory (Production Pattern)
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+def compute_monthly_payroll(base_salary: Decimal, ...):
+    # Đọc hệ số động từ payroll_parameters (NC-HR-040)
+    hourly_rate = (base_salary / (params.standard_working_days * params.standard_daily_hours)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    # [NC-HR-041] Xác thực cân bằng Net Pay Zero-Tolerance
+    assert net_pay == (gross_pay - total_deductions), "LỖI BẤT BIẾN: Net Pay không khớp tuyệt đối!"
+```</code></pre>
+    </section>
+
+    <!-- File Paths & Commands -->
+    <section class="p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 space-y-4">
+      <h3 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+        <span>📂</span> Danh Mục Tài Nguyên & Mã Nguồn Bàn Giao
+      </h3>
+      <div class="space-y-2 text-xs font-mono">
+        <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <span class="text-zinc-300">knowledge/Demo-Core/exemplars/HR-EX-001.md</span>
+          <span class="text-zinc-500">Mẫu tính lương HR-M04 (Decimal, ROUND_HALF_UP, Thuế TNCN)</span>
+        </div>
+        <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <span class="text-zinc-300">knowledge/Demo-Core/exemplars/HR-EX-002.md</span>
+          <span class="text-zinc-500">Mẫu xử lý điều chỉnh công HR-M02 khi kỳ công LOCKED</span>
+        </div>
+        <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <span class="text-zinc-300">knowledge/Personal-KB/exemplars/PKB-EX-001.md</span>
+          <span class="text-zinc-500">Mẫu triển khai MCP Tool an toàn (Stderr log, Type hints)</span>
+        </div>
+        <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <span class="text-zinc-300">knowledge/adrs/ADR-001.md đến ADR-003.md</span>
+          <span class="text-zinc-500">3 Quyết định kiến trúc cốt lõi (Collection, Dual-Protocol, Guardrails)</span>
+        </div>
+        <div class="p-2.5 rounded bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <span class="text-zinc-300">backend/tests/test_exemplars_and_adrs.py</span>
+          <span class="text-zinc-500">Suite kiểm thử 5 test cases PASS 100% (Exemplars + Tombstone)</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

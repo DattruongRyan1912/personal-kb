@@ -1,0 +1,126 @@
+<title>Worklog liên dự án 28/10</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, verdict first, then evidence tables, then method. Dark zinc first. */
+:root {
+  --bg: #09090b; --panel: #111113; --line: #27272a; --fg: #e4e4e7; --muted: #a1a1aa;
+  --accent: #7dd3fc; --ok: #4ade80; --warn: #fbbf24; --bad: #f87171;
+  --sans: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #fafafa; --panel: #ffffff; --line: #e4e4e7; --fg: #18181b; --muted: #52525b;
+  --accent: #0369a1; --ok: #15803d; --warn: #b45309; --bad: #b91c1c; color-scheme: light; } }
+:root[data-theme="light"] {
+  --bg: #fafafa; --panel: #ffffff; --line: #e4e4e7; --fg: #18181b; --muted: #52525b;
+  --accent: #0369a1; --ok: #15803d; --warn: #b45309; --bad: #b91c1c; color-scheme: light; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--sans); }
+main { max-width: 880px; margin: 0 auto; display: grid; gap: 36px;
+  padding-block: 40px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: grid; gap: 6px; }
+.meta { font: 12px/1.5 var(--mono); color: var(--muted); letter-spacing: .02em; }
+h1 { font-size: 26px; line-height: 1.25; margin: 0; font-weight: 600; text-wrap: balance; }
+h2 { font-size: 17px; margin: 0 0 12px; font-weight: 600; text-wrap: balance; }
+p { margin: 0; max-width: 68ch; }
+section { display: grid; gap: 12px; min-width: 0; }
+.verdict { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 18px 20px; display: grid; gap: 14px; }
+.verdict p.lead { font-size: 17px; }
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.split div { background: var(--panel); padding: 12px 14px; display: grid; gap: 2px; }
+.split b { font: 500 22px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+.split span { font-size: 13px; color: var(--muted); }
+.ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11.5px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--panel); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+td.t, code { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+code { white-space: normal; overflow-wrap: anywhere; color: var(--accent); }
+.pill { display: inline-block; font: 500 11.5px/1.5 var(--mono); padding: 1px 7px; border-radius: 3px; border: 1px solid currentColor; white-space: nowrap; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 70ch; }
+.note { color: var(--muted); font-size: 13.5px; }
+</style>
+
+<main>
+  <header>
+    <div class="meta">Personal-KB · đo lúc 28/10/2026 20:07 (+07) · hook bật từ 27/10 03:07</div>
+    <h1>Agent ở các project khác đã tự ghi vào Personal-KB chưa</h1>
+  </header>
+
+  <section class="verdict">
+    <p class="lead"><b class="ok">Có, với worklog.</b> Kể từ khi bật Stop hook, cả 13 lượt Claude sửa code đã kết thúc ở MyNotch và CyberOS đều có mục worklog. <b class="warn">Chưa có với spec:</b> không agent nào ở project khác tạo proposal cập nhật spec.</p>
+    <div class="split">
+      <div><b class="ok">6</b><span>agent tự ghi, không cần nhắc</span></div>
+      <div><b>5</b><span>ghi sau khi hook giữ lượt và nhắc</span></div>
+      <div><b class="warn">2</b><span>hook tự ghi mục <code>[tự động]</code></span></div>
+      <div><b class="ok">0</b><span>lượt sửa code không có worklog</span></div>
+    </div>
+    <p class="note">Trước khi có hook (24–26/10), MyNotch có 3/7 phiên và CyberOS 0/1 phiên ghi worklog. Đơn vị lúc đó là phiên, giờ là lượt, nên chỉ so được về xu hướng. Một lượt CyberOS bắt đầu 19:51 hôm nay vẫn đang chạy nên chưa tính.</p>
+  </section>
+
+  <section>
+    <h2>Số mục worklog theo project</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Project</th><th>Trước hook</th><th>Sau hook</th><th><code>[tự động]</code></th><th>Thiếu agent</th><th>Thiếu session</th><th>Loại</th></tr></thead>
+      <tbody>
+        <tr><td>MyNotch</td><td class="n">6</td><td class="n">18</td><td class="n">1</td><td class="n warn">16</td><td class="n warn">17</td><td>progress</td></tr>
+        <tr><td>CyberOS</td><td class="n">0</td><td class="n">10</td><td class="n">1</td><td class="n">1</td><td class="n warn">9</td><td>progress, decision, gotcha, handoff</td></tr>
+        <tr><td>AGY-Remote-Hub</td><td class="n">1</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="note">không có lượt sửa code từ khi có hook</td></tr>
+        <tr><td>Demo-Core</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="note">không có phiên nào</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Mục ghi qua MCP thường để trống <code>agent</code> và <code>session_id</code> vì <code>log_progress</code> không tự điền hai trường này. Nội dung vẫn đủ, nhưng khó biết mục nào từ phiên nào.</p>
+  </section>
+
+  <section>
+    <h2>Từng lượt sửa code từ khi có hook</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Giờ (+07)</th><th>Project</th><th>Phiên</th><th>Yêu cầu</th><th>Kết quả</th></tr></thead>
+      <tbody>
+        <tr><td class="t">27/10 02:58</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Bỏ nút &lt; và &lt;&lt; trên thanh icon</td><td><span class="pill warn">hook tự ghi #67</span></td></tr>
+        <tr><td class="t">27/10 03:03</td><td>MyNotch</td><td class="t">93884727</td><td>Giữ cửa sổ lời nổi</td><td><span class="pill">ghi sau nhắc</span></td></tr>
+        <tr><td class="t">27/10 03:21</td><td>CyberOS</td><td class="t">34947439</td><td>Xem kế hoạch PoC-B trước khi đăng</td><td><span class="pill warn">hook tự ghi #69</span></td></tr>
+        <tr><td class="t">27/10 16:48</td><td>MyNotch</td><td class="t">93884727</td><td>Cửa sổ nổi không kéo được, thêm chỉnh màu</td><td><span class="pill ok">tự ghi</span></td></tr>
+        <tr><td class="t">27/10 17:55</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Hộp thoại quyền không hiện</td><td><span class="pill">ghi sau nhắc</span></td></tr>
+        <tr><td class="t">27/10 20:49</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Chấp nhận Now Playing bị ẩn</td><td><span class="pill ok">tự ghi</span></td></tr>
+        <tr><td class="t">28/10 00:34</td><td>CyberOS</td><td class="t">34947439</td><td>Triển khai PoC-B trong khi chờ duyệt</td><td><span class="pill ok">tự ghi</span></td></tr>
+        <tr><td class="t">28/10 01:44</td><td>CyberOS</td><td class="t">34947439</td><td>PoC-B PR 1, làm từng task</td><td><span class="pill ok">tự ghi</span></td></tr>
+        <tr><td class="t">28/10 01:59</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Mở PR feat/modules vào main</td><td><span class="pill">ghi sau nhắc</span></td></tr>
+        <tr><td class="t">28/10 02:11</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Option phụ đề khi xem toàn màn hình</td><td><span class="pill ok">tự ghi</span></td></tr>
+        <tr><td class="t">28/10 19:30</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Nghe giọng nhân vật để căn phụ đề</td><td><span class="pill ok">tự ghi</span></td></tr>
+        <tr><td class="t">28/10 19:30</td><td>MyNotch</td><td class="t">7db97b74</td><td>Nhận biết fullscreen của Chrome (worktree)</td><td><span class="pill">ghi sau nhắc</span></td></tr>
+        <tr><td class="t">28/10 19:53</td><td>MyNotch</td><td class="t">2cd75a26</td><td>Tự căn phụ đề báo không thành công</td><td><span class="pill">ghi sau nhắc</span></td></tr>
+        <tr><td class="t">28/10 19:51</td><td>CyberOS</td><td class="t">34947439</td><td>Soạn hướng dẫn tự test</td><td><span class="pill">đang chạy</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Cập nhật spec</h2>
+    <p>Từ khi có hook, chưa có proposal nào từ agent ở MyNotch, CyberOS, Demo-Core hay AGY-Remote-Hub. Proposal gần nhất cho spec của các project này là ngày 25/10 (sửa frontmatter và tiêu đề), tạo từ phiên Personal-KB. Hook có nhắc agent tạo proposal khi thay đổi làm spec sai, nhưng không kiểm tra việc này.</p>
+    <p class="note">MyNotch có nhiều thay đổi tính năng trong hai ngày qua (phụ đề, ẩn icon trên macOS 27, clipboard Android). Chưa đối chiếu xem spec <code>mynotch-context</code> còn đúng không.</p>
+  </section>
+
+  <section>
+    <h2>Phần chưa được theo dõi</h2>
+    <ul>
+      <li><b>AGY:</b> hook AGY bật từ 27/10 03:24, nhưng từ đó chưa có lượt AGY nào trong project đã khai báo. AGY đang dùng ở <code>Audio_Story</code>, project này chưa có trong <code>config/projects.json</code> nên hook bỏ qua.</li>
+      <li><b>Claude ở <code>Orther/CV</code> và <code>Orther/MemeVault</code>:</b> cũng chưa khai báo nên không được theo dõi.</li>
+      <li><b>Phiên MCP cũ:</b> 8 tiến trình vẫn chạy kiểu <code>docker exec</code> (MyNotch ×3, CyberOS, MemeVault, agy-remote-hub và hai phiên khác). Lần <code>kb-backend</code> khởi động lại tới, các phiên này mất MCP. Khi đó hook vẫn tự ghi qua REST nên worklog không mất.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Cách đo</h2>
+    <ul class="note">
+      <li>Worklog: bảng <code>worklog_entries</code> trong <code>kb-postgres</code>, mốc là 27/10 03:07:48 (+07), giờ cài hook theo <code>docs/agent-continuity/config-changes.log</code>.</li>
+      <li>Lượt: tách từ transcript Claude trong <code>~/.claude/projects/</code> theo từng prompt người dùng gõ. Một lượt được coi là sửa code khi có Edit/Write/MultiEdit/NotebookEdit hoặc <code>git commit</code>, hoặc khi hook giữ lượt đó (hook còn thấy file đổi qua <code>git status</code>).</li>
+      <li>“Ghi sau nhắc” là lượt có <code>hook_blocking_error</code> của worklog guard rồi mới có <code>log_progress</code>.</li>
+      <li>Proposal: <code>python3 scripts/manage_proposals.py list --status ALL</code> (24 proposal, không có PENDING).</li>
+    </ul>
+  </section>
+</main>

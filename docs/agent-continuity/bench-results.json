@@ -1,0 +1,1680 @@
+{
+  "latency": {
+    "started_at": "2026-10-24T23:32:42+07:00",
+    "repos": [
+      "Demo-Core",
+      "CyberOS",
+      "MyNotch",
+      "AGY-Remote-Hub",
+      "Personal-KB"
+    ],
+    "runs_per_repo": 20,
+    "backend_up": {
+      "Demo-Core": {
+        "repo": "/Users/ryantruong/Project/HRM",
+        "stats": {
+          "n": 20,
+          "p50": 0.254,
+          "p95": 0.281,
+          "max": 0.281,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 807,
+          "chars_min": 807,
+          "has_worklog_down_line": 0
+        },
+        "samples": [
+          {
+            "seconds": 0.281,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.274,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.279,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.237,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.243,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.277,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.261,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 807,
+            "worklog_down": false
+          }
+        ]
+      },
+      "CyberOS": {
+        "repo": "/Users/ryantruong/Project/CyberOS",
+        "stats": {
+          "n": 20,
+          "p50": 0.257,
+          "p95": 0.295,
+          "max": 0.295,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 1479,
+          "chars_min": 1479,
+          "has_worklog_down_line": 0
+        },
+        "samples": [
+          {
+            "seconds": 0.295,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.27,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.261,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.244,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.261,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 1479,
+            "worklog_down": false
+          }
+        ]
+      },
+      "MyNotch": {
+        "repo": "/Users/ryantruong/Project/MyNotch",
+        "stats": {
+          "n": 20,
+          "p50": 0.259,
+          "p95": 0.378,
+          "max": 0.378,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 2048,
+          "chars_min": 2048,
+          "has_worklog_down_line": 0
+        },
+        "samples": [
+          {
+            "seconds": 0.378,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.269,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.266,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.264,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.266,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.263,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.278,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.266,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2048,
+            "worklog_down": false
+          }
+        ]
+      },
+      "AGY-Remote-Hub": {
+        "repo": "/Users/ryantruong/Project/agy-remote-hub",
+        "stats": {
+          "n": 20,
+          "p50": 0.249,
+          "p95": 0.26,
+          "max": 0.26,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 1503,
+          "chars_min": 1503,
+          "has_worklog_down_line": 0
+        },
+        "samples": [
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.24,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.247,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.26,
+            "exit": 0,
+            "chars": 1503,
+            "worklog_down": false
+          }
+        ]
+      },
+      "Personal-KB": {
+        "repo": "/Users/ryantruong/Project/personal-kb",
+        "stats": {
+          "n": 20,
+          "p50": 0.253,
+          "p95": 0.273,
+          "max": 0.273,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 1424,
+          "chars_min": 1424,
+          "has_worklog_down_line": 0
+        },
+        "samples": [
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.261,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.273,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1424,
+            "worklog_down": false
+          }
+        ]
+      }
+    },
+    "backend_stopped": true,
+    "backend_restarted_healthy": true,
+    "backend_down": {
+      "Demo-Core": {
+        "repo": "/Users/ryantruong/Project/HRM",
+        "stats": {
+          "n": 20,
+          "p50": 0.246,
+          "p95": 0.268,
+          "max": 0.268,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 811,
+          "chars_min": 811,
+          "has_worklog_down_line": 20
+        },
+        "samples": [
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.244,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.244,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.242,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.239,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.247,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.243,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.247,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.268,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.247,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 811,
+            "worklog_down": true
+          }
+        ]
+      },
+      "CyberOS": {
+        "repo": "/Users/ryantruong/Project/CyberOS",
+        "stats": {
+          "n": 20,
+          "p50": 0.253,
+          "p95": 0.263,
+          "max": 0.263,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 1483,
+          "chars_min": 1483,
+          "has_worklog_down_line": 20
+        },
+        "samples": [
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.263,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.247,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.241,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.253,
+            "exit": 0,
+            "chars": 1483,
+            "worklog_down": true
+          }
+        ]
+      },
+      "MyNotch": {
+        "repo": "/Users/ryantruong/Project/MyNotch",
+        "stats": {
+          "n": 20,
+          "p50": 0.255,
+          "p95": 0.282,
+          "max": 0.282,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 2052,
+          "chars_min": 2052,
+          "has_worklog_down_line": 20
+        },
+        "samples": [
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.257,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.259,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.243,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.256,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.261,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.282,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.254,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.258,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.255,
+            "exit": 0,
+            "chars": 2052,
+            "worklog_down": true
+          }
+        ]
+      },
+      "AGY-Remote-Hub": {
+        "repo": "/Users/ryantruong/Project/agy-remote-hub",
+        "stats": {
+          "n": 20,
+          "p50": 0.245,
+          "p95": 0.267,
+          "max": 0.267,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 1507,
+          "chars_min": 1507,
+          "has_worklog_down_line": 20
+        },
+        "samples": [
+          {
+            "seconds": 0.231,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.242,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.267,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.244,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.241,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.244,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.237,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.25,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.242,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1507,
+            "worklog_down": true
+          }
+        ]
+      },
+      "Personal-KB": {
+        "repo": "/Users/ryantruong/Project/personal-kb",
+        "stats": {
+          "n": 20,
+          "p50": 0.246,
+          "p95": 0.252,
+          "max": 0.252,
+          "exit_codes": [
+            0
+          ],
+          "chars_max": 1318,
+          "chars_min": 1318,
+          "has_worklog_down_line": 20
+        },
+        "samples": [
+          {
+            "seconds": 0.247,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.241,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.24,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.252,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.249,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.251,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.244,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.245,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.246,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          },
+          {
+            "seconds": 0.248,
+            "exit": 0,
+            "chars": 1318,
+            "worklog_down": true
+          }
+        ]
+      }
+    },
+    "finished_at": "2026-10-24T23:33:37+07:00"
+  },
+  "updated_at": "2026-10-24T23:48:03+07:00",
+  "hook_command_check": {
+    "at": "2026-10-24T23:47:20+07:00",
+    "command": "/usr/bin/python3 /Users/ryantruong/Project/personal-kb/scripts/project_brief.py --runtime claude --format claude-hook",
+    "runs": [
+      {
+        "source": "startup",
+        "exit": 0,
+        "seconds": 0.255,
+        "valid_json_with_brief": true,
+        "header": "PROJECT BRIEF — Personal-KB (/Users/ryantruong/Project/personal-kb)"
+      },
+      {
+        "source": "compact",
+        "exit": 0,
+        "seconds": 0.244,
+        "valid_json_with_brief": true,
+        "header": "PROJECT BRIEF — Personal-KB (/Users/ryantruong/Project/personal-kb)"
+      }
+    ]
+  },
+  "scenario6_unmapped": {
+    "at": "2026-10-24T23:48:03+07:00",
+    "repo": "/Users/ryantruong/Project/MyEQ",
+    "exit": 0,
+    "stdout_chars": 0,
+    "stdout_empty": true,
+    "stderr_chars": 0
+  },
+  "secret": {
+    "at": "2026-10-24T23:47:21+07:00",
+    "worklog_entry_contains_fake_key": true,
+    "exit": 0,
+    "brief_contains_secret_value": false,
+    "redaction_marker_present": true,
+    "excerpt": [
+      "- 2026-10-24 16:47 [progress] secret check OPENAI_API_KEY=[REDACTED] (claude)",
+      "  tiếp: dùng OPENAI_API_KEY=[REDACTED]"
+    ]
+  },
+  "agy_inject": {
+    "at": "2026-10-24T23:37:42+07:00",
+    "prompt": "Không dùng tool nào. Theo PROJECT BRIEF trong ngữ cảnh, bước tiếp theo (next_steps) mới nhất là gì? Trả lời một dòng.",
+    "passed": 10,
+    "total": 10,
+    "runs": [
+      {
+        "run": 1,
+        "marker": "AC-632887",
+        "conversation": "9170427c-3893-4323-8aca-a7ef313c4f3f",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 19.2,
+        "stdout": "kiểm tra marker AC-632887\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 2,
+        "marker": "AC-8e84c9",
+        "conversation": "719efe9b-1cd3-4057-bd6f-b27134ecc5ed",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 20.1,
+        "stdout": "kiểm tra marker AC-8e84c9\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 3,
+        "marker": "AC-9c65de",
+        "conversation": "0d5d96bc-cb4e-432a-b1cf-d689c7073607",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 20.2,
+        "stdout": "kiểm tra marker AC-9c65de\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 4,
+        "marker": "AC-4f50fe",
+        "conversation": "e7a91546-a863-439b-a795-586ef5c2bd57",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 23.1,
+        "stdout": "kiểm tra marker AC-4f50fe\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 5,
+        "marker": "AC-7755ae",
+        "conversation": "c291fd3a-0d97-4600-8fcc-54d499d7eee6",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 20.9,
+        "stdout": "kiểm tra marker AC-7755ae\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 6,
+        "marker": "AC-b14202",
+        "conversation": "5cae7339-216c-4683-9667-3f8e596e55d4",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 19.4,
+        "stdout": "kiểm tra marker AC-b14202\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 7,
+        "marker": "AC-908e18",
+        "conversation": "e1f1dd0c-3d1b-495a-891f-654142cbd970",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 22.2,
+        "stdout": "kiểm tra marker AC-908e18\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 8,
+        "marker": "AC-b9a3b2",
+        "conversation": "cb637b47-94a0-4e23-9229-747baf23908f",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 18.4,
+        "stdout": "kiểm tra marker AC-b9a3b2\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 9,
+        "marker": "AC-7a94b2",
+        "conversation": "972a23b5-e7a2-458d-9228-f734eb38618b",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 19.3,
+        "stdout": "kiểm tra marker AC-7a94b2\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      },
+      {
+        "run": 10,
+        "marker": "AC-0abf21",
+        "conversation": "69fa6670-efbd-4dee-abe4-d77ba07d89ff",
+        "reply_has_marker": true,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 17.7,
+        "stdout": "kiểm tra marker AC-0abf21\n",
+        "stderr": "",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": false
+        }
+      }
+    ]
+  },
+  "agy_continue": {
+    "at": "2026-10-24T23:40:49+07:00",
+    "prompt": "tiếp tục",
+    "passed": 3,
+    "total": 3,
+    "runs": [
+      {
+        "run": 1,
+        "marker": "AC-ace12b",
+        "conversation": "c1f83608-b1ac-462d-94e3-a875ac128178",
+        "reply_has_marker": false,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 56.7,
+        "stdout": "",
+        "stderr": "i: no output produced — a tool required the \"read_file\" permission that headless mode cannot prompt for, so it was auto-denied. Add an allow-rule under permissions.allow in settings.json (e.g. read_file(<target>)). Alternatively, re-run with --dangerously-skip-permissions to auto-approve all tools.\n",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": true
+        }
+      },
+      {
+        "run": 2,
+        "marker": "AC-94e770",
+        "conversation": "398c2f58-38f8-4024-b930-992a7260c89c",
+        "reply_has_marker": false,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 53.0,
+        "stdout": "",
+        "stderr": "etski: no output produced — a tool required the \"command\" permission that headless mode cannot prompt for, so it was auto-denied. Add an allow-rule under permissions.allow in settings.json (e.g. command(<target>)). Alternatively, re-run with --dangerously-skip-permissions to auto-approve all tools.\n",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": true
+        }
+      },
+      {
+        "run": 3,
+        "marker": "AC-06d53d",
+        "conversation": "3541435a-ab7b-4fe7-aab1-79f4c6c67e3d",
+        "reply_has_marker": false,
+        "transcript_has_marker": "transcript.jsonl",
+        "pass": true,
+        "exit": 0,
+        "seconds": 70.5,
+        "stdout": "",
+        "stderr": "etski: no output produced — a tool required the \"command\" permission that headless mode cannot prompt for, so it was auto-denied. Add an allow-rule under permissions.allow in settings.json (e.g. command(<target>)). Alternatively, re-run with --dangerously-skip-permissions to auto-approve all tools.\n",
+        "evidence": {
+          "injected_brief_with_marker": true,
+          "get_worklog_result_with_marker": true
+        }
+      }
+    ]
+  },
+  "scenario3_claude_side": {
+    "at": "2026-10-24T23:43:17+07:00",
+    "exit": 0,
+    "has_phien_truoc_agy": true,
+    "excerpt": "Phiên trước (agy, 2026-10-24 16:40 UTC):\n- Người dùng: tiếp tục\n\nGhi tiến độ: gọi MCP log_progress (personal-kb) sau mỗi bước chính; get_worklog để xem lại.\n"
+  },
+  "sizes_real_worklog": {
+    "at": "2026-10-24T23:47:21+07:00",
+    "repo": "/Users/ryantruong/Project/personal-kb",
+    "runs": {
+      "agy": {
+        "seconds": 0.234,
+        "exit": 0,
+        "chars": 1580,
+        "has_previous_session": true,
+        "worklog_entries": 3
+      },
+      "claude": {
+        "seconds": 0.231,
+        "exit": 0,
+        "chars": 2005,
+        "has_previous_session": true,
+        "worklog_entries": 3
+      }
+    }
+  }
+}

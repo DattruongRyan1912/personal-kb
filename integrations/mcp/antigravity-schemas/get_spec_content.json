@@ -1,0 +1,1 @@
+{"name":"get_spec_content","description":"Đọc nguyên văn toàn bộ 100% nội dung (bảng biểu, quy tắc, code) của một tài liệu Spec Markdown theo spec_id (Ví dụ: HR-M01, HR-M02, SPC-1).","parameters":{"properties":{"spec_id":{"title":"Spec Id","type":"string"}},"required":["spec_id"],"title":"get_spec_contentArguments","type":"object"}}
