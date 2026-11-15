@@ -55,3 +55,19 @@ backend/tests/reports/
 # Proposals queue (local runtime cache)
 knowledge/proposals/
 
+# Client specs, private workspace docs & operational logs (keep local, never commit)
+/HANDOVER.html
+/docs/worklog/
+/docs/agent-continuity/config-changes.log
+/knowledge/AGY-GOTCHAS.md
+/knowledge/AGY-REMOTE-HUB-GOTCHAS.md
+/knowledge/AGY-Remote-Hub/
+/knowledge/CYBEROS-*.md
+/knowledge/HRM-Core/
+/knowledge/MYNOTCH-*.md
+/knowledge/TOEIC-*.md
+/knowledge/workspaces/
+/scripts/sync_hrm_kb.py
+/test_evidence/
+
+
